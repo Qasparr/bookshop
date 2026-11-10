@@ -213,12 +213,28 @@ UNITS_ALL = [
      "Representative", "CAPVT XXX — De Officio Summi Imperantis"),
     ("chXXXI", "CHAPTER XXXI — Of the Kingdom of God by Nature",
      "CAPVT XXXI — De Regno Dei Naturali"),
+    # Part III (De Civitate Christiana). Latin titles per each
+    # chapter's own display, the contents leaf as witness (N15);
+    # English titles as #3207 prints them, spelling modernized
+    # only where Part I's practice modernized.
+    ("chXXXII", "CHAPTER XXXII — Of the Principles of Christian "
+     "Politiques",
+     "CAPVT XXXII — De Politicae Christianae Principiis"),
+    ("chXXXIII", "CHAPTER XXXIII — Of the Number, Antiquity, Scope, "
+     "Authority, and Interpreters of the Books of Holy Scripture",
+     "CAPVT XXXIII — De Numero, Antiquitate, Scopo, Authoritate et "
+     "Interpretibus Librorum Sacrorum"),
+    ("chXXXIV", "CHAPTER XXXIV — Of the Signification of Spirit, "
+     "Angel, and Inspiration in the Books of Holy Scripture",
+     "CAPVT XXXIV — De Significatione quam habent in Scripturis "
+     "Sacris Vocabula Spiritus, Angelus, Inspiratio"),
 ]
-BRICK = 10
-UNITS_BUILT = UNITS_ALL[:32]         # Parts I and II complete
+BRICK = 11
+UNITS_BUILT = UNITS_ALL[:35]         # Parts I–II; Part III to XXXIV
 BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
-               "Introduction and Chapters 1–16 — and the whole of "
-               "Part II (De Civitate), Chapters 17–31, in parallel")
+               "Introduction and Chapters 1–16 — the whole of "
+               "Part II (De Civitate), Chapters 17–31, and Part III "
+               "(De Civitate Christiana) Chapters 32–34 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -275,6 +291,13 @@ LA_SEAMS = {
     "chXXIX": (7630, 7959),
     "chXXX": (7960, 8412),
     "chXXXI": (8413, 8735),
+    # Brick 11 seams (Part III): XXXII's display at 8736 directly
+    # under the PARS TERTIA display (8727–8733, inside XXXI's
+    # seam, dropped there); XXXIII's at 8887, XXXIV's at 9200;
+    # XXXIV closes the line before XXXV's display (9565).
+    "chXXXII": (8736, 8886),
+    "chXXXIII": (8887, 9199),
+    "chXXXIV": (9200, 9564),
 }
 
 # ----------------------------------------------------------------------
@@ -366,6 +389,19 @@ LA_FURNITURE_BLOCKS = {
     # Definitione Poenae deduco…'); the word stands whole at
     # the paragraph's head.
     "Ade*",
+    # Brick 11 (Part III): leaf-turn catchwords standing alone,
+    # each the first word of the paragraph that follows it —
+    # Capvt XXXII's 'In' (before 'In his Verbis notanda…'),
+    # Capvt XXXIII's 'Octo,', 'Capitis', 'Spiritu' (N29). The
+    # 'In' entry also takes Capvt XIII's catchword of the same
+    # shape, which had stood as a note since Brick 5.
+    "In", "Octo,", "Capitis", "Spiritu",
+    # Brick 11, recorded repair of an earlier part (N29): a
+    # running head of Capvt XIII ('64 De Homine. Cap. 13.') that
+    # the machine's garble carried past the head classes as a
+    # text block; it is the press's furniture, listed here as
+    # such. The leaf's catchword and text stand whole.
+    '64 ®\'e Homine. Cap. 13."',
 }
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
@@ -1646,6 +1682,25 @@ def collation_notes(pdf, report):
              "seating in the contents and the colophon, and the "
              "Latin volume's seating of each part title before "
              "its first chapter stands recorded at N1 and here."),
+            ("N29 — Part III opens (Brick 11). Capvt XXXII–"
+             "XXXIV face the English of Chapters 32–34 under the "
+             "PARS TERTIA display seated at N28. Four leaf-turn "
+             "catchwords stand listed as furniture ('In', "
+             "'Octo,', 'Capitis', 'Spiritu' — each the first "
+             "word of the paragraph following it); Capvt "
+             "XXXIII's Esther line stands as a margin note, "
+             "complete in the margin as printed: 'Liber Esther "
+             "in ipsa Captivitate, vel postea scriptus est.' A "
+             "running head of the Part III form ('Cap. 33. De "
+             "Civitate Christiana') stands fused at a paragraph "
+             "head in Capvt XXXIII, as read — the line classes "
+             "do not reach inside a paragraph. One recorded "
+             "repair reaches back into Part I: a running head of "
+             "Capvt XIII ('64 De Homine. Cap. 13.'), garbled past "
+             "the head classes, had stood as a text block since "
+             "Brick 5, beside its own leaf's catchword; both are "
+             "furniture and are now listed as such. No word of "
+             "the chapter is touched."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
