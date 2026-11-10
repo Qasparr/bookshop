@@ -267,15 +267,22 @@ UNITS_ALL = [
      "of the Religion of the Gentiles",
      "CAPVT XLV — De Daemonologia et aliis Reliquiis Religionum "
      "Ethnicarum"),
+    ("chXLVI", "CHAPTER XLVI — Of Darknesse from Vain Philosophy, "
+     "and Fabulous Traditions",
+     "CAPVT XLVI — De Tenebris a vana Philosophia et Traditionibus "
+     "fabulosis"),
+    ("chXLVII", "CHAPTER XLVII — Of the Benefit That Proceedeth "
+     "from Such Darknesse, and to Whom It Accreweth",
+     "CAPVT XLVII — De Lucro ab huiusmodi Tenebris quid sit et "
+     "quibus accrescat"),
 ]
-BRICK = 16
-UNITS_BUILT = UNITS_ALL[:46]         # Parts I–III; Part IV to XLV
-BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
-               "Introduction and Chapters 1–16 — the whole of "
-               "Part II (De Civitate), Chapters 17–31, the whole "
-               "of Part III (De Civitate Christiana), Chapters "
-               "32–43, and Part IV (De Regno Tenebrarum) Chapters "
-               "44–45 in parallel")
+BRICK = 17
+UNITS_BUILT = UNITS_ALL[:48]         # All 47 chapters in parallel
+BRICK_SCOPE = ("front matter and the whole work in parallel: Part I "
+               "(De Homine) — the Introduction and Chapters 1–16 — "
+               "Part II (De Civitate), Chapters 17–31, Part III "
+               "(De Civitate Christiana), Chapters 32–43, and "
+               "Part IV (De Regno Tenebrarum), Chapters 44–47")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -364,6 +371,11 @@ LA_SEAMS = {
     # at 15164; XLV closes the line before XLVI's display (15619).
     "chXLIV": (14386, 15163),
     "chXLV": (15164, 15618),
+    # Brick 17 seams: XLVI's display at 15619, XLVII's at 16038;
+    # XLVII closes the line before the Appendix's first line
+    # (16279, its opening fragment 'APPEN-').
+    "chXLVI": (15619, 16037),
+    "chXLVII": (16038, 16278),
 }
 
 # ----------------------------------------------------------------------
@@ -517,6 +529,15 @@ LA_FURNITURE_BLOCKS = {
     # standing alone as a block ('323 De Regno Tenebrarum.
     # Cap. 45.', heavily garbled as read).
     "3 izj. ut &egnv i eneurarum. v^ap. qy.",
+    # Brick 17, Capvt XLVI: the catchword 'Deo' standing alone
+    # (the word stands at the next leaf's head, 'Deo
+    # substantiae…'); a signature shard with its catchword
+    # ('Liziat*' + 'Rerum', the word whole at the next text
+    # block); and a running head of the Part IV form standing
+    # alone as a block, in plainer type than its fellows.
+    "Deo",
+    "Liziat* 1 1 1 1 Rerum",
+    "321 De Regno Tenebrarum. Cap. 46",
 }
 
 # Leaf-split paragraph openings that carry none of the six
@@ -531,6 +552,22 @@ LA_FURNITURE_BLOCKS = {
 # in the class names that shape, so the fragment is named.
 LA_LEAF_SPLIT_FRAGMENTS = {
     "Aromanisethnicisetiamest, quod Papas sibi sumserunt nomen",
+    # Brick 17, Capvt XLVI: one sentence split across TWO leaf
+    # turns, standing as two consecutive note-shaped fragments
+    # ('…Deum esse Peccati' / 'Authorem, nec debere idco
+    # Peccatorem puniri, concedant tamen' / [signature + head] /
+    # 'Rerum et Actionum causam primam esse Deum…'). The chain
+    # defeats the signatures, which test a single neighbour.
+    "Quod negato Libero Arbitriosequi dicant, Deum esse Peccati",
+    "Authorem, necdebereidco Peccatorem puniri, concedant tamen",
+    # Brick 17, Capvt XLVII: two complete one-sentence
+    # paragraphs the block classifier seated as notes, judged
+    # body by the non-duplication test — their matter (the
+    # exorcisms; the marriage of clergy and Lemures) is carried
+    # nowhere else in their neighbours, where a margin summary
+    # repeats the matter it stands beside (N35).
+    "Per Exorcismos et caeteram Demonologiam populos terrent.",
+    "Neque Lemures neque Clerici uxores ducunt.",
 }
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
@@ -1933,6 +1970,28 @@ def collation_notes(pdf, report):
              "the datum is named, never stretched. A garbled "
              "Part IV head standing as a block is listed as "
              "furniture."),
+            ("N35 — The chapters complete (Brick 17). Capvt "
+             "XLVI–XLVII close the forty-seven; what remains of "
+             "the volume is its Appendix, taken in the final "
+             "brick under N2. Capvt XLVI carries one sentence "
+             "split across two leaf turns, standing as two "
+             "consecutive note-shaped fragments with a signature "
+             "and a head between them and their continuation "
+             "('…Deum esse Peccati' / 'Authorem, nec debere idco "
+             "Peccatorem puniri, concedant tamen' / 'Rerum et "
+             "Actionum causam primam esse Deum…') — seated as "
+             "text by the named list, the signatures testing a "
+             "single neighbour and the chain defeating them. "
+             "Capvt XLVII carries two complete one-sentence "
+             "paragraphs the classifier seated as notes; they "
+             "are judged body by the non-duplication test — a "
+             "margin summary repeats the matter it stands "
+             "beside (so Capvt XXXIII's Esther line stands as a "
+             "note), while these carry matter found nowhere in "
+             "their neighbours: 'Per Exorcismos et caeteram "
+             "Demonologiam populos terrent.' and 'Neque Lemures "
+             "neque Clerici uxores ducunt.' Both are seated as "
+             "text by the named list and recorded here."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
