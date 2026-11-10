@@ -67,7 +67,11 @@ MECHANISM / DOCTRINE -- how this builder works, and why:
           facing form. Brick 9 also corrected the spread
           packer's first-spread capacity (see plan_spreads):
           per-face heading-priced caps, verified to leave the
-          standing spreads of Kapitel 1-8 untouched.
+          standing spreads of Kapitel 1-8 untouched. Brick 10
+          added Kapitel 10 (295 units), carrying at ¶180 the
+          volume's one truncated sentence — the witness's own
+          loss, flagged in a [TN] and carried to the final
+          Apparatus of OCR Loci.
   TOLERANCE  Any step that would change a word of the German body
           fails the edition. Any translation choice that softens,
           omits, or improves the original fails the translation
@@ -150,6 +154,9 @@ BRICK1 = [
     ("kap9", "9. KAPITEL — DIE DEUTSCHE ARBEITERPARTEI",
      "CHAPTER 9 — THE GERMAN WORKERS' PARTY", "9. KAPITEL",
      "CHAPTER 9"),
+    ("kap10", "10. KAPITEL — URSACHEN DES ZUSAMMENBRUCHS",
+     "CHAPTER 10 — CAUSES OF THE COLLAPSE", "10. KAPITEL",
+     "CHAPTER 10"),
 ]
 
 
@@ -566,6 +573,77 @@ TN = {
         "chapter itself keeps; the English supplies the verb "
         "per evident construction, and the German page "
         "prints the sentence as found.",
+    ("kap10", 71):
+        "Printed 'Kriechern und Schliefern': Schliefern for "
+        "Schleichern ('slinkers') — the F-for-L misread "
+        "entered at Kapitel 3, ¶159. Translated per evident "
+        "sense.",
+    ("kap10", 98):
+        "Twice in this paragraph 'hegt' for liegt — the "
+        "hegen-for-liegen class (cf. Kapitel 3, ¶140). "
+        "Translated per evident sense in both places.",
+    ("kap10", 116):
+        "Printed 'fede Halbheit': fede for Jede ('every'), "
+        "the initial letter misread. Translated per evident "
+        "sense.",
+    ("kap10", 120):
+        "A reversed run of the F/L class: printed 'in beiden "
+        "Lällen die Lolgen' for in beiden Fällen die Folgen, "
+        "and 'in Lrage kommen' for in Frage kommen — the L "
+        "standing where the F belongs. Translated per "
+        "evident sense throughout.",
+    ("kap10", 125):
+        "Printed 'in ihrem Fiebesleben' for in ihrem "
+        "Liebesleben, and 'die Taster der Eltern' for die "
+        "Laster der Eltern ('the vices of the parents'). "
+        "Translated per evident sense in both places.",
+    ("kap10", 127):
+        "Printed 'den heben Gott zu bitten': heben for "
+        "lieben ('the dear God'). Translated per evident "
+        "sense.",
+    ("kap10", 137):
+        "Printed 'hegen bleiben': hegen for liegen — 'will "
+        "remain lying' on the way. Translated per evident "
+        "sense.",
+    ("kap10", 169):
+        "Printed 'die darunter am meisten Feidende' for "
+        "Leidende ('the most suffering'), and 'ihre Fage' "
+        "for ihre Frage — which stands again at ¶171 ('in "
+        "der Fage ist'). Translated per evident sense.",
+    ("kap10", 175):
+        "The heading's 'Prostituierang' stands for "
+        "Prostituierung, one letter misread. The German "
+        "page prints it as found; the English renders the "
+        "evident word.",
+    ("kap10", 179):
+        "SOURCE LOCUS. The sentence of this paragraph "
+        "stands in the witness without its completion: "
+        "'Diese scheint im Gegenteil eher eine Feindin "
+        "wahrer Geistes- und Lebenshöhe zu' — and the "
+        "heading unit follows. The secured OCR text itself "
+        "breaks off at 'zu'; the printed book's completion "
+        "(of the form 'sein scheint') does not stand in "
+        "this witness, and whether the loss is the scan's "
+        "or the printing's cannot be decided from it. The "
+        "English therefore carries the fragment as it "
+        "stands, uncompleted; the locus is carried to the "
+        "Apparatus of OCR Loci at the volume's close. "
+        "[Completion UNVERIFIED.]",
+    ("kap10", 218):
+        "Printed 'Der Flumanitätsdusel': Flumanitäts- for "
+        "Humanitätsdusel ('humanity-daze'). Translated per "
+        "evident sense.",
+    ("kap10", 251):
+        "Printed 'der doch ewig nur im Angriff hegt und "
+        "hegen kann': hegt and hegen for liegt and liegen "
+        "— the class entered at Kapitel 3, ¶140. Translated "
+        "per evident sense.",
+    ("kap10", 281):
+        "Printed 'im sonstigen heben' for im sonstigen "
+        "Leben ('in the rest of life') — here and again at "
+        "¶283 ('unserem sonstigen heben'); and at ¶285 'die "
+        "Weichheit der fugend' for der Jugend ('of youth'). "
+        "Translated per evident sense throughout.",
 }
 
 
@@ -1038,8 +1116,8 @@ PREFACE_PARALLEL = [
     "Munich, the fifth, The World War, the sixth, War "
     "Propaganda, the seventh, The Revolution, and the "
     "eighth, Beginning of My Political Activity, and the "
-    "ninth, The German Workers' Party. The chapters "
-    "follow, brick "
+    "ninth, The German Workers' Party, and the tenth, "
+    "Causes of the Collapse. The chapters follow, brick "
     "by brick, in the book's own order; the volume closes with "
     "the Schlusswort in parallel, the Tower Audit entire, the "
     "Glossary, the Apparatus of OCR Loci, the Title Register, "
@@ -1143,7 +1221,10 @@ def contents_page(pdf, toc):
                        "Kapitel 8"),
               "kap9": ("9. Kapitel — Die deutsche "
                        "Arbeiterpartei / Chapter 9 — The "
-                       "German Workers' Party", "Kapitel 9")}
+                       "German Workers' Party", "Kapitel 9"),
+              "kap10": ("10. Kapitel — Ursachen des "
+                        "Zusammenbruchs / Chapter 10 — "
+                        "Causes of the Collapse", "Kapitel 10")}
     for key, _hd, _he, _rd, _re in BRICK1:
         name, short = labels[key]
         entries.append((f"{name} — in parallel", toc.get(key)))
@@ -1155,7 +1236,7 @@ def contents_page(pdf, toc):
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
     pdf.ln(4)
-    para(pdf, "Kapitel 10–12, the Schlusswort in parallel, "
+    para(pdf, "Kapitel 11–12, the Schlusswort in parallel, "
           "the "
               "Tower Audit entire, the Glossary of Translation "
               "Rulings, the Apparatus of OCR Loci, the Title "
@@ -1277,7 +1358,9 @@ def build(toc, folio_total=None, log=None):
               "kap8": "8. Kapitel — Beginn meiner "
                       "politischen Tätigkeit",
               "kap9": "9. Kapitel — Die deutsche "
-                      "Arbeiterpartei"}
+                      "Arbeiterpartei",
+              "kap10": "10. Kapitel — Ursachen des "
+                       "Zusammenbruchs"}
     for key, head_de, head_en, run_de, run_en in BRICK1:
         de_list = german[key]
         en_list = load_translation(key)

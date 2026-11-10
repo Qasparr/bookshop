@@ -209,16 +209,49 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   spread counts; the whole book's census passes clean and
   the two unpaired pages are gone (412 → 410).
 
+- **BRICK 10 — Kapitel 10** ("Ursachen des
+  Zusammenbruchs"): `translations/en-kap10.txt`, **295
+  units one-for-one**; wired in as above; contents
+  closing line moved to "Kapitel 11–12"; preface made
+  cumulative. **13 [TN]s**: Schliefern für Schleichern
+  (¶72); hegt für liegt twice in the newspaper-reader
+  paragraph (¶99); fede für Jede (¶117); the reversed
+  L-run Lällen/Lolgen/Lrage (¶121); Fiebesleben and
+  Taster für Laster (¶126); den heben Gott für lieben
+  (¶128); hegen bleiben (¶138); Feidende/Fage (¶170,
+  ¶171); the heading "Prostituierang" (¶176); **the
+  truncated sentence (¶180)** — the witness's sentence
+  lacks its completion: the secured OCR text itself
+  breaks off at "zu" before the heading "Der
+  Bolschewismus der Kunst" (verified against the raw
+  secured OCR, `../mein-kampf/source/
+  mk-vol1-eher1943-ocr.txt`, line 10473); the English
+  carries the fragment uncompleted, the presumed
+  completion ("sein scheint") is [UNVERIFIED] from this
+  witness, and the locus is carried to the final
+  Apparatus of OCR Loci — the same truncation necessarily
+  stands in the sibling Critical Edition (one source,
+  one loader), flagged for the desk; Flumanitätsdusel
+  (¶219); hegt/hegen (¶252); heben für Leben twice and
+  fugend für Jugend (¶282–285). **PDF now 509 pages.**
+  Verified by census: all 48 Kapitel 10 spreads pair
+  even verso with odd recto at the identical ¶ range,
+  coverage ¶1–295 complete (238 spreads whole-book,
+  zero anomalies; Kapitel 1–9 start pages unchanged,
+  Kapitel 10 opening at p. 412); opening spread
+  (pp. 412–413) rendered and inspected.
+
 ## NEXT
 
-- **BRICK 10 — Kapitel 10** ("Ursachen des
-  Zusammenbruchs"): write `translations/en-kap10.txt`
-  (295 units; German dump already in
-  `work/de-kap10.txt`), add the `("kap10", ...)` 5-tuple
-  and the `labels` entries, move the contents closing
-  line to "Kapitel 11–12", add [TN]s, rebuild, verify by
-  census, commit, push. Then Bricks 11–13 likewise
-  (Kapitel 11–12, one per brick), per ARCHITECTURE §VII.
+- **BRICK 11 — Kapitel 11** ("Volk und Rasse"): write
+  `translations/en-kap11.txt` (241 units; German dump
+  already in `work/de-kap11.txt`), add the
+  `("kap11", ...)` 5-tuple and the `labels` entries,
+  move the contents closing line to "Kapitel 12", add
+  [TN]s (the heaviest load of the volume, per the OPEN
+  FLAG below), rebuild, verify by census, commit, push.
+  Then Brick 12 (Kapitel 12, 246 units) likewise, per
+  ARCHITECTURE §VII.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary
   of Translation Rulings (seeded by the [TN] rulings: Volk,
