@@ -74,18 +74,38 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   identical ¶ range, coverage ¶1–349 complete, no gaps, no
   overlaps, no unit split; sample recto (p. 49) rendered and
   inspected.
+- **BRICK 3 — Kapitel 3** ("Allgemeine politische Betrachtungen
+  aus meiner Wiener Zeit"): `translations/en-kap3.txt`, **420
+  units one-for-one** (counts asserted at build; the volume's
+  largest chapter); wired into the builder's `BRICK1` list and
+  both label tables; contents closing line moved to "Kapitel
+  4–12"; preface made cumulative. **12 [TN]s**: the
+  Parlamentswanzen compound field (¶5); the Führer ruling (¶162
+  — rendered "leader" throughout; the note records that the
+  word stands already four times in Kapitel 2, where no note
+  was set, and that the post-1925 title-sense is not read
+  back); Propaganda at its first occurrence in the volume
+  (¶130); the Goethe locus "Spottgeburt aus Dreck und Feuer"
+  (¶78); the chapter's F→L class (Lührer, Leilschen, Perikies,
+  Lederhändler für Federhändler); Schliefern für Schleichern;
+  hegen/hegt für liegen/liegt (¶140, ¶371); the broken words
+  versäum ten, Grund stein, auszu drücken; Fage für Frage; the
+  defective possessive at "ihr größte Stadt"; the lower-case
+  "zielen". **PDF now 233 pages.** Verified by full running-head
+  census: all 51 Kapitel 3 spreads pair even verso with odd
+  recto at the identical ¶ range, coverage ¶1–420 complete, no
+  gaps, no overlaps, no unit split (107 spreads whole-book,
+  zero anomalies); opening spread (pp. 130–131) and the notes
+  page (p. 232) rendered and inspected.
 
 ## NEXT
 
-- **BRICK 3 — Kapitel 3** ("Allgemeine politische Betrachtungen
-  aus meiner Wiener Zeit"): write `translations/en-kap3.txt`
-  (420 units by the loader — the largest chapter of the volume;
-  it may itself be laid in two sittings of one brick), add the
-  `("kap3", ...)` 5-tuple to the builder's `BRICK1` list, extend
+- **BRICK 4 — Kapitel 4** ("München"): write
+  `translations/en-kap4.txt` (159 units by the loader), add the
+  `("kap4", ...)` 5-tuple to the builder's `BRICK1` list, extend
   both `labels` tables, move the contents closing line to
-  "Kapitel 4–12", add [TN]s (watch first occurrences: Führer,
-  Propaganda, Parlament compounds), rebuild, verify by census,
-  commit, push. Then Bricks 4–13 likewise (Kapitel 4–12, one per
+  "Kapitel 5–12", add [TN]s, rebuild, verify by census, commit,
+  push. Then Bricks 5–13 likewise (Kapitel 5–12, one per
   brick), per ARCHITECTURE §VII.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary

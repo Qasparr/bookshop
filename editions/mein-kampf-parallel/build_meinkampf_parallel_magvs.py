@@ -60,7 +60,9 @@ MECHANISM / DOCTRINE -- how this builder works, and why:
           Preface for the parallel edition, the Translation
           Protocol in brief, contents); Widmung, Vorwort and
           Kapitel 1 in parallel, each followed by its translator's
-          notes and its carried notes.
+          notes and its carried notes. Brick 2 added Kapitel 2
+          (349 units); Brick 3 adds Kapitel 3 (420 units, the
+          volume's largest), each in the same facing form.
   TOLERANCE  Any step that would change a word of the German body
           fails the edition. Any translation choice that softens,
           omits, or improves the original fails the translation
@@ -125,6 +127,10 @@ BRICK1 = [
     ("kap2", "2. KAPITEL — WIENER LEHR- UND LEIDENSJAHRE",
      "CHAPTER 2 — VIENNA YEARS OF LEARNING AND SUFFERING",
      "2. KAPITEL", "CHAPTER 2"),
+    ("kap3", "3. KAPITEL — ALLGEMEINE POLITISCHE "
+     "BETRACHTUNGEN AUS MEINER WIENER ZEIT",
+     "CHAPTER 3 — GENERAL POLITICAL CONSIDERATIONS FROM MY "
+     "VIENNA TIME", "3. KAPITEL", "CHAPTER 3"),
 ]
 
 
@@ -302,6 +308,81 @@ TN = {
         "and is neither narrowed to 'breed' nor widened to "
         "'species'; its period scientific pretension is part of "
         "what the Tower Audit weighs. [First occurrence.]",
+    ("kap3", 4):
+        "Parlamentswanzen ('parliament-bedbugs'): the chapter's "
+        "parliament vocabulary is a compound field — Parlament, "
+        "Parlamentarier ('parliamentarian'), Parlamentarismus "
+        "(the heading at ¶50) — and its invective compounds are "
+        "carried whole into the English, never dissolved into a "
+        "politer periphrasis. The ruling is collected in the "
+        "Glossary. [The compound's first occurrence.]",
+    ("kap3", 41):
+        "Printed 'versäum ten': a word of the witness broken "
+        "across a space (versäumten, 'neglected') — the same "
+        "locus class as Kapitel 1, ¶31. The English translates "
+        "the evident reading; the German page is not emended.",
+    ("kap3", 46):
+        "Printed 'der Grund stein': the word Grundstein "
+        "('foundation stone') broken across a space in the "
+        "witness. Translated per evident sense.",
+    ("kap3", 77):
+        "“Spottgeburt aus Dreck und Feuer” is a quotation — "
+        "Goethe, Faust — carried in the English word for word "
+        "as the author carries it: 'mock-birth out of dirt and "
+        "fire.' The borrowing is the author's; the Audit, not "
+        "the translation, weighs the use he makes of it.",
+    ("kap3", 108):
+        "The F-to-L misread class of this witness (declared at "
+        "Kapitel 2) runs through this stretch: here 'Lührer' "
+        "for Führer, 'Leilschen' for Feilschen ('haggling'), "
+        "'Perikies' for Perikles; and at ¶110 'Lederhändler' "
+        "for Federhändler ('quill-trader'). The German page "
+        "prints each as found; the English translates the "
+        "evident readings.",
+    ("kap3", 129):
+        "Propaganda: the word's first occurrence in the "
+        "volume. It is rendered 'propaganda' throughout, in "
+        "the word's period sense — the organized working upon "
+        "the mass mind, which the author here names as the "
+        "press's office and later chapters raise to a doctrine "
+        "of the movement. The ruling is collected in the "
+        "Glossary. [First occurrence.]",
+    ("kap3", 158):
+        "Printed 'Schliefern': an OCR misread of Schleichern "
+        "('sneaks'). Translated per evident sense.",
+    ("kap3", 161):
+        "Führer: rendered 'leader' throughout the edition, and "
+        "the compounds with it — Führergedanke ('leader-"
+        "thought', the heading at ¶96), Führertum. The word "
+        "stands already four times in Kapitel 2, where no note "
+        "was set; the ruling is stated here, where the chapter "
+        "makes the word's office its subject (the 'free "
+        "election of the leader' in a 'Germanic democracy'), "
+        "and is collected in the Glossary. The title-sense the "
+        "word later acquired is not read back into the text of "
+        "1925.",
+    ("kap3", 170):
+        "Printed 'als ihr größte Stadt': the possessive stands "
+        "defective in the witness (ihre größte Stadt, 'their "
+        "greatest city'). The English translates the evident "
+        "reading; the locus is flagged, not repaired, on the "
+        "German page.",
+    ("kap3", 244):
+        "Printed 'Die Fage in Österreich': an OCR misread of "
+        "Die Frage ('the question'); and at ¶246 the word "
+        "auszudrücken stands broken across a space ('auszu "
+        "drücken'). Translated per evident sense in both "
+        "places.",
+    ("kap3", 285):
+        "Printed 'großen zielen': the noun stands lower-case "
+        "in the witness (großen Zielen, 'great goals') — a "
+        "case fault of the scan. The English translates the "
+        "evident reading.",
+    ("kap3", 370):
+        "Printed 'zu hegen': an OCR misread of zu liegen ('to "
+        "lie') — the same misread stands at ¶140 ('bei ihr "
+        "hegt' for bei ihr liegt). Translated per evident "
+        "sense in both places.",
 }
 
 
@@ -725,8 +806,9 @@ PREFACE_PARALLEL = [
 
     "This volume contains the front matter and the opening "
     "of the book: the Widmung, the Vorwort, the first chapter, "
-    "In the Parents' Home, and the second, Vienna Years of "
-    "Learning and Suffering. The chapters follow, brick "
+    "In the Parents' Home, the second, Vienna Years of "
+    "Learning and Suffering, and the third, General Political "
+    "Considerations from My Vienna Time. The chapters follow, brick "
     "by brick, in the book's own order; the volume closes with "
     "the Schlusswort in parallel, the Tower Audit entire, the "
     "Glossary, the Apparatus of OCR Loci, the Title Register, "
@@ -808,7 +890,12 @@ def contents_page(pdf, toc):
                        "In the Parents' Home", "Kapitel 1"),
               "kap2": ("2. Kapitel — Wiener Lehr- und "
                        "Leidensjahre / Chapter 2 — Vienna Years "
-                       "of Learning and Suffering", "Kapitel 2")}
+                       "of Learning and Suffering", "Kapitel 2"),
+              "kap3": ("3. Kapitel — Allgemeine politische "
+                       "Betrachtungen aus meiner Wiener Zeit / "
+                       "Chapter 3 — General Political "
+                       "Considerations from My Vienna Time",
+                       "Kapitel 3")}
     for key, _hd, _he, _rd, _re in BRICK1:
         name, short = labels[key]
         entries.append((f"{name} — in parallel", toc.get(key)))
@@ -820,7 +907,7 @@ def contents_page(pdf, toc):
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
     pdf.ln(4)
-    para(pdf, "Kapitel 3–12, the Schlusswort in parallel, the "
+    para(pdf, "Kapitel 4–12, the Schlusswort in parallel, the "
               "Tower Audit entire, the Glossary of Translation "
               "Rulings, the Apparatus of OCR Loci, the Title "
               "Register, the Table of Authorities, and the "
@@ -931,7 +1018,9 @@ def build(toc, folio_total=None, log=None):
     contents_page(pdf, toc)
     labels = {"widmung": "Widmung", "vorwort": "Vorwort",
               "kap1": "1. Kapitel — Im Elternhaus",
-              "kap2": "2. Kapitel — Wiener Lehr- und Leidensjahre"}
+              "kap2": "2. Kapitel — Wiener Lehr- und Leidensjahre",
+              "kap3": "3. Kapitel — Allgemeine politische "
+                      "Betrachtungen aus meiner Wiener Zeit"}
     for key, head_de, head_en, run_de, run_en in BRICK1:
         de_list = german[key]
         en_list = load_translation(key)
