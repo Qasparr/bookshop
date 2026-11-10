@@ -77,5 +77,6 @@ All Rights Reserved, Without Prejudice.
 - HUCKLEBERRY FINN (MAGVS), 324 pp, complete and unexpurgated — **$15** · note: HUCK FINN
 - TOM SAWYER (MAGVS) — **$12** · note: TOM SAWYER (building)
 - THE WONDERFUL WIZARD OF OZ (MAGVS) — **$12** · note: OZ (building)
-- LEVIATHAN (MAGVS) — **$21** · note: LEVIATHAN (resuming)
+- LEVIATHAN (MAGVS), 407 leaves — **$21** · note: LEVIATHAN
+- THE ART OF WAR (MAGVS), 121 pp, Giles 1910 complete — **$12** · note: ART OF WAR
 Standing order (his, 2026-11-09 21:19 EST): announce on Facebook as each book finishes.

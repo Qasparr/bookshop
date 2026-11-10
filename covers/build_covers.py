@@ -9,7 +9,7 @@
 # strings, no generative lettering — the press never garbles a title.
 # DOCTRINE: the canonical colours are the mark's law (ruled
 # 2026-11-06): purple the field, gold the word, green the living rule.
-import math, os, random
+import math, os, random, sys
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
@@ -147,10 +147,21 @@ BOOKS = [
      "THOMAS HOBBES", "1651",
      "Hobbes's great engine of 1651: man in the state of nature, the covenant, and the mortal god to whom we owe our peace and defence. The Teacher's Revision (MAGVS) founded 2026 — the Commonwealth weighed chapter by chapter under Scientific Illuminism, its doctrine answered, never silently altered.",
      "“The condition of man… is a condition of war of everyone against everyone.”"),
+    ("artofwar", "THE ART OF WAR", "THE OLDEST MILITARY TREATISE IN THE WORLD",
+     "SUN TZU", "c. 500 BC · GILES 1910",
+     "Thirteen short chapters, twenty-four centuries old, and still the sharpest book on conflict ever written: know the ground, know the force, know yourself — and prize above all the acme of skill, breaking the enemy's resistance without fighting. Lionel Giles's 1910 translation, the scholarly standard for fifty years, stands complete here with his Introduction and critical notes. The ancient text and the translation are public domain, unaltered in substance.",
+     "“All warfare is based on deception.”"),
 ]
 
+# Strike filter: with slug arguments, strike only those covers; with
+# none, strike the whole shelf. The press is deterministic (the
+# leather grain seeds itself), so a re-struck cover is byte-stable
+# in content either way.
+only = sys.argv[1:]
 for slug, title, sub, author, year, syn, pull in BOOKS:
+    if only and slug not in only:
+        continue
     front(slug, title, sub, author, year)
     back(slug, title, syn, pull)
     print("struck:", slug)
-print("ALL COVERS STRUCK")
+print("COVERS STRUCK:", ", ".join(only) if only else "ALL")
