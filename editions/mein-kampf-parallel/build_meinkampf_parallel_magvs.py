@@ -133,6 +133,8 @@ BRICK1 = [
      "VIENNA TIME", "3. KAPITEL", "CHAPTER 3"),
     ("kap4", "4. KAPITEL — MÜNCHEN", "CHAPTER 4 — MUNICH",
      "4. KAPITEL", "CHAPTER 4"),
+    ("kap5", "5. KAPITEL — DER WELTKRIEG",
+     "CHAPTER 5 — THE WORLD WAR", "5. KAPITEL", "CHAPTER 5"),
 ]
 
 
@@ -434,6 +436,51 @@ TN = {
         "theoretische Literatur. The German page prints each "
         "as found; the English translates the evident readings "
         "throughout.",
+    ("kap5", 6):
+        "Printed 'sich wieder zuzückzuverlieren': a doubled-"
+        "syllable garble of sich wieder zurückzuverlieren ('to "
+        "lose itself back again'). Translated per evident "
+        "sense.",
+    ("kap5", 14):
+        "Printed 'dem Schicksal seinen kauf zu lassen': kauf "
+        "for Lauf — the idiom is dem Schicksal seinen Lauf "
+        "lassen, 'to let fate have its course'. Translated "
+        "per evident sense.",
+    ("kap5", 16):
+        "Printed 'der günstigen Stunden des Fosschlagens': "
+        "Fosschlagens for Losschlagens ('of striking loose'), "
+        "an F-for-L misread of the class this witness carries "
+        "throughout. Translated per evident sense.",
+    ("kap5", 17):
+        "Printed 'an der Fage': Fage for Frage, as at Kapitel "
+        "3, ¶245. Translated per evident sense.",
+    ("kap5", 40):
+        "Printed twice in this paragraph 'Fiedes' and 'Fied' "
+        "for Liedes and Lied ('the sounds of a song... the "
+        "song also reached us'), F-for-L misreads. Translated "
+        "per evident sense.",
+    ("kap5", 42):
+        "Printed 'des Regiments Fist': Fist for List. The "
+        "author's own regiment — the Bavarian Reserve Infantry "
+        "Regiment named for its commander, Oberst List — is a "
+        "matter of record; a name is a fact, and the house's "
+        "standing ruling (Kapitel 2, ¶196) restores the fact in "
+        "the English while the German page prints the witness "
+        "as found.",
+    ("kap5", 80):
+        "Printed 'allein hegt die allererste Voraussetzung': "
+        "hegt for liegt, the hegen-for-liegen misread already "
+        "entered at Kapitel 3, ¶140, and Kapitel 4, ¶5. "
+        "Translated per evident sense.",
+    ("kap5", 89):
+        "Printed 'stürmischem E rohe rungs willen': the word "
+        "Eroberungswillen ('will-to-conquest') broken by the "
+        "scan into spaced fragments. Translated as the evident "
+        "word.",
+    ("kap5", 94):
+        "Printed 'die Dummheit der Fügner': Fügner for Lügner "
+        "('liars'), an F-for-L misread. Translated per evident "
+        "sense.",
 }
 
 
@@ -859,8 +906,9 @@ PREFACE_PARALLEL = [
     "of the book: the Widmung, the Vorwort, the first chapter, "
     "In the Parents' Home, the second, Vienna Years of "
     "Learning and Suffering, the third, General Political "
-    "Considerations from My Vienna Time, and the fourth, "
-    "Munich. The chapters follow, brick "
+    "Considerations from My Vienna Time, the fourth, "
+    "Munich, and the fifth, The World War. The chapters "
+    "follow, brick "
     "by brick, in the book's own order; the volume closes with "
     "the Schlusswort in parallel, the Tower Audit entire, the "
     "Glossary, the Apparatus of OCR Loci, the Title Register, "
@@ -949,7 +997,9 @@ def contents_page(pdf, toc):
                        "Considerations from My Vienna Time",
                        "Kapitel 3"),
               "kap4": ("4. Kapitel — München / Chapter 4 — "
-                       "Munich", "Kapitel 4")}
+                       "Munich", "Kapitel 4"),
+              "kap5": ("5. Kapitel — Der Weltkrieg / Chapter 5 "
+                       "— The World War", "Kapitel 5")}
     for key, _hd, _he, _rd, _re in BRICK1:
         name, short = labels[key]
         entries.append((f"{name} — in parallel", toc.get(key)))
@@ -961,7 +1011,7 @@ def contents_page(pdf, toc):
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
     pdf.ln(4)
-    para(pdf, "Kapitel 5–12, the Schlusswort in parallel, the "
+    para(pdf, "Kapitel 6–12, the Schlusswort in parallel, the "
               "Tower Audit entire, the Glossary of Translation "
               "Rulings, the Apparatus of OCR Loci, the Title "
               "Register, the Table of Authorities, and the "
@@ -1075,7 +1125,8 @@ def build(toc, folio_total=None, log=None):
               "kap2": "2. Kapitel — Wiener Lehr- und Leidensjahre",
               "kap3": "3. Kapitel — Allgemeine politische "
                       "Betrachtungen aus meiner Wiener Zeit",
-              "kap4": "4. Kapitel — München"}
+              "kap4": "4. Kapitel — München",
+              "kap5": "5. Kapitel — Der Weltkrieg"}
     for key, head_de, head_en, run_de, run_en in BRICK1:
         de_list = german[key]
         en_list = load_translation(key)

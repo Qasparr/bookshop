@@ -115,14 +115,31 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   whole-book, zero anomalies); opening spread (pp. 234–235)
   rendered and inspected.
 
+- **BRICK 5 — Kapitel 5** ("Der Weltkrieg"):
+  `translations/en-kap5.txt`, **110 units one-for-one**;
+  wired in as above; contents closing line moved to
+  "Kapitel 6–12"; preface made cumulative. **9 [TN]s**: the
+  Regiment List name-locus ("Fist" for List, restored under
+  the house's name ruling, cf. Kapitel 2 ¶196); the F-for-L
+  class running through the chapter (Fage, Fosschlagens,
+  Fiedes/Fied, Fügner); kauf for Lauf in the fate idiom;
+  the doubled-syllable garble "zuzückzuverlieren"; the
+  broken word "E rohe rungs willen" (Eroberungswillen);
+  hegt for liegt again (¶81). **PDF now 322 pages.** Verified
+  by census: all 17 Kapitel 5 spreads pair even verso with
+  odd recto at the identical ¶ range, coverage ¶1–110
+  complete, no gaps, no overlaps (150 spreads whole-book,
+  zero anomalies); opening spread (pp. 288–289) rendered and
+  inspected.
+
 ## NEXT
 
-- **BRICK 5 — Kapitel 5** ("Der Weltkrieg"): write
-  `translations/en-kap5.txt` (110 units by the loader), add the
-  `("kap5", ...)` 5-tuple to the builder's `BRICK1` list, extend
+- **BRICK 6 — Kapitel 6** ("Kriegpropaganda"): write
+  `translations/en-kap6.txt` (71 units by the loader), add the
+  `("kap6", ...)` 5-tuple to the builder's `BRICK1` list, extend
   both `labels` tables, move the contents closing line to
-  "Kapitel 6–12", add [TN]s, rebuild, verify by census, commit,
-  push. Then Bricks 6–13 likewise (Kapitel 6–12, one per
+  "Kapitel 7–12", add [TN]s, rebuild, verify by census, commit,
+  push. Then Bricks 7–13 likewise (Kapitel 7–12, one per
   brick), per ARCHITECTURE §VII.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary
