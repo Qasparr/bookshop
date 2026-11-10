@@ -181,16 +181,44 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   zero anomalies); opening spread (pp. 378–379) rendered
   and inspected.
 
+- **BRICK 9 — Kapitel 9** ("Die deutsche Arbeiterpartei"):
+  `translations/en-kap9.txt`, **48 units one-for-one**;
+  wired in as above; contents closing line moved to
+  "Kapitel 10–12"; preface made cumulative. **1 [TN]**: the
+  verb-less Harrer/Drexler sentence (¶23). **PDF now 410
+  pages.** Verified by census: all 7 Kapitel 9 spreads pair
+  even verso with odd recto at the identical ¶ range,
+  coverage ¶1–48 complete (190 spreads whole-book, zero
+  anomalies); opening spread (pp. 396–397) rendered and
+  inspected.
+  **BUILDER CORRECTION, same brick (marked, not
+  vanished):** the first build of this brick FAILED the
+  census — Kapitel 9's opening spread spilled one German
+  line onto an unpaired page and left a blank recto pair.
+  Cause found in `plan_spreads`: the first-spread title
+  allowance (a flat 30 mm) was applied only while packing
+  the spread's FIRST unit; the checks for units 2..n fell
+  back to full-page capacity, and Kapitel 9's first spread
+  packed to a measured 230.0 mm of German against a true
+  first-page capacity of 222. The packer now prices the
+  heading per face (8 mm per heading line + 3 mm after,
+  less the 1.4–2.0 mm measure bias observed on standing
+  pages) and holds the reduced caps for every unit of the
+  first spread. Proof of non-invasion: after the fix,
+  Kapitel 1–8 keep their exact standing start pages and
+  spread counts; the whole book's census passes clean and
+  the two unpaired pages are gone (412 → 410).
+
 ## NEXT
 
-- **BRICK 9 — Kapitel 9** ("Die deutsche Arbeiterpartei"):
-  write `translations/en-kap9.txt` (48 units; German dump
-  already in `work/de-kap9.txt`), add the `("kap9", ...)`
-  5-tuple and the `labels` entries, move the contents
-  closing line to "Kapitel 10–12", add [TN]s, rebuild,
-  verify by census, commit, push. Then Bricks 10–13
-  likewise (Kapitel 10–12, one per brick), per
-  ARCHITECTURE §VII.
+- **BRICK 10 — Kapitel 10** ("Ursachen des
+  Zusammenbruchs"): write `translations/en-kap10.txt`
+  (295 units; German dump already in
+  `work/de-kap10.txt`), add the `("kap10", ...)` 5-tuple
+  and the `labels` entries, move the contents closing
+  line to "Kapitel 11–12", add [TN]s, rebuild, verify by
+  census, commit, push. Then Bricks 11–13 likewise
+  (Kapitel 11–12, one per brick), per ARCHITECTURE §VII.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary
   of Translation Rulings (seeded by the [TN] rulings: Volk,

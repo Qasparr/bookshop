@@ -61,8 +61,13 @@ MECHANISM / DOCTRINE -- how this builder works, and why:
           Protocol in brief, contents); Widmung, Vorwort and
           Kapitel 1 in parallel, each followed by its translator's
           notes and its carried notes. Brick 2 added Kapitel 2
-          (349 units); Brick 3 adds Kapitel 3 (420 units, the
-          volume's largest), each in the same facing form.
+          (349 units); Brick 3 added Kapitel 3 (420 units, the
+          volume's largest); Bricks 4-9 added Kapitel 4-9 (159,
+          110, 71, 136, 49 and 48 units), each in the same
+          facing form. Brick 9 also corrected the spread
+          packer's first-spread capacity (see plan_spreads):
+          per-face heading-priced caps, verified to leave the
+          standing spreads of Kapitel 1-8 untouched.
   TOLERANCE  Any step that would change a word of the German body
           fails the edition. Any translation choice that softens,
           omits, or improves the original fails the translation
@@ -142,6 +147,9 @@ BRICK1 = [
     ("kap8", "8. KAPITEL — BEGINN MEINER POLITISCHEN "
      "TÄTIGKEIT", "CHAPTER 8 — BEGINNING OF MY POLITICAL "
      "ACTIVITY", "8. KAPITEL", "CHAPTER 8"),
+    ("kap9", "9. KAPITEL — DIE DEUTSCHE ARBEITERPARTEI",
+     "CHAPTER 9 — THE GERMAN WORKERS' PARTY", "9. KAPITEL",
+     "CHAPTER 9"),
 ]
 
 
@@ -548,6 +556,16 @@ TN = {
         "— the hegen-for-liegen misread entered at Kapitel "
         "3, ¶140. Translated per evident sense in both "
         "places.",
+    ("kap9", 22):
+        "The sentence stands in this witness without its "
+        "second verb: 'Der Vorsitzende der "
+        "„Reichsorganisation“ war ein Herr Harrer, der von "
+        "München Anton Drexler' — the chairman of the Munich "
+        "organization is named without a 'was'. The office "
+        "and the man are both matters of the record the "
+        "chapter itself keeps; the English supplies the verb "
+        "per evident construction, and the German page "
+        "prints the sentence as found.",
 }
 
 
@@ -684,14 +702,57 @@ def split_unit(de, en, capacity, log, label):
     return out
 
 
+def _head_lines(text):
+    """Lines the chapter heading occupies at its measure: the
+    scratch document set to the heading font, one multi_cell at
+    the heading's line height (8), counted off the pen's
+    travel. The heading is the first spread's only furniture
+    beyond the running head, so its line count prices that
+    spread's lost capacity exactly."""
+    global _scratch
+    if _scratch is None:
+        _scratch = new_book()
+        _scratch.add_page()
+    pdf = _scratch
+    pdf.set_font("dejavu", "B", 13.5)
+    y0 = pdf.get_y()
+    pdf.multi_cell(0, 8, text, align="C",
+                   new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    lines = round((pdf.get_y() - y0) / 8)
+    if pdf.get_y() > pdf.h - 40:
+        pdf.add_page()
+    return max(lines, 1)
+
+
 def plan_spreads(key, de_list, en_list, log):
     """Greedy spread packing (ARCHITECTURE SSIII.2): a spread is a
     list of unit indices; both pages of a spread always carry the
     identical range. Returns [(indices, [sub-paras or None...])] --
     in Brick 1 no unit splits, so sub-paras are the units
-    themselves; the split path rewrites the unit stream first."""
-    capacity_first = PAGE_BOTTOM - CONTENT_TOP - 30.0   # title block
+    themselves; the split path rewrites the unit stream first.
+
+    FIRST-SPREAD CAPACITY (corrected at Brick 9): a chapter's
+    first spread also carries the chapter heading -- 8 mm per
+    heading line plus 3 mm after it, per face, since the two
+    headings wrap independently. The packer originally priced
+    that furniture with a flat 30 mm allowance applied only to
+    the spread's first unit: the accumulation checks for units
+    2..n silently fell back to the full-page capacity, and
+    Kapitel 9's first spread, packed to a measured 230.0 mm of
+    German against a true 222, spilled one line onto an
+    unpaired page and left its recto's pair blank. The caps are
+    now per-face and hold for every unit of the first spread.
+    The 2 mm measure bias is observed, not hoped: measure()
+    over-reads a full standing page by 1.4-2.0 mm (Kapitel 3's
+    first spread measures 215.6 against a true 214 and renders
+    inside it), so each face's allowance is its heading cost
+    less that bias. Verified non-invasive: the first spreads
+    of Kapitel 1-8 pack identically under the corrected caps."""
     capacity = PAGE_BOTTOM - CONTENT_TOP
+    heads = {k: (hd, he) for k, hd, he, _rd, _re in BRICK1}
+    head_de, head_en = heads[key]
+    cap_de_first = capacity - (_head_lines(head_de) * 8 + 1)
+    cap_en_first = capacity - (_head_lines(head_en) * 8 + 1)
     units = list(zip(de_list, en_list))
     # Pre-split any unit that cannot stand alone on a fresh page.
     stream = []
@@ -704,13 +765,13 @@ def plan_spreads(key, de_list, en_list, log):
             stream.append((i, (de, en)))
     spreads, cur, h_de, h_en = [], [], 0.0, 0.0
     for idx, (de, en) in stream:
-        cap = capacity_first if not spreads and not cur else capacity
+        cap_de = cap_de_first if not spreads else capacity
+        cap_en = cap_en_first if not spreads else capacity
         hd, he = measure(de), measure(en)
-        if cur and (h_de + hd > cap or h_en + he > cap):
+        if cur and (h_de + hd > cap_de or h_en + he > cap_en):
             spreads.append(cur)
             cur, h_de, h_en = [], 0.0, 0.0
-            cap = capacity
-            assert hd <= cap and he <= cap, \
+            assert hd <= capacity and he <= capacity, \
                 f"{key} ¶{idx + 1} exceeds a fresh page"
         cur.append((idx, de, en))
         h_de += hd
@@ -976,8 +1037,9 @@ PREFACE_PARALLEL = [
     "Considerations from My Vienna Time, the fourth, "
     "Munich, the fifth, The World War, the sixth, War "
     "Propaganda, the seventh, The Revolution, and the "
-    "eighth, Beginning of My Political Activity. The "
-    "chapters follow, brick "
+    "eighth, Beginning of My Political Activity, and the "
+    "ninth, The German Workers' Party. The chapters "
+    "follow, brick "
     "by brick, in the book's own order; the volume closes with "
     "the Schlusswort in parallel, the Tower Audit entire, the "
     "Glossary, the Apparatus of OCR Loci, the Title Register, "
@@ -1078,7 +1140,10 @@ def contents_page(pdf, toc):
               "kap8": ("8. Kapitel — Beginn meiner "
                        "politischen Tätigkeit / Chapter 8 — "
                        "Beginning of My Political Activity",
-                       "Kapitel 8")}
+                       "Kapitel 8"),
+              "kap9": ("9. Kapitel — Die deutsche "
+                       "Arbeiterpartei / Chapter 9 — The "
+                       "German Workers' Party", "Kapitel 9")}
     for key, _hd, _he, _rd, _re in BRICK1:
         name, short = labels[key]
         entries.append((f"{name} — in parallel", toc.get(key)))
@@ -1090,7 +1155,8 @@ def contents_page(pdf, toc):
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
     pdf.ln(4)
-    para(pdf, "Kapitel 9–12, the Schlusswort in parallel, the "
+    para(pdf, "Kapitel 10–12, the Schlusswort in parallel, "
+          "the "
               "Tower Audit entire, the Glossary of Translation "
               "Rulings, the Apparatus of OCR Loci, the Title "
               "Register, the Table of Authorities, and the "
@@ -1209,7 +1275,9 @@ def build(toc, folio_total=None, log=None):
               "kap6": "6. Kapitel — Kriegspropaganda",
               "kap7": "7. Kapitel — Die Revolution",
               "kap8": "8. Kapitel — Beginn meiner "
-                      "politischen Tätigkeit"}
+                      "politischen Tätigkeit",
+              "kap9": "9. Kapitel — Die deutsche "
+                      "Arbeiterpartei"}
     for key, head_de, head_en, run_de, run_en in BRICK1:
         de_list = german[key]
         en_list = load_translation(key)
