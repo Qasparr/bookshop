@@ -163,11 +163,21 @@ UNITS_ALL = [
      "CAPVT XI — De Varietate Morum"),
     ("chXII", "CHAPTER XII — Of Religion",
      "CAPVT XII — De Religione"),
+    ("chXIII", "CHAPTER XIII — Of the Natural Condition of Mankind",
+     "CAPVT XIII — De Conditione generis Humani quantum attinet "
+     "ad Felicitatem praesentis vitae"),
+    ("chXIV", "CHAPTER XIV — Of the First and Second Natural Laws, "
+     "and of Contracts",
+     "CAPVT XIV — De Lege Naturae prima et fundamentali"),
+    ("chXV", "CHAPTER XV — Of Other Laws of Nature",
+     "CAPVT XV — De caeteris Legibus Naturae"),
+    ("chXVI", "CHAPTER XVI — Of Persons, Authors, and Things "
+     "Personated", "CAPVT XVI — De Personis et Authoribus"),
 ]
-BRICK = 4
-UNITS_BUILT = UNITS_ALL[:13]         # through Part I, Chapter 12
-BRICK_SCOPE = ("front matter, the Introduction, and Part I, "
-               "Chapters 1–12 in parallel")
+BRICK = 5
+UNITS_BUILT = UNITS_ALL[:17]         # Part I complete
+BRICK_SCOPE = ("front matter and the whole of Part I (De Homine): "
+               "the Introduction and Chapters 1–16 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -184,7 +194,11 @@ LA_SEAMS = {
     "chIX": (2206, 2265),
     "chX": (2266, 2595),
     "chXI": (2596, 2850),
-    "chXII": (2851, 3261),
+    "chXII": (2851, 3260),
+    "chXIII": (3261, 3420),
+    "chXIV": (3421, 3727),
+    "chXV": (3728, 4101),
+    "chXVI": (4102, 4253),
 }
 
 # ----------------------------------------------------------------------
@@ -269,7 +283,9 @@ LA_REPAIRS = {
     "mwes": "mores",            # Capvt XI ¶1: 'Per Mores intelligo'
     "prajsentis": "praesentis", # Capvt XI: ſ read as j
     "scelicitatem": "felicitatem",  # Capvt XI: F read as Sc
-    "sructus": "fructus",       # Capvt XII ¶1: f read as s
+    "ixjs": "ius",              # Capvt XIV ¶1: drop-cap I + 'us'
+    # (Capvt XII's 'fructus' needed no repair: the fru- stem joined
+    # the genuine-f protection table at Brick 5.)
 }
 
 # Phrase-level repairs (2): fusions spanning a word boundary that no
@@ -429,7 +445,7 @@ LA_PROTECT_STEMS = (
     "fid", "fili", "filu", "final", "finis", "finit", "finem", "firm",
     "fix", "flam", "flor", "fluct", "fluid", "fore", "form", "fort",
     "foss", "fue", "fui", "fut", "fulg", "fund", "funct", "frequen",
-    "fret",
+    "fret", "fru", "frat", "frau", "frag", "frang", "fren", "front",
 )
 # Medial genuine-f stems (assimilation and facio-compounds): a token
 # containing one of these keeps the f inside the stem.
@@ -1235,6 +1251,26 @@ def collation_notes(pdf, report):
              "Manners'. The edition's heading follows the chapter "
              "display; all three forms stand recorded here, none "
              "harmonized."),
+            ("N18 — Part I closes (Brick 5). With Capvt XVI the "
+             "parallel text carries the whole of Pars Prima, De "
+             "Homine — the Introduction and sixteen chapters — in "
+             "both tongues. One correction of the desk's own "
+             "record: Capvt XII's 'fructus' was announced at Brick "
+             "4 as a listed repair; it is in fact carried by the "
+             "genuine-f protection table (the fru- stem), extended "
+             "at this brick together with frat-, frau-, frag-, "
+             "frang-, fren-, and front-. "
+             "The opening leaves of Capvt XV and Capvt XVI carry "
+             "the decorated-initial garble more heavily than most; "
+             "their first paragraphs stand as read, garble and "
+             "all, under the residue rule — the English faces carry "
+             "the sense, and the loci are flagged here rather than "
+             "adjudicated. Capvt XIV's first word ('Ius') is "
+             "restored as a listed repair, its drop-cap initial "
+             "having fused. Part II, De Civitate, "
+             "opens at Capvt XVII in the next brick; the Latin "
+             "volume seats a part title there ('PARS SECUNDA / DE "
+             "CIVITATE') as it did at the first, recorded at N1."),
             ("N13 — Drift and residue are cumulative. N7's drift "
              "table and N8's residue count are regenerated at every "
              "brick over the whole text built so far; their figures "
