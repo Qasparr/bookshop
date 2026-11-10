@@ -89,4 +89,52 @@ of translation rulings and the OCR-loci apparatus. It alters
 nothing in the German/English parallel body, which proceeds
 exactly as briefed.
 
+---
+
+## AMENDMENT — THE FOUNDER'S FORM RULING (2026-11-10, 17:18 EST)
+
+The founder ruled on the rights posture of this register, in his
+own words:
+
+> **"No ARR. In authority of the Living Man, standing in his
+> Reservation."**
+
+APPLIED, as the desk reads it, provisionally and as HIS form:
+wherever this register frames the rights posture of the house,
+the house's standing is stated in the founder's form — **in the
+authority of the Living Man, standing in his Reservation of
+rights, without prejudice** — and not as a bare corporate claim
+under the abbreviation "ARR."
+
+WHAT STANDS MARKED. The head matter of this entry, as filed
+earlier the same day, carries the house's older standing form:
+
+> "Authorship attributed exclusively to Johnathan 'Qasparr'
+> Monroe (Greek, -ARR, All Rights Reserved, Without Prejudice)."
+> — and the Flagpole of Claim and Coinage in the same terms.
+
+That wording is PRESERVED above, unaltered, and is marked by this
+amendment as SUPERSEDED IN FORM for this register: where the two
+forms differ, the founder's form governs the reading — the claim,
+where any is made, is the Living Man's own, standing in his
+Reservation of rights, without prejudice. Nothing is deleted;
+nothing is vanished; the superseded form stands in the record
+under this mark, by the house's rule that corrections are dated
+and visible.
+
+WHAT DOES NOT CHANGE. The copyright discipline of this entry,
+and in particular the **[UNVERIFIED]** flag on the status of the
+Manabe Ryōichi translation (Kōfūkan, 1942), stands EXACTLY as
+filed. That flag records a fact (and an unresolved one) about a
+third party's estate; it is not a claim of this house, and the
+founder's form ruling does not touch it. The citation-only
+discipline — no text of any Japanese translation reproduced
+anywhere in this edition — likewise stands unchanged.
+
+CARRY-FORWARD. The same form is carried into the edition's front
+matter in Brick 1: the parallel edition states the house's
+rights posture in the founder's words, in the authority of the
+Living Man, standing in his Reservation of rights, without
+prejudice.
+
 93 — Live, Love, and let Love, Live.
