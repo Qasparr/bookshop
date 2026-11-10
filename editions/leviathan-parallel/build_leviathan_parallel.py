@@ -228,13 +228,21 @@ UNITS_ALL = [
      "Angel, and Inspiration in the Books of Holy Scripture",
      "CAPVT XXXIV — De Significatione quam habent in Scripturis "
      "Sacris Vocabula Spiritus, Angelus, Inspiratio"),
+    ("chXXXV", "CHAPTER XXXV — Of the Signification in Scripture of "
+     "Kingdome of God, of Holy, Sacred, and Sacrament",
+     "CAPVT XXXV — De Significatione in Scripturis Sacris "
+     "Vocabulorum Regnum Dei, Sanctum, Sacrum et Sacramentum"),
+    ("chXXXVI", "CHAPTER XXXVI — Of the Word of God, and of "
+     "Prophets", "CAPVT XXXVI — De Verbo Dei et Prophetis"),
+    ("chXXXVII", "CHAPTER XXXVII — Of Miracles, and Their Use",
+     "CAPVT XXXVII — De Miraculis et eorum Usu"),
 ]
-BRICK = 11
-UNITS_BUILT = UNITS_ALL[:35]         # Parts I–II; Part III to XXXIV
+BRICK = 12
+UNITS_BUILT = UNITS_ALL[:38]         # Parts I–II; Part III to XXXVII
 BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
                "Introduction and Chapters 1–16 — the whole of "
                "Part II (De Civitate), Chapters 17–31, and Part III "
-               "(De Civitate Christiana) Chapters 32–34 in parallel")
+               "(De Civitate Christiana) Chapters 32–37 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -298,6 +306,11 @@ LA_SEAMS = {
     "chXXXII": (8736, 8886),
     "chXXXIII": (8887, 9199),
     "chXXXIV": (9200, 9564),
+    # Brick 12 seams: XXXV's display at 9565, XXXVI's at 9778,
+    # XXXVII's at 10244; XXXVII closes before XXXVIII's (10467).
+    "chXXXV": (9565, 9777),
+    "chXXXVI": (9778, 10243),
+    "chXXXVII": (10244, 10466),
 }
 
 # ----------------------------------------------------------------------
@@ -402,6 +415,23 @@ LA_FURNITURE_BLOCKS = {
     # text block; it is the press's furniture, listed here as
     # such. The leaf's catchword and text stand whole.
     '64 ®\'e Homine. Cap. 13."',
+    # Brick 12 (Part III): a signature shard with its catchword
+    # at a leaf turn in Capvt XXXV ('Leviat.' misread + gathering
+    # letters + 'in', the next leaf's first word), and two
+    # running heads of the Part III form standing alone as
+    # blocks (Capvt XXXV's '194 … Cap. 36.' interleave and
+    # Capvt XXXVII's '208 … Cap. 37.') — the heads' chapters and
+    # leaves are the press's furniture (N30).
+    "Levtat, c c c c in",
+    "194 De Civitate chrisliana. Cap. $6.",
+    "20 8 De Civitate chrisliana. • Cap. $&.",
+    # Brick 12, Capvt XXXVII: the catchword 'Fidori' (the press's
+    # 'Victori' misread) standing alone before the leaf's head;
+    # the word stands at the next paragraph's head (N30).
+    "Fidori",
+    # Brick 12, Capvt XXXVI: the catchword shard '&de' — the
+    # next leaf's opening '& de' read in the foot of the last.
+    "&de",
 }
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
@@ -843,6 +873,21 @@ def clean_latin_lines(lines):
                         "eadem", "illo", "illa"}
         _last_word = (b.get("note", "").rstrip(".,;:!? ")
                       .split() or [""])[-1].lower()
+        # Brick 12, the fifth signature: the continuation across
+        # the leaf opens with the conjunction '&' (Capvt XXXVI's
+        # '…Uniuscujusque ergo hominis Christiani,' / '& de
+        # salute animae suae solliciti interest…') — no paragraph
+        # in this book opens with '&' except across a leaf turn.
+        # The sixth signature is the mirror of the first four:
+        # the fragment ENDS the sentence the text block before it
+        # left unfinished (Capvt XXXV's '…Sanctum enim in Regno'
+        # / 'Dei, respondet vocabulo Publicum, in Civitatibus
+        # humanis.') — it carries the terminal stop the block
+        # before it lacks.
+        _prev_unfinished = (
+            rejoined and "text" in rejoined[-1]
+            and rejoined[-1]["text"].rstrip()[-1:]
+            not in (".", "!", "?", "…", "»", ")", '"'))
         if ("note" in b and (b["note"].endswith("-")
                 or (b["note"][-1] not in ".!?"
                     and idx + 1 < len(out)
@@ -852,7 +897,13 @@ def clean_latin_lines(lines):
                          or (len(b["note"]) >= 25
                              and out[idx + 1]["text"][:1].islower())
                          or (len(b["note"]) >= 25
-                             and _last_word in _frag_enders))))):
+                             and _last_word in _frag_enders)
+                         or (len(b["note"]) >= 25
+                             and out[idx + 1]["text"]
+                             .startswith("&"))))
+                or (len(b.get("note", "")) >= 25
+                    and b.get("note", "").endswith(".")
+                    and _prev_unfinished))):
             b = {"text": b["note"]}
         if (rejoined and "text" in b and "text" in rejoined[-1]
                 and rejoined[-1]["text"]
@@ -1701,6 +1752,29 @@ def collation_notes(pdf, report):
              "Brick 5, beside its own leaf's catchword; both are "
              "furniture and are now listed as such. No word of "
              "the chapter is touched."),
+            ("N30 — Capvt XXXV–XXXVII (Brick 12), and the measure "
+             "of Part III. Two further leaf-split signatures join "
+             "the rejoin class: the fifth, a fragment whose "
+             "continuation opens with '&' (Capvt XXXVI's close: "
+             "'…Uniuscujusque ergo hominis Christiani,' / '& de "
+             "salute animae suae solliciti interest…', its "
+             "catchword shard '&de' listed); the sixth, the "
+             "mirror shape — a fragment carrying the terminal "
+             "stop of the sentence the block before it left "
+             "unfinished (Capvt XXXV: '…Sanctum enim in Regno' / "
+             "'Dei, respondet vocabulo Publicum, in Civitatibus "
+             "humanis.'). One earlier block converts under the "
+             "sixth signature and is judged a severed tail, as "
+             "read: Capvt VI's '…cepimus; …religio.' A signature "
+             "shard and two standing heads of the Part III form "
+             "are listed as furniture. Measured across the part "
+             "so far, the Latin runs at 0.51–0.55 of the "
+             "English's word count, chapter by chapter without "
+             "exception — against 0.61–0.71 in Part I: the 1668 "
+             "text is a condensed redaction throughout, and in "
+             "this part uniformly so. The fact is printed, not "
+             "harmonized; the facing is by paragraph, and the "
+             "drift figures at N7 carry it chapter by chapter."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
