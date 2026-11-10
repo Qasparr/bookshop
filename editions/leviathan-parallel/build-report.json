@@ -1,17 +1,17 @@
 {
- "repairs_applied": 64,
- "drift_text": "INTRODUCTIO: English 9 paragraph groups, Latin 8; paired 8, unpaired tail 1. CAPVT I: English 5 paragraph groups, Latin 7; paired 5, unpaired tail 2. CAPVT II: English 10 paragraph groups, Latin 13; paired 10, unpaired tail 3. CAPVT III: English 12 paragraph groups, Latin 15; paired 12, unpaired tail 3. CAPVT IV: English 25 paragraph groups, Latin 29; paired 25, unpaired tail 4. CAPVT V: English 22 paragraph groups, Latin 23; paired 22, unpaired tail 1. CAPVT VI: English 60 paragraph groups, Latin 64; paired 60, unpaired tail 4. CAPVT VII: English 7 paragraph groups, Latin 9; paired 7, unpaired tail 2. CAPVT VIII: English 27 paragraph groups, Latin 37; paired 27, unpaired tail 10. CAPVT IX: English 45 paragraph groups, Latin 10; paired 10, unpaired tail 35. CAPVT X: English 51 paragraph groups, Latin 53; paired 51, unpaired tail 2. CAPVT XI: English 28 paragraph groups, Latin 31; paired 28, unpaired tail 3. CAPVT XII: English 32 paragraph groups, Latin 41; paired 32, unpaired tail 9. CAPVT XIII: English 15 paragraph groups, Latin 16; paired 15, unpaired tail 1. CAPVT XIV: English 37 paragraph groups, Latin 38; paired 37, unpaired tail 1. CAPVT XV: English 49 paragraph groups, Latin 47; paired 47, unpaired tail 2. CAPVT XVI: English 20 paragraph groups, Latin 20; paired 20, unpaired tail 0.",
- "residue_text": "23 garbled or unresolved tokens stand across Brick 5's Latin (20 distinct forms: afrkiamur, ccmpcfta, effecl, efficut, eflk, fa, facli, fadu, fen, fin, firaul, fj, fme, forie, fra, frry, ft, iutef, mentafem, recluruseft).",
+ "repairs_applied": 68,
+ "drift_text": "INTRODUCTIO: English 9 paragraph groups, Latin 8; paired 8, unpaired tail 1. CAPVT I: English 5 paragraph groups, Latin 7; paired 5, unpaired tail 2. CAPVT II: English 10 paragraph groups, Latin 9; paired 9, unpaired tail 1. CAPVT III: English 12 paragraph groups, Latin 13; paired 12, unpaired tail 1. CAPVT IV: English 25 paragraph groups, Latin 26; paired 25, unpaired tail 1. CAPVT V: English 22 paragraph groups, Latin 21; paired 21, unpaired tail 1. CAPVT VI: English 60 paragraph groups, Latin 62; paired 60, unpaired tail 2. CAPVT VII: English 7 paragraph groups, Latin 10; paired 7, unpaired tail 3. CAPVT VIII: English 27 paragraph groups, Latin 34; paired 27, unpaired tail 7. CAPVT IX: English 45 paragraph groups, Latin 10; paired 10, unpaired tail 35. CAPVT X: English 51 paragraph groups, Latin 53; paired 51, unpaired tail 2. CAPVT XI: English 28 paragraph groups, Latin 32; paired 28, unpaired tail 4. CAPVT XII: English 32 paragraph groups, Latin 37; paired 32, unpaired tail 5. CAPVT XIII: English 15 paragraph groups, Latin 16; paired 15, unpaired tail 1. CAPVT XIV: English 37 paragraph groups, Latin 36; paired 36, unpaired tail 1. CAPVT XV: English 49 paragraph groups, Latin 46; paired 46, unpaired tail 3. CAPVT XVI: English 20 paragraph groups, Latin 19; paired 19, unpaired tail 1. CAPVT XVII: English 20 paragraph groups, Latin 14; paired 14, unpaired tail 6. CAPVT XVIII: English 36 paragraph groups, Latin 24; paired 24, unpaired tail 12. CAPVT XIX: English 27 paragraph groups, Latin 26; paired 26, unpaired tail 1.",
+ "residue_text": "26 garbled or unresolved tokens stand across Brick 6's Latin (21 distinct forms: afrkiamur, ccmpcfta, effecl, efficut, eflk, fa, facli, fadu, fen, fin, firaul, fj, fme, forie, fra, frry, ft, iutef, mentafem, mmm, recluruseft).",
  "residue_tokens": {
   "effecl": 1,
   "recluruseft": 1,
-  "fadu": 1,
+  "fadu": 2,
   "fj": 1,
   "afrkiamur": 1,
   "fen": 1,
   "ccmpcfta": 1,
   "efficut": 1,
-  "facli": 1,
+  "facli": 2,
   "mentafem": 1,
   "firaul": 1,
   "fme": 1,
@@ -22,7 +22,8 @@
   "eflk": 1,
   "fin": 3,
   "ft": 1,
-  "fa": 2
+  "fa": 2,
+  "mmm": 1
  },
  "units": [
   {
@@ -35,31 +36,31 @@
   },
   {
    "key": "chII",
-   "pairs": 13
+   "pairs": 10
   },
   {
    "key": "chIII",
-   "pairs": 15
+   "pairs": 13
   },
   {
    "key": "chIV",
-   "pairs": 29
+   "pairs": 26
   },
   {
    "key": "chV",
-   "pairs": 23
+   "pairs": 22
   },
   {
    "key": "chVI",
-   "pairs": 64
+   "pairs": 62
   },
   {
    "key": "chVII",
-   "pairs": 9
+   "pairs": 10
   },
   {
    "key": "chVIII",
-   "pairs": 37
+   "pairs": 34
   },
   {
    "key": "chIX",
@@ -71,11 +72,11 @@
   },
   {
    "key": "chXI",
-   "pairs": 31
+   "pairs": 32
   },
   {
    "key": "chXII",
-   "pairs": 41
+   "pairs": 37
   },
   {
    "key": "chXIII",
@@ -83,7 +84,7 @@
   },
   {
    "key": "chXIV",
-   "pairs": 38
+   "pairs": 37
   },
   {
    "key": "chXV",
@@ -92,26 +93,41 @@
   {
    "key": "chXVI",
    "pairs": 20
+  },
+  {
+   "key": "chXVII",
+   "pairs": 20
+  },
+  {
+   "key": "chXVIII",
+   "pairs": 36
+  },
+  {
+   "key": "chXIX",
+   "pairs": 27
   }
  ],
- "pages": 233,
+ "pages": 270,
  "toc": {
   "intro": 6,
   "chI": 10,
   "chII": 14,
-  "chIII": 26,
-  "chIV": 36,
-  "chV": 50,
-  "chVI": 62,
-  "chVII": 82,
-  "chVIII": 88,
-  "chIX": 114,
-  "chX": 120,
-  "chXI": 136,
-  "chXII": 148,
-  "chXIII": 172,
-  "chXIV": 180,
-  "chXV": 200,
-  "chXVI": 222
+  "chIII": 24,
+  "chIV": 32,
+  "chV": 46,
+  "chVI": 58,
+  "chVII": 76,
+  "chVIII": 82,
+  "chIX": 108,
+  "chX": 114,
+  "chXI": 130,
+  "chXII": 142,
+  "chXIII": 164,
+  "chXIV": 172,
+  "chXV": 192,
+  "chXVI": 214,
+  "chXVII": 222,
+  "chXVIII": 230,
+  "chXIX": 248
  }
 }

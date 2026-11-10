@@ -173,11 +173,52 @@ UNITS_ALL = [
      "CAPVT XV — De caeteris Legibus Naturae"),
     ("chXVI", "CHAPTER XVI — Of Persons, Authors, and Things "
      "Personated", "CAPVT XVI — De Personis et Authoribus"),
+    ("chXVII", "CHAPTER XVII — Of the Causes, Generation, and "
+     "Definition of a Commonwealth",
+     "CAPVT XVII — De Causa, Generatione, et Definitione Civitatis"),
+    ("chXVIII", "CHAPTER XVIII — Of the Rights of Sovereigns by "
+     "Institution",
+     "CAPVT XVIII — De Iure habentium Summam Potestatem in Civitate "
+     "per Institutionem"),
+    ("chXIX", "CHAPTER XIX — Of the Several Kinds of Commonwealth "
+     "by Institution, and of the Succession to the Sovereign Power",
+     "CAPVT XIX — De Generibus Civitatum per Institutionem, et de "
+     "Successione ad Summam Potestatem"),
+    ("chXX", "CHAPTER XX — Of Dominion Paternal and Despotical",
+     "CAPVT XX — De Dominio Paterno et Despotico"),
+    ("chXXI", "CHAPTER XXI — Of the Liberty of Subjects",
+     "CAPVT XXI — De Libertate Civium"),
+    ("chXXII", "CHAPTER XXII — Of Systems Subject, Political, and "
+     "Private", "CAPVT XXII — De Systematibus Civium"),
+    ("chXXIII", "CHAPTER XXIII — Of the Public Ministers of "
+     "Sovereign Power",
+     "CAPVT XXIII — De Potestatis Summae Ministris Publicis"),
+    ("chXXIV", "CHAPTER XXIV — Of the Nutrition, and Procreation "
+     "of a Commonwealth",
+     "CAPVT XXIV — De Civitatis Facultate Nutritiva et Generativa"),
+    ("chXXV", "CHAPTER XXV — Of Counsel", "CAPVT XXV — De Consilio"),
+    ("chXXVI", "CHAPTER XXVI — Of Civil Laws",
+     "CAPVT XXVI — De Legibus Civilibus"),
+    ("chXXVII", "CHAPTER XXVII — Of Crimes, Excuses, and "
+     "Extenuations",
+     "CAPVT XXVII — De Criminibus, Excusationibus, et "
+     "Extenuationibus"),
+    ("chXXVIII", "CHAPTER XXVIII — Of Punishments, and Rewards",
+     "CAPVT XXVIII — De Poenis et Praemiis"),
+    ("chXXIX", "CHAPTER XXIX — Of Those Things That Weaken, or "
+     "Tend to the Dissolution of a Commonwealth",
+     "CAPVT XXIX — De iis rebus quae Civitatem labefactant, "
+     "tenduntque ad dissolutionem eius"),
+    ("chXXX", "CHAPTER XXX — Of the Office of the Sovereign "
+     "Representative", "CAPVT XXX — De Officio Summi Imperantis"),
+    ("chXXXI", "CHAPTER XXXI — Of the Kingdom of God by Nature",
+     "CAPVT XXXI — De Regno Dei Naturali"),
 ]
-BRICK = 5
-UNITS_BUILT = UNITS_ALL[:17]         # Part I complete
-BRICK_SCOPE = ("front matter and the whole of Part I (De Homine): "
-               "the Introduction and Chapters 1–16 in parallel")
+BRICK = 6
+UNITS_BUILT = UNITS_ALL[:20]         # Part I complete; Part II opens
+BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
+               "Introduction and Chapters 1–16 — and Part II "
+               "(De Civitate) Chapters 17–19 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -199,6 +240,16 @@ LA_SEAMS = {
     "chXIV": (3421, 3727),
     "chXV": (3728, 4101),
     "chXVI": (4102, 4253),
+    # Part II seams (Brick 6), located by content as Part I's were:
+    # each seam opens at the chapter's own display line and closes
+    # the line before the next display. Capvt XVII's display is the
+    # spaced form at line 4254, directly under the PARS SECUNDA
+    # display (lines 4245–4252, which stand inside Capvt XVI's seam
+    # and are dropped there under the display classes, as Part I's
+    # display was). Capvt XIX's display is likewise spaced (4704).
+    "chXVII": (4254, 4409),
+    "chXVIII": (4410, 4703),
+    "chXIX": (4704, 5014),
 }
 
 # ----------------------------------------------------------------------
@@ -206,10 +257,25 @@ LA_SEAMS = {
 # ----------------------------------------------------------------------
 # Running heads / display debris: whole lines the edition never sets.
 LA_DROP_LINE_RES = [
-    re.compile(r"^Cap\. \d+;?\.?\s+.*\d+,$"),              # "Cap. 4; De Homint. 13,"
+    re.compile(r"^Cap\.\s+\d+;?\.?\s+.*\d+,$"),            # "Cap. 4; De Homint. 13,"
     re.compile(r"^\d+\s+De Homine\. Cap\. \d+\.$"),        # "14 De Homine. Cap. 4."
-    re.compile(r"^Cap\. [a-z0-9]+\. .* \d+$"),             # "Cap. i. De Hominc. 5"
-    re.compile(r"^Cap\. \d+\..*$"),   # running heads, tail garbled
+    re.compile(r"^Cap\.\s+[a-z0-9]+\.\s+.*\s\d+$"),        # "Cap. i. De Hominc. 5"
+    re.compile(r"^Cap\.\s+\d+[.,]?\s+.*$"),  # running heads, tail garbled
+    # Brick 6: Part II's running heads, in the machine's wide
+    # spacing and with garbled tails the rules above cannot reach
+    # ("86 De Civitate. Cap. i8„"; the leaf number itself split,
+    # "8 4 D* Civitate. Cap. 17."; the signature read into the
+    # number, "S8 De Civitate. Cap. i£."). Same class: press
+    # furniture, never text.
+    re.compile(r"^\d+\s+De\s+\w+\.\s+Cap\..*$"),
+    re.compile(r"^[A-Z]\d+\s+De\s+\w+\.\s+Cap\..*$"),
+    re.compile(r"^\d+\s+\d+\s+D\S*\s+Civitate\.\s+Cap\..*$"),
+    re.compile(r"^\d+\s+\S{1,3}\s+Civita\w*\.\s+Cap\..*$"),
+    re.compile(r"^\d+\)\d+\s+De\s+Civitate\.\s+Cap\..*$"),
+    # The signature line at a leaf's foot, carrying its catchword
+    # with it ("Leviat. n n n exerci-", "Leviat. 000 mam"): the
+    # catchword's word stands whole at the next leaf's head.
+    re.compile(r"^Leviat\.\s+.*$"),
     re.compile(r"^C\s*A-?$"),                              # drop-cap debris "C A-"
     re.compile(r"^[JjH\|\^\s]+$"),                         # initial-border debris
     re.compile(r"^LE\s+VIATHAN$"),
@@ -219,12 +285,24 @@ LA_DROP_LINE_RES = [
     re.compile(r"^G\s*A\s*P\s*V\s*T.*$"),                  # (OCR's G for C)
     re.compile(r"^De\s+(Senfu|Imaginatione|Confequcntia|Strmone)\.$"),
     re.compile(r"^\d{1,3}$"),                              # bare page numerals
-    re.compile(r"^\d+\s+De\s+\w+\.\s+Cap\.\s*[a-z0-9]+\.?$"),  # "2 De Bemine. Cap. i."
     re.compile(r"^L\w{2,5}t\.$"),                          # signature "Leviat." as OCR'd
 ]
 
 # Whole blocks that are press furniture (signature marks), never text.
-LA_FURNITURE_BLOCKS = {"b bb", "b b b"}
+LA_FURNITURE_BLOCKS = {
+    "b bb", "b b b",
+    # Brick 6, Capvt XVII: the signature shard and the catchword
+    # standing alone at XVII's first leaf turn; the paragraph's own
+    # first word stands whole at its head on the next leaf.
+    "m m m 2 Neque",
+    # Brick 6, Capvt XVII: a catchword shard ('Tertio' misread)
+    # standing alone at the leaf turn; the word stands whole at
+    # the next paragraph's head.
+    "Tertid,",
+    # Brick 6, Capvt XIX: the same class ('Potestas' misread),
+    # standing alone before the leaf's running head.
+    "Po:eilas",
+}
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
 # the Conjectura locus): removed, and the margin note restored as a
@@ -286,6 +364,11 @@ LA_REPAIRS = {
     "ixjs": "ius",              # Capvt XIV ¶1: drop-cap I + 'us'
     # (Capvt XII's 'fructus' needed no repair: the fru- stem joined
     # the genuine-f protection table at Brick 5.)
+    # Brick 6 loci, same certainty classes:
+    "uod": "[Q]uod",            # Capvt XVII ¶1: drop-cap Q consumed
+    "dlftinctio": "distinctio",  # Capvt XIX ¶1: D-i read as D-l,
+                                # sense fixed by the English face
+                                # ('The difference of Commonwealths')
 }
 
 # Phrase-level repairs (2): fusions spanning a word boundary that no
@@ -435,6 +518,8 @@ LA_RESIDUE = {
     "fme", "iutef", "mentafem", "nifcor", "defun", "fadu", "forie",
     "fa", "efre", "recluruseft", "toteftaifumma",
     "tftfjquihominipeculiariseft", "fen", "fin", "pof", "ft",
+    "mmm",          # Brick 6: signature debris inside Capvt XVII's
+                    # definition paragraph ("tantam Potentiam mmm 2 &")
 }
 
 # Genuine-f protection: stems whose f is the press's real f, not ſ.
@@ -612,7 +697,22 @@ def clean_latin_lines(lines):
     # opens lowercase, is one paragraph across the leaf; rejoin it.
     # Declared class; margin notes break the chain, as they should.
     rejoined = []
-    for b in out:
+    for idx, b in enumerate(out):
+        # Brick 6 class (Capvt XVIII's loci): a note-shaped block
+        # that ends mid-word — its text closing on a hyphen — or
+        # that stands before a lone hyphenated fragment of its own
+        # sentence, is no margin note: it is the opening of the
+        # paragraph the leaf turn split ('Septimo, … vel' /
+        # 'viola-' / 'violationem …'; 'Decimo, … Bel-' / 'lum …').
+        # A margin head is complete in the margin and never ends
+        # mid-word. Such fragments rejoin as text.
+        if ("note" in b and (b["note"].endswith("-")
+                or (b["note"][-1] not in ".!?"
+                    and idx + 1 < len(out)
+                    and "text" in out[idx + 1]
+                    and len(out[idx + 1]["text"].split()) == 1
+                    and out[idx + 1]["text"].endswith("-")))):
+            b = {"text": b["note"]}
         if (rejoined and "text" in b and "text" in rejoined[-1]
                 and rejoined[-1]["text"]
                 and rejoined[-1]["text"][-1] not in ".?!"
@@ -1276,6 +1376,50 @@ def collation_notes(pdf, report):
              "brick over the whole text built so far; their figures "
              "in this volume supersede the same notes in earlier "
              "bricks, which stand in the edition's git history."),
+        ]
+    if BRICK >= 6:
+        notes += [
+            ("N19 — Part II opens (Brick 6). Capvt XVII (De Causa, "
+             "Generatione, et Definitione Civitatis), Capvt XVIII "
+             "(De Iure habentium Summam Potestatem in Civitate per "
+             "Institutionem), and Capvt XIX (De Generibus Civitatum "
+             "per Institutionem, et de Successione ad Summam "
+             "Potestatem) join the parallel text. The PARS SECUNDA "
+             "display (DE CIVITATE SIVE REPVBLICA) stands in the "
+             "machine reading at the close of Capvt XVI's seam and "
+             "drops there under the display classes, as Part I's "
+             "display did (N1). Capvt XVII's first word is restored "
+             "as a listed repair — the decorated initial consumed "
+             "its Q: '[Q]uod homines…'. Capvt XIX's first word is "
+             "restored likewise ('Distinctio', the machine's D-l "
+             "for D-i), its sense fixed by the English face."),
+            ("N20 — A furniture correction, recorded whole (Brick "
+             "6). Part II's running heads defeated the drop classes "
+             "of Bricks 1–5 twice over: the machine sets them in "
+             "wide spacing the patterns did not allow, and their "
+             "tails garble past the anchors ('86 De Civitate. Cap. "
+             "i8„'; '8 4 D* Civitate. Cap. 17.'; 'S8 De Civitate. "
+             "Cap. i£.'; the signature line carrying its catchword, "
+             "'Leviat. n n n exerci-'). The classes are widened to "
+             "the spacing and the tails, and two consequences reach "
+             "back into Part I, printed here rather than worked "
+             "silently: running heads that stood in the earlier "
+             "printings as note-shaped blocks (and two as text) now "
+             "drop throughout the volume, as the furniture they "
+             "are; and paragraph fragments a leaf turn split "
+             "mid-word — known by their closing hyphen — now "
+             "rejoin as the text they are, in Part II (Capvt "
+             "XVIII's Septimo and Decimo paragraphs) and at one "
+             "Part I locus (Capvt IV). The desk audited the "
+             "correction word by word against Brick 5's text: no "
+             "word of Hobbes is lost; what falls is heads, "
+             "catchwords, and split fragments whose words stand "
+             "whole at their paragraphs' heads. The earlier "
+             "printings stand unaltered in the edition's git "
+             "history; this volume supersedes them, as N13 "
+             "declares. One debris token is added to the residue "
+             "register: 'mmm', signature waste standing inside "
+             "Capvt XVII's definition paragraph, counted at N8."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
