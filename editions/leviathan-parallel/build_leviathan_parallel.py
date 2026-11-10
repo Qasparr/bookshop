@@ -254,13 +254,18 @@ UNITS_ALL = [
      "CAPVT XLI — De Servatoris Nostri Benedicti Officio"),
     ("chXLII", "CHAPTER XLII — Of Power Ecclesiasticall",
      "CAPVT XLII — De Potestate Ecclesiastica"),
+    ("chXLIII", "CHAPTER XLIII — Of What Is Necessary for a Mans "
+     "Reception into the Kingdome of Heaven",
+     "CAPVT XLIII — De iis quae ad Receptionem in Regnum Coelorum "
+     "sunt necessaria"),
 ]
-BRICK = 14
-UNITS_BUILT = UNITS_ALL[:43]         # Parts I–II; Part III to XLII
+BRICK = 15
+UNITS_BUILT = UNITS_ALL[:44]         # Parts I–III complete
 BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
                "Introduction and Chapters 1–16 — the whole of "
-               "Part II (De Civitate), Chapters 17–31, and Part III "
-               "(De Civitate Christiana) Chapters 32–42 in parallel")
+               "Part II (De Civitate), Chapters 17–31, and the whole "
+               "of Part III (De Civitate Christiana), Chapters "
+               "32–43, in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -341,6 +346,10 @@ LA_SEAMS = {
     # XLIII's display (13924).
     "chXLI": (11326, 11562),
     "chXLII": (11563, 13923),
+    # Brick 15 seam: XLIII's display at 13924; the chapter closes
+    # the line before XLIV's display (14386), the PARS QVARTA
+    # display standing inside its tail (14382–14383).
+    "chXLIII": (13924, 14385),
 }
 
 # ----------------------------------------------------------------------
@@ -398,6 +407,10 @@ LA_DROP_LINE_RES = [
     re.compile(r"^DE\s+CIVITATE$"),
     re.compile(r"^S\s*I\s*V\s*E$"),
     re.compile(r"^REPVBLICA\.$"),
+    # Brick 15: the PARS QVARTA display standing inside Capvt
+    # XLIII's seam tail, line by line as the machine gives it.
+    re.compile(r"^D\s+E\s+R\s*E\s*G\s*N\s*O$"),
+    re.compile(r"^TENEBRARVM\.$"),
     re.compile(r"^C\s*A\s*[PF]\s*V\s*T.*$"),               # chapter display lines
     re.compile(r"^G\s*A\s*P\s*V\s*T.*$"),                  # (OCR's G for C)
     re.compile(r"^De\s+(Senfu|Imaginatione|Confequcntia|Strmone)\.$"),
@@ -475,6 +488,17 @@ LA_FURNITURE_BLOCKS = {
     # severed tail it interrupted under signature six (N32).
     "Inquo", "Ccetus",
     "1)6 De 'Civitate ckrisiiana. Cap. 42.",
+    # Brick 15, Capvt XLIII: the catchword shard 'Do£tri«'
+    # (Doctrinas misread; the word stands whole at the next
+    # leaf's head), a garbled running head standing as a block
+    # ('250 De Civitate Christiana. Cap. 43.' as read), a head
+    # standing in note shape with its debris, and the catchword
+    # fragment 'Osten-' (Ostensum's first syllable, the word
+    # whole after the head it precedes) (N33).
+    "Do£tri«",
+    "250 ue wvnaie ^nrijuana. v^ap. 4^",
+    "Cap. 4$. De Civitate Chrijliana. i%j",
+    "Osten-",
 }
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
@@ -1845,6 +1869,21 @@ def collation_notes(pdf, report):
              "judicabunt.' No margin note stands in the chapter "
              "as cleaned: its summaries ride inside its "
              "paragraphs in this part of the book."),
+            ("N33 — Part III closes (Brick 15). Capvt XLIII, De "
+             "iis quae ad Receptionem in Regnum Coelorum sunt "
+             "necessaria, completes Pars Tertia; the PARS QVARTA "
+             "display (De Regno Tenebrarum) stands inside its "
+             "seam tail and drops there, as the earlier part "
+             "displays dropped (N19, N28). The chapter's "
+             "furniture is of the leaf-turn kinds already "
+             "listed: a catchword shard ('Do£tri«', Doctrinas "
+             "misread), a garbled head standing as a block, a "
+             "head in note shape, and the catchword fragment "
+             "'Osten-' before 'Ostensum ante est…' — each listed "
+             "at the furniture table, each word standing whole "
+             "in the text. The Latin closes the part in its own "
+             "words: 'Atque haec de Regno Dei, et Politica "
+             "Ecclesiastica dicta sufficiant.'"),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
