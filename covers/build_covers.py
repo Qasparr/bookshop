@@ -121,6 +121,8 @@ def back(slug, title_short, synopsis, pull):
                  "unaltered in substance."]:
         foil_text(img, (W // 2, y), line, ff, fill=CREAM, shadow=False); y += 52
     y += 26
+    foil_text(img, (W // 2, y), "BLEATS PUBLISHING GROUP", ImageFont.truetype(SERIFB, 46), fill=GOLD)
+    y += 62
     foil_text(img, (W // 2, y), "SPARROW · SOLE PROPRIETORSHIP", ImageFont.truetype(SERIFB, 40), fill=GREEN)
     img.save(os.path.join(OUT, f"BACK-{slug}.png"))
 
