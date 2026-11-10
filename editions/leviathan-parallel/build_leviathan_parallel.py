@@ -214,11 +214,11 @@ UNITS_ALL = [
     ("chXXXI", "CHAPTER XXXI — Of the Kingdom of God by Nature",
      "CAPVT XXXI — De Regno Dei Naturali"),
 ]
-BRICK = 7
-UNITS_BUILT = UNITS_ALL[:23]         # Part I complete; Part II to XXII
+BRICK = 8
+UNITS_BUILT = UNITS_ALL[:26]         # Part I complete; Part II to XXV
 BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
                "Introduction and Chapters 1–16 — and Part II "
-               "(De Civitate) Chapters 17–22 in parallel")
+               "(De Civitate) Chapters 17–25 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -255,6 +255,13 @@ LA_SEAMS = {
     "chXX": (5015, 5293),
     "chXXI": (5294, 5641),
     "chXXII": (5642, 6015),
+    # Brick 8 seams, by content as before: XXIII's display at 6016,
+    # XXIV's at 6125, XXV's at 6298 — the last in the machine's
+    # F-for-P reading ('C A F V T XXV.'), for which the display
+    # class is widened at this brick (see clean_latin_lines).
+    "chXXIII": (6016, 6124),
+    "chXXIV": (6125, 6297),
+    "chXXV": (6298, 6493),
 }
 
 # ----------------------------------------------------------------------
@@ -268,8 +275,11 @@ LA_DROP_LINE_RES = [
     # Brick 7: the same heads with the chapter number itself
     # garbled past digits ('Cap. zo. T>e Civitate. i o i';
     # 'Cap. 2i„ De Civitate, icp'). The shape is the furniture's:
-    # Cap. + short token + short token + Civit- + tail.
-    re.compile(r"^Cap\.\s+\S{1,4}\s+\S{1,3}\s+Civit\w*[.,]\s+.*$"),
+    # Cap. + short token + short token + Civit- + tail. Brick 8:
+    # one head carries a fourth short token before the Civit-
+    # word ('Cap. if. JDe Cwitate. yzj-'), admitted likewise.
+    re.compile(r"^Cap\.\s+\S{1,4}\s+(\S{1,3}\s+)?\S{1,3}\s+"
+               r"Civit\w*[.,]\s+.*$"),
     re.compile(r"^\S{1,3}\s+D\S*\s+Civitate\.\s+Cap\..*$"),  # "H4 D* Civitate. Cap. 22."
     re.compile(r"^Cap\.\s+\d+[.,]?\s+.*$"),  # running heads, tail garbled
     # Brick 6: Part II's running heads, in the machine's wide
@@ -287,12 +297,15 @@ LA_DROP_LINE_RES = [
     # with it ("Leviat. n n n exerci-", "Leviat. 000 mam"): the
     # catchword's word stands whole at the next leaf's head.
     re.compile(r"^Leviat\.\s+.*$"),
+    # Brick 8: a Part II head whose leaf number the machine read
+    # as a word ('in De Civitate* Cap. 24.').
+    re.compile(r"^\S{1,3}\s+De\s+Civitat\w*[^A-Za-z\s]?\s+Cap\..*$"),
     re.compile(r"^C\s*A-?$"),                              # drop-cap debris "C A-"
     re.compile(r"^[JjH\|\^\s]+$"),                         # initial-border debris
     re.compile(r"^LE\s+VIATHAN$"),
     re.compile(r"^P\s*A\s*R\s*S.*PRIMA$"),
     re.compile(r"^D\s*E\s+H\s*O\s*M\s*I\s*N\s*E\.$"),
-    re.compile(r"^C\s*A\s*P\s*V\s*T.*$"),                  # chapter display lines
+    re.compile(r"^C\s*A\s*[PF]\s*V\s*T.*$"),               # chapter display lines
     re.compile(r"^G\s*A\s*P\s*V\s*T.*$"),                  # (OCR's G for C)
     re.compile(r"^De\s+(Senfu|Imaginatione|Confequcntia|Strmone)\.$"),
     re.compile(r"^\d{1,3}$"),                              # bare page numerals
@@ -317,6 +330,10 @@ LA_FURNITURE_BLOCKS = {
     # a leaf turn ('Sc', the machine's reading of &); the
     # conjunction itself stands at the next block's head.
     "Sc",
+    # Brick 8, Capvt XXIV: the signature line with its catchword
+    # ('omnium'), the signature itself misread ('Ltviat.'); the
+    # catchword's word stands at the next leaf's head.
+    "Ltviat. rts omniun»",
 }
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
@@ -622,7 +639,9 @@ def clean_latin_lines(lines):
     in_title = False
     last_title_line = ""
     title_lines = 0
-    capvt_re = re.compile(r"^[CG]\s*A\s*P\s*V\s*T\b")
+    # Brick 8: the class admits the machine's F-for-P reading of
+    # the display (Capvt XXV stands as 'C A F V T' in the OCR).
+    capvt_re = re.compile(r"^[CG]\s*A\s*[PF]\s*V\s*T\b")
     for ln in lines:
         s = ln.strip()
         if capvt_re.match(s):
@@ -1476,6 +1495,32 @@ def collation_notes(pdf, report):
              "One shard is listed as furniture: Capvt XX's 'Sc', "
              "the ampersand's debris at a leaf turn, its "
              "conjunction standing at the next block's head."),
+            ("N23 — Brick 8 scope. Capvt XXIII (De Potestatis "
+             "Summae Ministris Publicis), Capvt XXIV (De "
+             "Civitatis Facultate Nutritiva et Generativa), and "
+             "Capvt XXV (De Consilio) join the parallel text. "
+             "Capvt XXV's display stands in the machine reading "
+             "with its P read as F ('C A F V T XXV.'); the display "
+             "class is widened to admit the variant, and the "
+             "chapter's heading is set from the census, as at N12. "
+             "One of the chapter's own running heads stands fused "
+             "inside its first paragraph in the machine reading "
+             "('Cap. if. JDe Cwitate. yzj-'), dropped under the "
+             "widened head class of N22."),
+            ("N24 — Capvt XXIII's first words, flagged whole "
+             "(Brick 8). The chapter opens in the machine reading "
+             "as 'Mlntsler?#£//«« is est qui in rebus…' — the words "
+             "the English face gives as 'A Publique Minister is "
+             "he, that…' (Minister Publicus is est, qui…) garbled "
+             "past every declared class. They are set as read, "
+             "under the residue rule; the English face carries "
+             "the sense; the locus is flagged for the facsimile "
+             "collation that remains UNCHARTED. Capvt XXIV's "
+             "signature line, its catchword with it, is listed as "
+             "furniture (the signature itself misread, 'Ltviat.'); "
+             "the word it promised, 'omnium', stands at its "
+             "paragraph's place: 'Vbi enim Civitas non est, ibi "
+             "omnia omnium sunt'."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
