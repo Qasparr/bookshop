@@ -155,6 +155,14 @@ BOOKS = [
      "ADOLF HITLER", "1925",
      "The German text of the first volume (1925), printed whole and unaltered — and answered. A critical Teacher's Revision (MAGVS): English notes to every chapter carrying present-day correlations, and a full Tower Audit in which the book's factual claims, autobiographical legends, prophecies, and racial doctrine are weighed against the standard historical record and tiered, claim by claim. An audit, not an endorsement: the text is printed so that it can be examined — and it is examined.",
      "An audited text can be answered. An unaudited one can only be feared."),
+    ("leviathan-parallel", "LEVIATHAN", "PARALLEL EDITION — THE 1651 ENGLISH FACING THE 1668 LATIN — TEACHER'S REVISION (MAGVS)",
+     "THOMAS HOBBES", "1651 · 1668 · 2026",
+     "The Commonwealth in both its tongues: Hobbes's 1651 English set page for page against the Latin he himself revised for Amsterdam in 1668 — the Introduction and all 47 chapters in parallel, and both endings, the English Review & Conclusion facing the Latin Appendix that replaced it. 1,094 pages, collation apparatus N1–N36, both sources verified by hash at every brick; the divergences printed as found, never harmonized.",
+     "Two tongues, one mortal god — and every difference on the record."),
+    ("meinkampf-parallel", "MEIN KAMPF", "PARALLEL CRITICAL EDITION — VOL. 1 · THE GERMAN FACING A NEW HOUSE ENGLISH — TEACHER'S REVISION (MAGVS)",
+     "ADOLF HITLER", "1925 · 2026",
+     "The German text whole and unaltered, facing the house's own new English translation — literal and unsparing, judgment carried in the apparatus: the full Tower Audit (36 items, tiered claim by claim), a Glossary of Translation Rulings, an Apparatus of OCR Loci, and the Title Register with the 1942 Koufukan Japanese witness of record, cited bibliographically only. 684 pages, census-verified: every German paragraph faces its English. An audit, never an endorsement.",
+     "An audited text can be answered. An unaudited one can only be feared."),
 ]
 
 # Strike filter: with slug arguments, strike only those covers; with
