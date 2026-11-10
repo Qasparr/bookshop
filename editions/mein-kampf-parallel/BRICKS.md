@@ -98,14 +98,31 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   zero anomalies); opening spread (pp. 130–131) and the notes
   page (p. 232) rendered and inspected.
 
+- **BRICK 4 — Kapitel 4** ("München"): `translations/
+  en-kap4.txt`, **159 units one-for-one**; wired in as above;
+  contents closing line moved to "Kapitel 5–12"; preface made
+  cumulative. **8 [TN]s**: Lebensraum at its first occurrence
+  in the volume (¶43 — plain spatial sense here; the ruling
+  holds the rendering steady for the doctrine chapters);
+  the hegen-for-liegen class recurring (¶5, ¶146); lieb und
+  teuer misread as "heb und teuer"; Welthandelspobtik;
+  Eehrern für Lehrern; the closing F-for-L cluster (Fösung,
+  Fehre, Fiteratur, Febens, heben); the two Schiller loci
+  (Pappenheimer; the Wallenstein poet-word). **PDF now 287
+  pages.** Verified by census: all 26 Kapitel 4 spreads pair
+  even verso with odd recto at the identical ¶ range, coverage
+  ¶1–159 complete, no gaps, no overlaps (133 spreads
+  whole-book, zero anomalies); opening spread (pp. 234–235)
+  rendered and inspected.
+
 ## NEXT
 
-- **BRICK 4 — Kapitel 4** ("München"): write
-  `translations/en-kap4.txt` (159 units by the loader), add the
-  `("kap4", ...)` 5-tuple to the builder's `BRICK1` list, extend
+- **BRICK 5 — Kapitel 5** ("Der Weltkrieg"): write
+  `translations/en-kap5.txt` (110 units by the loader), add the
+  `("kap5", ...)` 5-tuple to the builder's `BRICK1` list, extend
   both `labels` tables, move the contents closing line to
-  "Kapitel 5–12", add [TN]s, rebuild, verify by census, commit,
-  push. Then Bricks 5–13 likewise (Kapitel 5–12, one per
+  "Kapitel 6–12", add [TN]s, rebuild, verify by census, commit,
+  push. Then Bricks 6–13 likewise (Kapitel 6–12, one per
   brick), per ARCHITECTURE §VII.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary

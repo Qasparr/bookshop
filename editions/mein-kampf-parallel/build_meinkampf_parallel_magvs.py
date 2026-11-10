@@ -131,6 +131,8 @@ BRICK1 = [
      "BETRACHTUNGEN AUS MEINER WIENER ZEIT",
      "CHAPTER 3 — GENERAL POLITICAL CONSIDERATIONS FROM MY "
      "VIENNA TIME", "3. KAPITEL", "CHAPTER 3"),
+    ("kap4", "4. KAPITEL — MÜNCHEN", "CHAPTER 4 — MUNICH",
+     "4. KAPITEL", "CHAPTER 4"),
 ]
 
 
@@ -383,6 +385,55 @@ TN = {
         "lie') — the same misread stands at ¶140 ('bei ihr "
         "hegt' for bei ihr liegt). Translated per evident "
         "sense in both places.",
+    ("kap4", 2):
+        "Printed 'heb und teuer': an OCR misread of lieb und "
+        "teuer ('dear and precious'). Translated per evident "
+        "sense.",
+    ("kap4", 4):
+        "The hegen-for-liegen misread of Kapitel 3 recurs in "
+        "this witness's Kapitel 4: here 'hegt wohl "
+        "mitbegründet' for liegt wohl mitbegründet, and again "
+        "at ¶146 ('Verschlagenheit hegen' for Verschlagenheit "
+        "liegen). Translated per evident sense in both places.",
+    ("kap4", 42):
+        "Lebensraum ('living-space'): the word's first "
+        "occurrence in the volume, here in its plain spatial "
+        "sense — the room at a people's disposal. Rendered "
+        "'living-space' throughout the edition; where the "
+        "later chapters raise the word into the doctrine of "
+        "soil to be taken in the East, the rendering does not "
+        "change, and the Audit weighs the doctrine. The ruling "
+        "is collected in the Glossary. [First occurrence.]",
+    ("kap4", 48):
+        "“Er kennt seine Pappenheimer” — 'he knows his "
+        "Pappenheimer': the saying is Schiller's (Wallenstein), "
+        "of the general who knows his men and what they are "
+        "good for. Carried in the English as the author carries "
+        "it, untranslated in the name.",
+    ("kap4", 98):
+        "Printed 'Welthandelspobtik': an OCR garble of "
+        "Welthandelspolitik ('world-trade policy'). Translated "
+        "per evident sense.",
+    ("kap4", 104):
+        "Printed 'erhabenen Eehrern': an OCR misread of "
+        "erhabenen Lehrern ('sublime teachers'). Translated "
+        "per evident sense.",
+    ("kap4", 136):
+        "The 'poet-word' quoted — “Und setzet ihr nicht das "
+        "Leben ein, nie wird euch das Leben gewonnen sein” — "
+        "is Schiller's, from Wallenstein. The author quotes "
+        "without naming; the English carries the verse as he "
+        "carries it.",
+    ("kap4", 149):
+        "A dense run of this witness's F-for-L misread class "
+        "closes the chapter: here 'des Rätsels Fösung' for "
+        "Lösung and 'marxistische Fehre' for Lehre; at ¶151 "
+        "'diese Fehre der Zerstörung', 'in meinem heben' for "
+        "in meinem Leben, 'politischen Febens' for "
+        "politischen Lebens, and 'theoretische Fiteratur' for "
+        "theoretische Literatur. The German page prints each "
+        "as found; the English translates the evident readings "
+        "throughout.",
 }
 
 
@@ -807,8 +858,9 @@ PREFACE_PARALLEL = [
     "This volume contains the front matter and the opening "
     "of the book: the Widmung, the Vorwort, the first chapter, "
     "In the Parents' Home, the second, Vienna Years of "
-    "Learning and Suffering, and the third, General Political "
-    "Considerations from My Vienna Time. The chapters follow, brick "
+    "Learning and Suffering, the third, General Political "
+    "Considerations from My Vienna Time, and the fourth, "
+    "Munich. The chapters follow, brick "
     "by brick, in the book's own order; the volume closes with "
     "the Schlusswort in parallel, the Tower Audit entire, the "
     "Glossary, the Apparatus of OCR Loci, the Title Register, "
@@ -895,7 +947,9 @@ def contents_page(pdf, toc):
                        "Betrachtungen aus meiner Wiener Zeit / "
                        "Chapter 3 — General Political "
                        "Considerations from My Vienna Time",
-                       "Kapitel 3")}
+                       "Kapitel 3"),
+              "kap4": ("4. Kapitel — München / Chapter 4 — "
+                       "Munich", "Kapitel 4")}
     for key, _hd, _he, _rd, _re in BRICK1:
         name, short = labels[key]
         entries.append((f"{name} — in parallel", toc.get(key)))
@@ -907,7 +961,7 @@ def contents_page(pdf, toc):
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
     pdf.ln(4)
-    para(pdf, "Kapitel 4–12, the Schlusswort in parallel, the "
+    para(pdf, "Kapitel 5–12, the Schlusswort in parallel, the "
               "Tower Audit entire, the Glossary of Translation "
               "Rulings, the Apparatus of OCR Loci, the Title "
               "Register, the Table of Authorities, and the "
@@ -1020,7 +1074,8 @@ def build(toc, folio_total=None, log=None):
               "kap1": "1. Kapitel — Im Elternhaus",
               "kap2": "2. Kapitel — Wiener Lehr- und Leidensjahre",
               "kap3": "3. Kapitel — Allgemeine politische "
-                      "Betrachtungen aus meiner Wiener Zeit"}
+                      "Betrachtungen aus meiner Wiener Zeit",
+              "kap4": "4. Kapitel — München"}
     for key, head_de, head_en, run_de, run_en in BRICK1:
         de_list = german[key]
         en_list = load_translation(key)
