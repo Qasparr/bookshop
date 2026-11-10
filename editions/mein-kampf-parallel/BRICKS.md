@@ -268,18 +268,66 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   p. 510); opening spread (pp. 510–511) rendered and
   inspected.
 
+- **BRICK 12 — Kapitel 12** ("Die erste
+  Entwicklungszeit der Nationalsozialistischen
+  Deutschen Arbeiterpartei"):
+  `translations/en-kap12.txt`, **246 units
+  one-for-one**; wired in as above; contents closing
+  line moved to the Schlusswort and the closing
+  apparatus; preface made cumulative. **6 [TN]s**:
+  fetzt für jetzt (¶10); the hegen-for-liegen class
+  collected across the chapter (¶41, anchoring ¶84,
+  ¶95, ¶115, ¶141); the garble "Trätäklub" (¶174 —
+  rendered "debating-club" per evident sense,
+  [Reading UNVERIFIED], carried to the Apparatus);
+  Feere für Leere (¶236); heben für Leben (¶243);
+  the volume's narrative last line, "ihren kauf"
+  für Lauf (¶246). **PDF now 658 pages.** Verified
+  by census: all 34 Kapitel 12 spreads pair even
+  verso with odd recto at the identical ¶ range,
+  coverage ¶1–246 complete (311 spreads whole-book,
+  zero anomalies; Kapitel 1–11 start pages
+  unchanged, Kapitel 12 opening at p. 590); opening
+  spread (pp. 590–591) and notes page (p. 658)
+  rendered and inspected. Word-audit against the
+  Brick 11 build: within pp. 1–589 only the preface
+  page and the contents page differ, both by exactly
+  this brick's wiring.
+  **TWO CORRECTIONS at this brick, marked per house
+  practice** (the draft wiring stood uncommitted in
+  the working tree when this desk took the build
+  up): (1) THE CHAPTER TITLE. The draft heading read
+  "Die erste Entwicklungszeit der Bewegung". This
+  ledger's own wiring note required the title from
+  the sibling loader's section head; the printed
+  book (and the sibling's SECTIONS table) read "Die
+  erste Entwicklungszeit der Nationalsozialistischen
+  Deutschen Arbeiterpartei" — "der Bewegung" is a
+  phrase of the chapter's first paragraph, not its
+  title. Corrected in the spread headings, the
+  contents label, the notes label, and the preface's
+  enumeration before the brick was built. (2) THE
+  ¶49/¶50 SEAM. The draft English of ¶49 carried
+  the whole of German ¶50's opening clause across
+  the seam (the period restructured around its main
+  verb); no word was lost, but the facing claim —
+  the same paragraphs on both pages — failed at
+  that seam. The English was re-broken at the
+  German seam in the draft's own wording ("…must in
+  the / sharpest manner make front against…"), as
+  the edition keeps every other mid-sentence break
+  in step (cf. Kapitel 1, ¶28).
+
 ## NEXT
 
-- **BRICK 12 — Kapitel 12** (246 units; German dump
-  already in `work/de-kap12.txt`): write
-  `translations/en-kap12.txt`, add the
-  `("kap12", ...)` 5-tuple and the `labels` entries,
-  the contents closing line then points only to the
-  Schlusswort and the closing apparatus, add [TN]s,
-  rebuild, verify by census, commit, push. The
-  chapter's German title is to be taken from the
-  sibling loader's section head at wiring. Then the
-  FINAL BRICK, per ARCHITECTURE §VII.
+- **BRICK 13 — Schlusswort** (5 units; German dump
+  already in `work/de-schluss.txt`; draft
+  translation in `translations/en-schluss.txt`):
+  add the `("schluss", ...)` 5-tuple and the
+  `labels` entries, the contents closing line then
+  points only to the closing apparatus, rebuild,
+  verify by census, commit, push. Then the FINAL
+  BRICK, per ARCHITECTURE §VII.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary
   of Translation Rulings (seeded by the [TN] rulings: Volk,

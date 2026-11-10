@@ -74,7 +74,9 @@ MECHANISM / DOCTRINE -- how this builder works, and why:
           Apparatus of OCR Loci. Brick 11 added Kapitel 11
           (241 units), carrying the volume's heaviest load of
           translator's notes (19), as the BRICKS ledger's open
-          flag foresaw.
+          flag foresaw. Brick 12 added Kapitel 12 (246
+          units), the last chapter; the Schlusswort and the
+          closing apparatus remain for the final brick.
   TOLERANCE  Any step that would change a word of the German body
           fails the edition. Any translation choice that softens,
           omits, or improves the original fails the translation
@@ -163,6 +165,12 @@ BRICK1 = [
     ("kap11", "11. KAPITEL — VOLK UND RASSE",
      "CHAPTER 11 — PEOPLE AND RACE", "11. KAPITEL",
      "CHAPTER 11"),
+    ("kap12", "12. KAPITEL — DIE ERSTE ENTWICKLUNGSZEIT "
+     "DER NATIONALSOZIALISTISCHEN DEUTSCHEN "
+     "ARBEITERPARTEI",
+     "CHAPTER 12 — THE FIRST DEVELOPMENT-TIME OF THE "
+     "NATIONAL SOCIALIST GERMAN WORKERS' PARTY",
+     "12. KAPITEL", "CHAPTER 12"),
 ]
 
 
@@ -743,6 +751,42 @@ TN = {
         "— for the letter 'l)'. The English restores the "
         "letter; the German page prints the figure as "
         "found.",
+    ("kap12", 9):
+        "Printed 'fetzt versucht ihr den Mangel an Waffen "
+        "hinzustellen': fetzt for jetzt ('now'), the "
+        "initial letter misread. Translated per evident "
+        "sense.",
+    ("kap12", 40):
+        "Printed 'in der Rasse hegende Eigenschaften': "
+        "hegende for liegende ('lying in the race') — the "
+        "hegen-for-liegen class (cf. Kapitel 3, ¶140), "
+        "which runs through this chapter: hegt for liegt "
+        "at ¶84 ('Ihre Mission hegt nicht'), ¶95, ¶115 "
+        "and ¶141. Translated per evident sense "
+        "throughout.",
+    ("kap12", 173):
+        "Printed 'einem solchen bürgerlichen "
+        "Trätäklub': the word is garbled in this witness "
+        "past certain restoration; the sentence's sense — "
+        "a bourgeois talking-club whose harmlessness the "
+        "Reds knew better than its members — is plain, "
+        "and the English renders 'debating-club' per "
+        "evident sense. [Reading UNVERIFIED.]",
+    ("kap12", 235):
+        "Printed 'vor gähnender Feere sprechen': Feere "
+        "for Leere ('before yawning emptiness'). "
+        "Translated per evident sense.",
+    ("kap12", 242):
+        "Printed 'der deutschen Nation das heben "
+        "wiedergewinnen soll': heben for Leben ('shall "
+        "regain life'). Translated per evident sense.",
+    ("kap12", 245):
+        "The chapter's — and the volume's narrative — "
+        "last line is printed 'Die Bewegung nahm ihren "
+        "kauf': kauf for Lauf ('took its course'). The "
+        "locus stands in the sibling Critical Edition's "
+        "apparatus as well (one source, one text). "
+        "Translated per evident sense.",
 }
 
 
@@ -1217,7 +1261,9 @@ PREFACE_PARALLEL = [
     "eighth, Beginning of My Political Activity, and the "
     "ninth, The German Workers' Party, and the tenth, "
     "Causes of the Collapse, and the eleventh, People and "
-    "Race. The chapters follow, brick "
+    "Race, and the twelfth, The First Development-Time of "
+    "the National Socialist German Workers' Party. The "
+    "chapters follow, brick "
     "by brick, in the book's own order; the volume closes with "
     "the Schlusswort in parallel, the Tower Audit entire, the "
     "Glossary, the Apparatus of OCR Loci, the Title Register, "
@@ -1327,7 +1373,14 @@ def contents_page(pdf, toc):
                         "Causes of the Collapse", "Kapitel 10"),
               "kap11": ("11. Kapitel — Volk und Rasse / "
                         "Chapter 11 — People and Race",
-                        "Kapitel 11")}
+                        "Kapitel 11"),
+              "kap12": ("12. Kapitel — Die erste "
+                        "Entwicklungszeit der "
+                        "Nationalsozialistischen Deutschen "
+                        "Arbeiterpartei / Chapter 12 — The "
+                        "First Development-Time of the "
+                        "National Socialist German Workers' "
+                        "Party", "Kapitel 12")}
     for key, _hd, _he, _rd, _re in BRICK1:
         name, short = labels[key]
         entries.append((f"{name} — in parallel", toc.get(key)))
@@ -1339,7 +1392,7 @@ def contents_page(pdf, toc):
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
     pdf.ln(4)
-    para(pdf, "Kapitel 12, the Schlusswort in parallel, "
+    para(pdf, "The Schlusswort in parallel, "
           "the "
               "Tower Audit entire, the Glossary of Translation "
               "Rulings, the Apparatus of OCR Loci, the Title "
@@ -1464,7 +1517,11 @@ def build(toc, folio_total=None, log=None):
                       "Arbeiterpartei",
               "kap10": "10. Kapitel — Ursachen des "
                        "Zusammenbruchs",
-              "kap11": "11. Kapitel — Volk und Rasse"}
+              "kap11": "11. Kapitel — Volk und Rasse",
+              "kap12": "12. Kapitel — Die erste "
+                       "Entwicklungszeit der "
+                       "Nationalsozialistischen Deutschen "
+                       "Arbeiterpartei"}
     for key, head_de, head_en, run_de, run_en in BRICK1:
         de_list = german[key]
         en_list = load_translation(key)
