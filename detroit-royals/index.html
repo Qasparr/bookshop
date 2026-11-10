@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+  DETROIT ROYALS — the record store page of the Bookshop.
+  "Do what thou wilt shall be the whole of the Law."
+  X day of November, Dies Martis, Sol in Scorpio, Anno V:xii e.n. (2026 e.v.)
+  Authorship attributed exclusively to Johnathan 'Qasparr' Monroe
+  (Greek, -ARR, All Rights Reserved, Without Prejudice).
+  Scientific Illuminism: Method of Science, Aim of Religion.
+  DOCTRINE: free to listen, buy to own. The player streams the whole
+  record; no download is offered here. The download is the purchase,
+  delivered person-to-person on payment with a numbered receipt —
+  the same road the books travel.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DETROIT ROYALS — Qasparr — Free to Listen, Buy to Own</title>
+<style>
+  :root { --purple:#2a0a44; --purple2:#4B0082; --gold:#FFD700; --green:#2ECC71; --ink:#f3ead2; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Georgia, 'Times New Roman', serif; background:var(--purple); color:var(--ink); }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 28px 18px 48px; }
+  h1 { color: var(--gold); letter-spacing: .12em; text-align:center; margin: 6px 0 2px; font-size: 2rem; }
+  .byline { text-align:center; color: var(--green); letter-spacing:.2em; font-size:.85rem; margin-bottom: 4px; }
+  .model { text-align:center; font-style: italic; margin: 10px 0 20px; }
+  .player { background: var(--purple2); border: 1px solid var(--gold); border-radius: 10px; padding: 16px; }
+  .now { color: var(--gold); min-height: 1.4em; margin-bottom: 8px; font-size: 1.05rem; }
+  audio { width: 100%; }
+  ol.tracks { list-style: none; margin: 18px 0 0; padding: 0; }
+  ol.tracks li { border-top: 1px solid rgba(255,215,0,.25); }
+  ol.tracks button { all: unset; display:flex; justify-content:space-between; width:100%; padding: 11px 6px; cursor:pointer; color: var(--ink); font-size: 1rem; }
+  ol.tracks button:hover, ol.tracks button:focus { color: var(--gold); }
+  ol.tracks li.playing button { color: var(--gold); }
+  .bonus { margin-top: 22px; color: var(--green); letter-spacing:.15em; font-size:.85rem; }
+  .buy { margin-top: 28px; border:1px solid var(--green); border-radius:10px; padding:16px; text-align:center; }
+  .buy a { color: var(--gold); font-size: 1.15rem; }
+  .fine { font-size:.85rem; opacity:.85; text-align:center; margin-top: 12px; }
+  footer { margin-top: 36px; font-size:.8rem; text-align:center; opacity:.8; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="byline">BLEATS PUBLISHING GROUP · SPARROW, PUBLISHER OF RECORD</div>
+  <h1>DETROIT ROYALS</h1>
+  <div class="byline">QASPARR</div>
+  <p class="model">Free to listen. Buy to own. — the whole record streams below; the download is the purchase.</p>
+
+  <div class="player">
+    <div class="now" id="now">Pick a track.</div>
+    <audio id="au" controls controlsList="nodownload" preload="none"></audio>
+    <ol class="tracks" id="list"></ol>
+    <div class="bonus">BONUS — ALTERNATE TAKES</div>
+    <ol class="tracks" id="bonus"></ol>
+  </div>
+
+  <div class="buy">
+    <div>Own the record — <strong>$9</strong>, the full album as a download, delivered on payment with a numbered receipt.</div>
+    <p><a href="https://cash.app/$axoneme">Buy on Cash App — $axoneme</a></p>
+    <div>Put <strong>DETROIT ROYALS</strong> in the note. The books live here too — ask for the price list.</div>
+  </div>
+
+  <p class="fine">If it gets stolen, it means it was good. The name on it doesn't move either way.</p>
+
+  <footer>
+    Flagpole of Claim and Coinage: Johnathan 'Qasparr' Monroe, ARR, All Rights Reserved, Without Prejudice.
+    Right of claim hereby reserved and coined under the authority of the Living Man.<br>
+    93 — Live, Love, and let Love, Live.
+  </footer>
+</div>
+<script>
+  // MECHANISM: one audio element; each row loads its file and plays.
+  // DOCTRINE: streaming only — no download links anywhere on this page.
+  var MAIN = [
+    ["Keeper of the Keys", "tracks/qasparr - keeper of the keys.mp3"],
+    ["The Main Event", "tracks/qasparr - the main event.mp3"],
+    ["Stand Up or Fold", "tracks/stand_up_or_fold.mp3"],
+    ["Concrete in the Veins", "tracks/concrete_in_the_veins.mp3"],
+    ["Clear the Board", "tracks/clear_the_board.mp3"],
+    ["144 on the Dash", "tracks/144_on_the_dash.mp3"],
+    ["The Anvil Crown", "tracks/the_anvil_crown.mp3"],
+    ["Teeth and Chains", "tracks/teeth_and_chains.mp3"],
+    ["Sentinel of the Cache", "tracks/sentinel_of_the_cache.mp3"],
+    ["Midnight Siege", "tracks/midnight_siege.mp3"],
+    ["Crown on the Concrete", "tracks/crown_on_the_concrete.mp3"],
+    ["Sphinx in a Gown", "tracks/sphinx_in_a_gown.mp3"],
+    ["Sovereign at the Threshold", "tracks/sovereign_at_the_threshold.mp3"],
+    ["Steel in the Silk", "tracks/steel_in_the_silk.mp3"],
+    ["Velvet in the Trench", "tracks/velvet_in_the_trench.mp3"],
+    ["Steel in the Silk Purse", "tracks/steel_in_the_silk_purse.mp3"]
+  ];
+  var BONUS = [
+    ["The Main Event (alternate take)", "tracks/the-main-event-alt-take.mp3"],
+    ["Steel in the Silk Purse (Resonantia master)", "tracks/steel-in-the-silk-purse-resonantia.mp3"]
+  ];
+  var au = document.getElementById('au'), now = document.getElementById('now');
+  var flat = MAIN.concat(BONUS), rows = [];
+  function build(list, el, offset) {
+    list.forEach(function (t, i) {
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.innerHTML = '<span>' + (offset + i + 1) + '. ' + t[0] + '</span><span>▶</span>';
+      b.addEventListener('click', function () { play(offset + i); });
+      li.appendChild(b); el.appendChild(li); rows.push(li);
+    });
+  }
+  build(MAIN, document.getElementById('list'), 0);
+  build(BONUS, document.getElementById('bonus'), MAIN.length);
+  var cur = -1;
+  function play(n) {
+    cur = n;
+    au.src = flat[n][1];
+    au.play();
+    now.textContent = 'Now playing: ' + flat[n][0];
+    rows.forEach(function (r, i) { r.className = i === n ? 'playing' : ''; });
+  }
+  au.addEventListener('ended', function () { if (cur + 1 < flat.length) play(cur + 1); });
+</script>
+</body>
+</html>
