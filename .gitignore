@@ -1,0 +1,6 @@
+# The living books never leave the house: buyer names and money records stay local.
+ledger.jsonl
+receipts/
+coupons.txt
+config.json
+__pycache__/
