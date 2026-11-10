@@ -1,0 +1,49 @@
+{
+ "repairs_applied": 49,
+ "drift_text": "INTRODUCTIO: English 9 paragraph groups, Latin 8; paired 8, unpaired tail 1. CAPVT I: English 5 paragraph groups, Latin 7; paired 5, unpaired tail 2. CAPVT II: English 10 paragraph groups, Latin 13; paired 10, unpaired tail 3. CAPVT III: English 12 paragraph groups, Latin 15; paired 12, unpaired tail 3.",
+ "residue_text": "17 garbled or unresolved tokens stand across Brick 1's Latin (17 distinct forms: afrkiamur, ccmpcfta, effecl, efficut, eflk, facli, fadu, fen, firaul, fj, fme, forie, fra, frry, iutef, mentafem, recluruseft).",
+ "residue_tokens": {
+  "effecl": 1,
+  "recluruseft": 1,
+  "fadu": 1,
+  "fj": 1,
+  "afrkiamur": 1,
+  "fen": 1,
+  "ccmpcfta": 1,
+  "efficut": 1,
+  "facli": 1,
+  "mentafem": 1,
+  "firaul": 1,
+  "fme": 1,
+  "frry": 1,
+  "fra": 1,
+  "forie": 1,
+  "iutef": 1,
+  "eflk": 1
+ },
+ "units": [
+  {
+   "key": "intro",
+   "pairs": 9
+  },
+  {
+   "key": "chI",
+   "pairs": 7
+  },
+  {
+   "key": "chII",
+   "pairs": 13
+  },
+  {
+   "key": "chIII",
+   "pairs": 15
+  }
+ ],
+ "pages": 38,
+ "toc": {
+  "intro": 6,
+  "chI": 10,
+  "chII": 14,
+  "chIII": 26
+ }
+}

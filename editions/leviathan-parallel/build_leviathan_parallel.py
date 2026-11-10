@@ -1,0 +1,1143 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+93
+
+"Non est super terram potestas quae comparetur ei." — Job 41, the
+verse Hobbes himself cites at the end of his twenty-eighth chapter.
+
+LEVIATHAN — A PARALLEL EDITION (MAGVS). The English of 1651 facing
+the Latin of 1668, built in bricks, pushed as it grows.
+
+Authorship attributed exclusively to Johnathan 'Qasparr' Monroe
+(Greek, -ARR, All Rights Reserved, Without Prejudice)
+X day of November, Dies Martis, Sol in Scorpio,
+Anno V:xii e.n. (2026 e.v.)
+
+Scientific Illuminism: the Method of Science, the Aim of Religion.
+
+Flagpole of Claim and Coinage: Johnathan 'Qasparr' Monroe, ARR, All
+Rights Reserved, Without Prejudice. Right of claim hereby reserved and
+coined under the authority of the Living Man. — The Flagpole on this
+volume claims THE EDITION AND THE APPARATUS ONLY. Thomas Hobbes's
+texts, English and Latin, are public domain; no claim reaches for
+them, and the title page of the built book says so in plain words.
+
+MECHANISM / DOCTRINE — how this builder works, and why:
+
+  INPUT   English: Project Gutenberg eBook #3207, the text of record
+          secured at this program's founding (2026-11-02), file
+          editions/leviathan/source/pg3207.txt, SHA-256
+          3de1e492641d939567a8b0de827fb13e1ad992324f9ac8b204f
+          60475009b7294 — re-asserted byte for byte on every run,
+          exactly as the parent edition's builder asserts it.
+          Latin: Internet Archive item leviathansivedem00hobb, the
+          1668 Blaeu Latin Leviathan (Amsterdam), file
+          source/leviathansivedem00hobb_djvu.txt, SHA-256
+          5a364c05fb3dc6cdf03ad6cb273835368911ef5aa0a935d011467b9501
+          c62b4d — asserted on every run. Full provenance, hashes,
+          defect register, and the honest list of what was NOT done:
+          SOURCE-LEDGER.md in this directory. The Latin is a
+          SINGLE-WITNESS OCR TEXT (ABBYY OCR, Archive confidence 74)
+          and is labelled so wherever the book speaks of it.
+  PROCESS The English is parsed by the parent edition's own census
+          logic (Introduction + chapters by CHAPTER headings). The
+          Latin is extracted by content seams (SOURCE-LEDGER §III.4)
+          and cleaned ONLY by the declared classes printed in this
+          file: running-head and display-debris removal; line-end
+          dehyphenation; punctuation spacing; the ampersand classes
+          (& = et; intra-word & = the ct ligature; &c/8c/6c = etc.);
+          the long-s restoration (the 1668 ſ, which the OCR renders
+          "f", is restored to s ONLY under the ordered rule table
+          below — protected genuine-f stems stand; unresolved and
+          garbled tokens stand as the OCR gave them and are counted
+          in the build report and the brick's collation notes); the
+          listed token repairs (fused-word splits, drop-cap
+          restoration, margin-debris removal) — every repair is data
+          in this file and is printed in the book's apparatus.
+          The Latin's own orthography otherwise stands AS PRINTED
+          in 1668 (u/v, i/j as the OCR carries them): this house's
+          epigraphic respelling governs the house's own Latin only,
+          never Hobbes's text.
+          ALIGNMENT: units pair by chapter; within a unit, blocks
+          pair by index (a margin note travels with the paragraph
+          it heads). A pagination planner measures every block on a
+          scratch document at final measure, then packs pairs into
+          spreads — Latin on the verso (even leaf), English on the
+          recto (odd leaf) — closing a spread when either face
+          would overflow. Divergence (block-count drift, unpaired
+          tails) is measured and printed in the collation notes,
+          never silently harmonized.
+  OUTPUT  LEVIATHAN-PARALLEL-MAGVS.pdf — cumulative: each brick
+          rebuilds the whole book to date (front matter, all units
+          built so far, the brick's collation notes, Table of
+          Authorities, Colophon). Multi-pass until the contents
+          page is stable, as in the parent edition.
+  TOLERANCE  Any step that would change a word of Hobbes beyond the
+          declared classes fails the edition. Any Latin reading not
+          traceable to the secured OCR text through a declared
+          class fails the edition. The builder asserts both source
+          hashes, the English chapter census, every Latin seam,
+          and the contents stability before it writes the file.
+
+  FONT TOLERANCE, declared: this host's DejaVu Serif carries no
+  italic face; the body is set in DejaVu Serif regular/bold as the
+  commission specifies, and emphasis is carried by furniture
+  (spacing, small heads), never by a synthetic oblique.
+
+  fpdf2 discipline (house gotcha, AGENTS.md 2026-10-04): every
+  multi_cell is called with new_x=XPos.LMARGIN, new_y=YPos.NEXT so
+  the pen returns to the left margin instead of dying at the right.
+"""
+
+import hashlib
+import json
+import re
+import sys
+from pathlib import Path
+
+from fpdf import FPDF
+from fpdf.enums import XPos, YPos
+
+# ----------------------------------------------------------------------
+# Paths, hashes, constants
+# ----------------------------------------------------------------------
+HERE = Path(__file__).resolve().parent
+EN_SOURCE = HERE.parent / "leviathan" / "source" / "pg3207.txt"
+LA_SOURCE = HERE / "source" / "leviathansivedem00hobb_djvu.txt"
+LOGO = Path.home() / "workspace" / "templates" / "doctrine-logo.png"
+OUT = HERE / "LEVIATHAN-PARALLEL-MAGVS.pdf"
+REPORT = HERE / "build-report.json"
+
+EN_SHA256 = ("3de1e492641d939567a8b0de827fb13e1ad992324f9ac8b204f"
+             "60475009b7294")
+LA_SHA256 = ("5a364c05fb3dc6cdf03ad6cb273835368911ef5aa0a935d011467b9501"
+             "c62b4d")
+
+DEJAVU = "/usr/share/fonts/truetype/dejavu"
+
+FLAGPOLE = ("Flagpole of Claim and Coinage: Johnathan 'Qasparr' Monroe, "
+            "ARR, All Rights Reserved, Without Prejudice. Right of claim "
+            "hereby reserved and coined under the authority of the "
+            "Living Man.")
+THELEMIC_DATE = ("X day of November, Dies Martis, Sol in Scorpio, "
+                 "Anno V:xii e.n. (2026 e.v.)")
+FOOTER = ("— {n} of {m} — | All Rights Reserved, Without Prejudice | "
+          "Flagpole of Claim and Coinage reserved")
+PUBLISHER = "Published by Bleats Publishing Group"
+PROPRIETOR = ("SPARROW (Sole Proprietorship) — Johnathan 'Qasparr' "
+              "Monroe, Proprietor, legal publisher of record")
+
+ROMANS = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
+          "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII",
+          "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI",
+          "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII",
+          "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL",
+          "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII"]
+
+# Brick register: (unit key, English title, Latin title). The build is
+# cumulative; a brick ships when its units stand in this list.
+UNITS_ALL = [
+    ("intro", "THE INTRODUCTION", "INTRODUCTIO"),
+    ("chI", "CHAPTER I — Of Sense", "CAPVT I — De Sensu"),
+    ("chII", "CHAPTER II — Of Imagination", "CAPVT II — De Imaginatione"),
+    ("chIII", "CHAPTER III — Of Consequence, or Train of Imaginations",
+     "CAPVT III — De Consequentia sive Serie Imaginationum"),
+]
+BRICK = 1
+UNITS_BUILT = UNITS_ALL[:4]          # Brick 1: Intro + Part I, Ch. 1–3
+
+# Latin seams in the secured djvu text, 1-based lines, by content
+# (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
+LA_SEAMS = {
+    "intro": (114, 210),
+    "chI": (213, 278),
+    "chII": (280, 504),
+    "chIII": (506, 705),
+}
+
+# ----------------------------------------------------------------------
+# The Latin cleaning classes (declared in the ledger and the Preface)
+# ----------------------------------------------------------------------
+# Running heads / display debris: whole lines the edition never sets.
+LA_DROP_LINE_RES = [
+    re.compile(r"^Cap\. \d+;?\.?\s+.*\d+,$"),              # "Cap. 4; De Homint. 13,"
+    re.compile(r"^\d+\s+De Homine\. Cap\. \d+\.$"),        # "14 De Homine. Cap. 4."
+    re.compile(r"^Cap\. [a-z0-9]+\. .* \d+$"),             # "Cap. i. De Hominc. 5"
+    re.compile(r"^C\s*A-?$"),                              # drop-cap debris "C A-"
+    re.compile(r"^[JjH\|\^\s]+$"),                         # initial-border debris
+    re.compile(r"^LE\s+VIATHAN$"),
+    re.compile(r"^P\s*A\s*R\s*S.*PRIMA$"),
+    re.compile(r"^D\s*E\s+H\s*O\s*M\s*I\s*N\s*E\.$"),
+    re.compile(r"^C\s*A\s*P\s*V\s*T.*$"),                  # chapter display lines
+    re.compile(r"^G\s*A\s*P\s*V\s*T.*$"),                  # (OCR's G for C)
+    re.compile(r"^De\s+(Senfu|Imaginatione|Confequcntia|Strmone)\.$"),
+    re.compile(r"^\d{1,3}$"),                              # bare page numerals
+    re.compile(r"^\d+\s+De\s+\w+\.\s+Cap\.\s*[a-z0-9]+\.?$"),  # "2 De Bemine. Cap. i."
+    re.compile(r"^L\w{2,5}t\.$"),                          # signature "Leviat." as OCR'd
+]
+
+# Whole blocks that are press furniture (signature marks), never text.
+LA_FURNITURE_BLOCKS = {"b bb", "b b b"}
+
+# Margin-debris shards fused into body lines by the OCR (Capvt III,
+# the Conjectura locus): removed, and the margin note restored as a
+# subhead at the same locus — see REPAIR_NOTES in the apparatus data.
+LA_DEBRIS_TOKENS = {"Ctxje8ura", "T-venti."}
+
+# Listed token repairs: OCR reading -> restored reading. Fused-word
+# splits restore a word boundary; drop-cap and ligature repairs
+# restore a certain letter. Every entry is printed in the apparatus.
+LA_REPAIRS = {
+    "Aturam": "[N]aturam",          # the Introduction's drop cap
+    "ideft": "id est", "aliudeft": "aliud est", "noneft": "non est",
+    "noneftj": "non est", "cumfit": "cum sit", "tantumfit": "tantum sit",
+    "quaeeft": "quae est", "futuraefunt": "futurae sunt",
+    "fivefacultatem": "sive facultatem",
+    "fomniumdiftinguere": "somnium distinguere",
+    "fcientiamquamlibetacquirere": "scientiam quamlibet acquirere",
+    "aliaquelocaconfecrata": "aliaque loca consecrata",
+    "phantalmahabuiflehorribile": "phantasma habuisse horribile",
+    "corporisfentientis": "corporis sentientis",
+    "cordiumfuorum": "cordium suorum",
+    "defuturotempore": "de futuro tempore",
+    "minuseftin": "minus est in", "tamfortuitaeft": "tam fortuita est",
+    "tantumexiftunt": "tantum existunt",
+    "confequcntia": "consequentia", "ccnfiquens": "consequens",
+    "qu£": "quae", "pra?fumtio": "praesumptio",
+    "prasceffit": "praecessit", "praeceitifte": "praecessisse",
+    "prasfenti": "praesenti", "prasfentis": "praesentis",
+    "prasfumptio": "praesumptio", "raanifeftum": "manifestum",
+    "senftonem": "sensionem", "fadtorum": "factorum",
+    "Tinitum": "Finitum", "bonoremns": "honoremus",
+    "inpartes": "in partes", "adionefque": "actionesque",
+    "farcilegiam": "sacrilegiam", "fururis": "futuris",
+    "fuura": "futura", "elafirum": "elastrum", "elaftris": "elastris",
+    "objetlum": "Objectum", "disleremus": "disseremus",
+    "neceslaria": "necessaria", "obstatquo": "obstat quo",
+    "minusdicamus": "minus dicamus", "dcus": "Deus",
+    "arshumana": "Ars humana", "rotuke": "rotulae",
+    "nobilislimum": "nobilissimum", "opisicium": "opificium",
+    "chrisiiana": "Christiana",
+    # Capvt II, first paragraph (a noisier leaf; one-letter OCR
+    # substitutions in certain words, sense fixed by the parallel
+    # English at the same locus):
+    "esle": "esse", "elte": "esse", "movealur": "moveatur",
+    "seipsumj": "seipsum", "alirs": "aliis",
+    "quasidesesla": "quasi desessa", "siia": "sua",
+    "succeslionem": "successionem",
+}
+# Repairs are keyed case-insensitively; the values carry the case.
+LA_REPAIRS = {k.lower(): v for k, v in LA_REPAIRS.items()}
+
+# FACSIMILE OVERRIDE — the Introduction's first printed page (1668
+# p. 1; secured PDF leaf 9). The machine reading of this art page is
+# shard-ridden past the reach of the token classes (the decorated
+# initial's column interleaves the text). The leaf was rendered from
+# the secured PDF and read at the desk; the blocks below are that
+# reading, with the press's & resolved under the declared ampersand
+# class and its ſ under the rule table. Basis: SOURCE-LEDGER
+# amendment of 2026-11-10 (spot adjudication at a named locus).
+LA_FACSIMILE_INTRO = [
+    {"text": "[N]aturam, id est, illam, qua Mundum Deus condidit "
+             "et gubernat, divinam Artem, eatenus imitatur Ars "
+             "humana, ut possit inter alia producere artificiale "
+             "Animal. Cum enim vita nihil aliud sit quam artuum "
+             "motus, cujus principium est internum in parte aliqua "
+             "Corporis principali, Quid obstat quo minus dicamus, "
+             "Automata omnia, sive machinas omnes quae ab Elastris "
+             "Rotulisque intus dispositis motum habent, ut Horologia "
+             "in seipsis, habere etiam artificialem vitam? Quid est "
+             "cor, nisi Elastrum, quid Nervi, nisi chordae, quid "
+             "articuli, nisi totidem rotulae, motum, qualem voluit "
+             "artifex, toti corpori impertientes? Neque animal "
+             "tantum imitatur Ars, sed etiam nobilissimum animalium, "
+             "Hominem. Magnus ille Leviathan, quae Civitas "
+             "appellatur, opificium Artis est, et Homo artificialis, "
+             "quanquam Homine naturali (propter cujus protectionem "
+             "et salutem excogitatus est) et mole et robore multo "
+             "major. In quo Is qui summam habet Potestatem, pro "
+             "Anima est, corpus totum vivificante et movente. "
+             "Magistratus et Praefecti, artificiales Artus. Praemia "
+             "et Poenae summae Potestati appensae, et a quibus "
+             "Membra ad suum cujusque opus perficiendum incitantur, "
+             "Nervi sunt, qui idem faciunt in corpore naturali. "
+             "Divitiae singularium hominum sunt pro robore. Salus "
+             "populi, pro Negotio. Consiliarii per quos ea, quae "
+             "cognitu necessaria illi sunt, suggeruntur pro Memoria "
+             "sunt. AEquitas Legesque pro artificiali Ratione. "
+             "Concordia, sanitas est. Seditio, Morbus. Bellum "
+             "civile, Mors. Postremo Pacta quibus partes corporis "
+             "hujus politici conglutinantur, imitantur divinum "
+             "illud verbum Fiat, sive Faciamus Hominem, a Deo "
+             "prolatum in principio cum crearet Mundum."},
+    {"text": "Hominis hujus Artificialis naturam describens, "
+             "considerabo"},
+    {"text": "1. Materiam ejus, et Artificem, id est Hominem."},
+    {"text": "2. Quo modo, et quibus Pactis factus est; quae Iura, "
+             "quae Potestas sive Authoritas ejus est; et in quo "
+             "residet Potestas summa."},
+    {"text": "3. Quid est Civitas Christiana."},
+    {"text": "4. Quid est Regnum Tenebrarum."},
+]
+
+# Garbles that stand as the OCR gave them (counted as residue in the
+# report and the apparatus). No guessing: the facsimile adjudication
+# of these loci is UNCHARTED.
+LA_RESIDUE = {
+    "afrkiamur", "ccmpcfta", "ccmpftta", "culofi", "eflk", "effecl",
+    "efficut", "facli", "firaul", "frry", "fri", "fra", "flu", "fj",
+    "fme", "iutef", "mentafem", "nifcor", "defun", "fadu", "forie",
+    "fa", "efre", "recluruseft", "toteftaifumma",
+    "tftfjquihominipeculiariseft", "fen", "fin", "pof", "ft",
+}
+
+# Genuine-f protection: stems whose f is the press's real f, not ſ.
+# (Initial-stem patterns evaluated on the lowercase token.)
+LA_PROTECT_STEMS = (
+    "fac", "faci", "fact", "facul", "fabul", "facin", "fam", "fast",
+    "faun", "fall", "fem", "fenestr", "fenestr", "figment", "figur",
+    "fid", "fili", "filu", "final", "finis", "finit", "finem", "firm",
+    "fix", "flam", "flor", "fluct", "fluid", "fore", "form", "fort",
+    "foss", "fue", "fui", "fut", "fulg", "fund", "funct", "frequen",
+    "fret",
+)
+# Medial genuine-f stems (assimilation and facio-compounds): a token
+# containing one of these keeps the f inside the stem.
+LA_PROTECT_MEDIAL = (
+    "effic", "effect", "affic", "offic", "suffic", "profic", "infic",
+    "perfic", "refic", "defici", "confic", "diffic", "differ",
+    "defin", "confus", "confut", "artif",
+)
+LA_PROTECT_TOKENS = {
+    "fecit", "feci", "fecisse", "seu", "fore", "forte", "fortis",
+    "falsa", "falsi", "falsum", "falso", "falsae", "falsis",
+    "stupefiunt",
+}
+
+
+def _long_s_token(tok):
+    """Restore one token under the ordered long-s rules. Returns the
+    restored token. Case: rules run on the lowercase form; an initial
+    capital is restored after mapping."""
+    if not tok or not any(c.isalpha() for c in tok):
+        return tok
+    cap = tok[0].isupper()
+    t = tok.lower()
+    if t in LA_RESIDUE:
+        return tok
+    if t in LA_REPAIRS:
+        r = LA_REPAIRS[t]
+        return (r[0].upper() + r[1:]) if cap and r[0].islower() else r
+    # R0: the OCR's "fb" digraph reads the 1668 ſo (no native Latin fb).
+    t2 = t.replace("fb", "so")
+    if "f" not in t2:
+        return (t2[0].upper() + t2[1:]) if cap and t2 else t2
+    # Protection: whole-token and stem classes stand as printed.
+    if t2 in LA_PROTECT_TOKENS:
+        return tok
+    if t2.startswith("falf"):            # falſ- : first f genuine
+        r = "fals" + t2[4:].replace("f", "s")
+        return (r[0].upper() + r[1:]) if cap else r
+    if t2.startswith("fugg"):            # ſugger- (suggero)
+        r = "sugg" + t2[4:].replace("f", "s")
+        return (r[0].upper() + r[1:]) if cap else r
+    if any(m in t2 for m in LA_PROTECT_MEDIAL):
+        # keep the stem's f; map f outside the leftmost protected stem
+        m = min((t2.find(m), m) for m in LA_PROTECT_MEDIAL if m in t2)
+        i, stem = m
+        head = t2[:i].replace("f", "s")
+        tail = t2[i + len(stem):].replace("f", "s")
+        r = head + stem + tail
+        return (r[0].upper() + r[1:]) if cap else r
+    if t2.startswith(LA_PROTECT_STEMS):
+        # initial f genuine; medial f still maps (e.g. a protected
+        # stem carrying a later ſ) except where a medial stem rules.
+        r = t2[0] + t2[1:].replace("f", "s")
+        return (r[0].upper() + r[1:]) if cap else r
+    # fer- splits: genuine ferre/ferrum stems stand, else ſer-.
+    if t2.startswith(("fert", "ferr", "fertil", "fervor")):
+        r = t2[0] + t2[1:].replace("f", "s")
+        return (r[0].upper() + r[1:]) if cap else r
+    # Medial ff: ſſ -> ss, except protected assimilation stems above
+    # and word-initial off- (offendere family keeps its ff).
+    if "ff" in t2 and not t2.startswith("off"):
+        t2 = t2.replace("ff", "ss")
+    r = t2.replace("f", "s")
+    return (r[0].upper() + r[1:]) if cap else r
+
+
+def clean_latin_lines(lines):
+    """Apply the declared cleaning classes to a unit's raw OCR lines.
+    Returns a list of blocks: {"text": ...} prose, {"note": ...}
+    margin notes (mirroring the English parse's furniture)."""
+    kept = []
+    for ln in lines:
+        s = ln.strip()
+        if any(rx.match(s) for rx in LA_DROP_LINE_RES):
+            continue
+        kept.append(ln)
+    # Join into blocks on blank lines, dehyphenating line ends.
+    blocks, cur = [], []
+    for ln in kept:
+        if ln.strip() == "":
+            if cur:
+                blocks.append(cur)
+                cur = []
+        else:
+            cur.append(ln.strip())
+    if cur:
+        blocks.append(cur)
+    out = []
+    for blk in blocks:
+        # dehyphenate + join
+        text = ""
+        for i, piece in enumerate(blk):
+            piece = " ".join(t for t in piece.split()
+                             if t not in LA_DEBRIS_TOKENS)
+            if i == 0:
+                text = piece
+            elif text.endswith("-") and piece[:1].islower():
+                text = text[:-1] + piece
+            elif text.endswith("-"):
+                text = text[:-1] + piece
+            else:
+                text = text + " " + piece
+        # ampersand classes (declared)
+        text = re.sub(r"\b[86]c\b", "etc.", text)
+        text = re.sub(r"&c\b", "etc.", text)
+        text = re.sub(r"(?<=[A-Za-z])&(?=[A-Za-z])", "ct", text)
+        text = text.replace(" & ", " et ")
+        # token-level long-s restoration + repairs
+        text = re.sub(r"[A-Za-zÀ-ÿ£?]+",
+                      lambda m: _long_s_token(m.group(0)), text)
+        # punctuation spacing (typographic only)
+        text = re.sub(r"\s+([,.;:!?])", r"\1", text)
+        text = re.sub(r"\s+", " ", text).strip()
+        if not text:
+            continue
+        if text in LA_FURNITURE_BLOCKS:
+            continue
+        # margin note: a single short line-block standing alone
+        if (len(blk) == 1 and len(text.split()) <= 9 and len(text) <= 78
+                and text[0].isupper()):
+            out.append({"note": text})
+        else:
+            out.append({"text": text})
+    # Catchwords: a one-word block that repeats the next block's
+    # first word is the press's catchword, not text. Declared class.
+    dedup = []
+    for i, b in enumerate(out):
+        words = (b.get("text") or b.get("note") or "").split()
+        if len(words) == 1 and i + 1 < len(out):
+            nxt = (out[i + 1].get("text")
+                   or out[i + 1].get("note") or "").split()
+            if nxt and nxt[0].strip(",.;:") == words[0].strip(",.;:"):
+                continue
+        dedup.append(b)
+    out = dedup
+    # Leaf-break rejoin: the machine reading breaks the text at
+    # every scanned leaf, and dropping the running heads leaves one
+    # paragraph standing as two blocks. A prose block that ends
+    # without terminal punctuation, followed by a prose block that
+    # opens lowercase, is one paragraph across the leaf; rejoin it.
+    # Declared class; margin notes break the chain, as they should.
+    rejoined = []
+    for b in out:
+        if (rejoined and "text" in b and "text" in rejoined[-1]
+                and rejoined[-1]["text"]
+                and rejoined[-1]["text"][-1] not in ".?!"
+                and b["text"][:1].islower()):
+            rejoined[-1] = {"text": rejoined[-1]["text"] + " "
+                            + b["text"]}
+        else:
+            rejoined.append(b)
+    out = rejoined
+    # The Conjectura margin note, restored at its debris locus (the
+    # shards stood inside Capvt III's prudence passage; the note is
+    # set as Hobbes set it, in the margin — here, as a subhead).
+    for i, b in enumerate(out):
+        if "text" in b and b["text"].startswith(
+                "Sicut Prudentia est praesumptio Futuri"):
+            out.insert(i, {"note": "Conjectura eventi."})
+            break
+    return out
+
+
+# ----------------------------------------------------------------------
+# English source preparation (the parent edition's census logic)
+# ----------------------------------------------------------------------
+CHAP_RE = re.compile(r"^CHAPTER ([IVXL]+)\.?\s*(.*)$")
+
+
+def _en_blocks(lines, notes=True):
+    raw_blocks, cur = [], []
+    for ln in lines:
+        if ln.strip() == "":
+            if cur:
+                raw_blocks.append(cur)
+                cur = []
+        else:
+            cur.append(ln)
+    if cur:
+        raw_blocks.append(cur)
+    out = []
+    for blk in raw_blocks:
+        text = " ".join(s.strip() for s in blk)
+        text = re.sub(r"\s+", " ", text).strip()
+        if not text:
+            continue
+        if (notes and len(blk) == 1 and len(text) <= 78
+                and len(text.split()) <= 9
+                and text[-1] not in ".;:!?,"
+                and text[0].isupper()):
+            out.append({"note": text})
+        else:
+            out.append({"text": text})
+    return out
+
+
+def load_english_units():
+    raw = EN_SOURCE.read_text(encoding="utf-8").replace("\r\n", "\n")
+    assert hashlib.sha256(EN_SOURCE.read_bytes()).hexdigest() == EN_SHA256
+    lines = raw.split("\n")
+    intro_at = next(i for i, ln in enumerate(lines)
+                    if ln.strip() == "THE INTRODUCTION")
+    finis_at = next(i for i, ln in enumerate(lines)
+                    if ln.strip() == "FINIS")
+    body = lines[intro_at:finis_at]
+    units, cur, i = [], None, 0
+
+    def flush():
+        nonlocal cur
+        if cur is not None:
+            units.append(cur)
+        cur = None
+
+    while i < len(body):
+        s = body[i].strip()
+        m = CHAP_RE.match(s)
+        if m:
+            flush()
+            heading = [s]
+            i += 1
+            while i < len(body) and body[i].strip() != "":
+                heading.append(body[i].strip())
+                i += 1
+            cur = {"kind": "chapter", "num": m.group(1),
+                   "key": "ch" + m.group(1),
+                   "title": " ".join(heading), "lines": []}
+            continue
+        if s == "A REVIEW, AND CONCLUSION":
+            flush()
+            cur = {"kind": "review", "key": "review",
+                   "title": s, "lines": []}
+            i += 1
+            continue
+        if cur is None:
+            cur = {"kind": "intro", "key": "intro",
+                   "title": "THE INTRODUCTION", "lines": []}
+        cur["lines"].append(body[i])
+        i += 1
+    flush()
+    nums = [u["num"] for u in units if u["kind"] == "chapter"]
+    assert nums == ROMANS, f"English census failed: {nums[:6]}"
+    out = {}
+    for u in units:
+        u["blocks"] = _en_blocks(u.pop("lines"))
+        out[u["key"]] = u
+    return out
+
+
+def load_latin_units():
+    raw = LA_SOURCE.read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == LA_SHA256
+    lines = raw.decode("utf-8", errors="replace").split("\n")
+    out = {}
+    for key, (a, b) in LA_SEAMS.items():
+        seam = lines[a - 1:b]
+        assert seam, f"empty Latin seam for {key}"
+        out[key] = clean_latin_lines(seam)
+    # The Introduction's first page is set from the facsimile
+    # reading (LA_FACSIMILE_INTRO): the machine reading's first five
+    # blocks (the great paragraph and the considerabo list) are
+    # replaced, after asserting they are the blocks expected.
+    intro = out["intro"]
+    assert intro[0].get("text", "").startswith("[N]aturam"), \
+        "Introduction incipit seam failed"
+    assert any("Regnum" in (blk.get("text") or "")
+               for blk in intro[:6]), "considerabo list seam failed"
+    del intro[:5]
+    out["intro"] = LA_FACSIMILE_INTRO + intro
+    assert not any("Typographicae" in (blk.get("text") or "")
+                   for blk in out["chIII"]), "Ch. IV seam overrun"
+    return out
+
+
+# ----------------------------------------------------------------------
+# Pairing + pagination planning
+# ----------------------------------------------------------------------
+def pair_blocks(en_blocks, la_blocks):
+    """Pair by index; a note block travels attached to the prose
+    block that follows it (it is that paragraph's margin head)."""
+    def attach(blocks):
+        out, pending = [], []
+        for b in blocks:
+            if "note" in b:
+                pending.append(b)
+            else:
+                out.append(pending + [b])
+                pending = []
+        if pending:
+            out.append(pending)
+        return out
+    en_g, la_g = attach(en_blocks), attach(la_blocks)
+    pairs = []
+    for i in range(max(len(en_g), len(la_g))):
+        pairs.append({
+            "en": en_g[i] if i < len(en_g) else None,
+            "la": la_g[i] if i < len(la_g) else None,
+        })
+    return pairs, len(en_g), len(la_g)
+
+
+PAGE_W, PAGE_H = 215.9, 279.4          # Letter
+MARG_L, MARG_R, MARG_T = 22.0, 22.0, 20.0
+TEXT_W = PAGE_W - MARG_L - MARG_R
+BODY_BOTTOM = PAGE_H - 18.0            # footer reserve
+USABLE_H = BODY_BOTTOM - MARG_T
+
+BODY_SIZE, BODY_H = 10.5, 5.6
+NOTE_SIZE, NOTE_H = 9.0, 4.6
+
+
+def measure(pdf, blocks, lang):
+    """Height in mm of a block list on a scratch document."""
+    if not blocks:
+        return 0.0
+    h = 0.0
+    for b in blocks:
+        if "note" in b:
+            pdf.set_font("dejavu", "B", NOTE_SIZE)
+            n = len(pdf.multi_cell(TEXT_W, NOTE_H, b["note"],
+                                   dry_run=True, output="LINES"))
+            h += n * NOTE_H + 2.2
+        else:
+            pdf.set_font("dejavu", "", BODY_SIZE)
+            n = len(pdf.multi_cell(TEXT_W, BODY_H, b["text"],
+                                   dry_run=True, output="LINES"))
+            h += n * BODY_H + 2.4
+    return h
+
+
+def plan_spreads(pdf, units):
+    """units: list of dicts with pairs + titles. Returns a plan:
+    list of unit-plans, each a list of spreads; a spread is
+    {"la": [pair-indices], "en": [pair-indices]} — indices into the
+    unit's pair list, each side carrying its own face's blocks."""
+    plan = []
+    for u in units:
+        spreads, cur, la_h, en_h = [], None, 0.0, 0.0
+
+        def new_spread():
+            return {"la": [], "en": []}
+        cur = new_spread()
+        HEAD_H = 26.0
+        la_h = en_h = HEAD_H
+        for idx, pair in enumerate(u["pairs"]):
+            hl = measure(pdf, pair["la"], "la") if pair["la"] else 0.0
+            he = measure(pdf, pair["en"], "en") if pair["en"] else 0.0
+            if (la_h + hl > USABLE_H - 6.0
+                    or en_h + he > USABLE_H - 6.0) \
+                    and (cur["la"] or cur["en"]):
+                spreads.append(cur)
+                cur = new_spread()
+                la_h = en_h = 0.0
+            cur["la"].append((idx, pair["la"]))
+            cur["en"].append((idx, pair["en"]))
+            la_h += hl
+            en_h += he
+        if cur["la"] or cur["en"]:
+            spreads.append(cur)
+        plan.append({"unit": u, "spreads": spreads})
+    return plan
+
+
+# ----------------------------------------------------------------------
+# The book
+# ----------------------------------------------------------------------
+class Book(FPDF):
+    folio_total = None
+
+    def footer(self):
+        self.set_y(-14)
+        self.set_font("dejavu", "", 7.5)
+        self.set_text_color(90, 90, 90)
+        total = self.folio_total if self.folio_total else "{nb}"
+        self.cell(0, 8, FOOTER.format(n=self.page_no(), m=total),
+                  align="C")
+        self.set_text_color(0, 0, 0)
+
+
+def para(pdf, text, size=BODY_SIZE, height=BODY_H, align="J",
+         space_after=2.4, style="", font="dejavu"):
+    pdf.set_font(font, style, size)
+    pdf.multi_cell(0, height, text, align=align,
+                   new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    pdf.ln(space_after)
+
+
+def centered(pdf, text, size, height=6.0, style="B", space_after=0.0,
+             color=None, font="dejavu"):
+    if color:
+        pdf.set_text_color(*color)
+    pdf.set_font(font, style, size)
+    pdf.multi_cell(0, height, text, align="C",
+                   new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    if color:
+        pdf.set_text_color(0, 0, 0)
+    pdf.ln(space_after)
+
+
+GOLD = (146, 110, 20)
+GREEN = (20, 110, 60)
+GREY = (90, 90, 90)
+
+
+def head_rule(pdf, space_before=2.0, space_after=4.0):
+    pdf.ln(space_before)
+    pdf.set_draw_color(*GOLD)
+    pdf.set_line_width(0.4)
+    pdf.line(MARG_L, pdf.get_y(), PAGE_W - MARG_R, pdf.get_y())
+    pdf.ln(space_after)
+
+
+def roman_head(pdf, numeral, title):
+    centered(pdf, f"§{numeral}", 11, color=GOLD, space_after=1.0)
+    centered(pdf, title, 13.5, space_after=2.0)
+    head_rule(pdf)
+
+
+# ----------------------------------------------------------------------
+# Front matter (Brick 1 form; grows by amendment, never silently)
+# ----------------------------------------------------------------------
+PREFACE = [
+    ("I", "WHY TWO FACES",
+     ["This edition sets Thomas Hobbes's Leviathan twice on the "
+      "same opening: the English of 1651 on the right-hand page, the "
+      "Latin of 1668 on the left. Hobbes made both books. The Latin "
+      "is no translation hung upon the English for ornament; it is "
+      "the author at work again, seventeen years on, in another "
+      "tongue, for another republic of readers — compressing here, "
+      "expanding there, and in one great structural stroke setting "
+      "an Appendix of three chapters where the English had closed "
+      "with A Review, and Conclusion.",
+      "A reader with both faces open can watch the same mind argue "
+      "in two registers. That is the whole case for a parallel "
+      "edition, and it needs no embellishment. Where the two texts "
+      "diverge, this edition prints the divergence in its collation "
+      "notes as evidence. It does not harmonize, and it does not "
+      "look away."]),
+    ("II", "THE SOURCES, IN BRIEF",
+     ["The English face is Project Gutenberg eBook #3207 — the text "
+      "of record of this program, secured at its founding on "
+      "2026-11-02 and re-verified by hash at every build; it descends "
+      "from the Pelican Classics edition, prepared from the first "
+      "edition of 1651. The Latin face is the Leviathan of the Opera "
+      "philosophica quae Latine scripsit omnia (Amsterdam: Joan "
+      "Blaeu, 1668), secured on 2026-11-10 from the Internet Archive "
+      "(item leviathansivedem00hobb) as that scan's machine-read "
+      "text, and verified by imprint, dedicatee, and its own printed "
+      "census before a page was built.",
+      "The Latin is therefore, and is labelled throughout, a "
+      "SINGLE-WITNESS OCR TEXT: machine reading of one scanned copy, "
+      "not a collated critical text. The full provenance, the "
+      "hashes of every secured file, the defect register, and the "
+      "honest list of what was not done stand in the edition's "
+      "SOURCE LEDGER, kept with the edition's working papers and "
+      "summarized in the apparatus of this volume."]),
+    ("III", "THE COLLATION METHOD",
+     ["The unit of alignment is the chapter; within the chapter, "
+      "paragraphs pair by order, Hobbes's marginal summaries riding "
+      "with the paragraphs they head. The planner measures both "
+      "faces and packs each opening so that paired paragraphs face "
+      "each other; when one face runs longer, the opening turns and "
+      "the drift is measured, not masked — each brick's collation "
+      "notes print the drift table for its chapters.",
+      "The Latin of 1668 is treated in this edition as a collation "
+      "witness with its own authority — the standing question of "
+      "this program's founding charter, whether the Latin should be "
+      "taken as a witness at all, is answered here in the practice: "
+      "yes, and its differences are the most instructive pages in "
+      "the book."]),
+    ("IV", "NORMALIZATIONS AND TOLERANCES, DECLARED",
+     ["The English face changes nothing: reflow and the parent "
+      "edition's furniture, as there declared. The Latin face "
+      "reproduces the 1668 text in its own orthography — u and v, "
+      "i and j stand as the press set them — normalized only by "
+      "declared classes: the press's long s, which machine reading "
+      "renders as f, is restored to s under a printed rule table "
+      "(genuine f, as in forma and finis, is protected; what the "
+      "rules cannot resolve stands as it was read, and is counted "
+      "in the apparatus as residue); line-end hyphens are joined; "
+      "the ampersand classes are resolved (the & of the press is "
+      "its et; within a word it is the ct ligature; &c is etc.); "
+      "running heads and the furniture of the folio page are not "
+      "set as text; decorative initials the machine reading split "
+      "or lost are restored in brackets and listed. Every one of "
+      "these is a typographic class, stated once here and binding "
+      "on every brick.",
+      "What the classes cannot honestly carry, the edition prints "
+      "as apparatus, not as Hobbes. First-edition facsimile "
+      "collation is UNCHARTED in this edition: loci that need it "
+      "are flagged, never resolved by preference. No Latin has "
+      "been fabricated, completed, or retranslated at any locus."]),
+]
+
+CONTENT_TEST = (
+    "THE FOUR-ELEMENT TEST OF THIS EDITION — Inputs: Gutenberg "
+    "#3207 (hash of record) and the 1668 Blaeu Latin via Internet "
+    "Archive leviathansivedem00hobb (hashes in the Source Ledger). "
+    "Processes: hash assertion, census assertion, seam extraction, "
+    "declared-class normalization, paragraph pairing, measured "
+    "spread planning, multi-pass contents stabilization. Outputs: "
+    "this volume, cumulative by brick, with its build report. "
+    "Tolerances: no word of Hobbes changed beyond the declared "
+    "classes; no Latin reading untraceable to the secured text; "
+    "divergence printed, never harmonized.")
+
+AUTHORITIES = [
+    "Hobbes, Thomas. Leviathan, or The Matter, Forme, & Power of a "
+    "Common-wealth Ecclesiasticall and Civill. London: Andrew "
+    "Crooke, 1651.",
+    "Hobbes, Thomas. Leviathan, sive De materia, forma, & potestate "
+    "civitatis ecclesiasticae et civilis. In: Opera philosophica "
+    "quae Latine scripsit omnia. Amsterdam: Joan Blaeu, 1668.",
+    "Project Gutenberg eBook #3207 (Leviathan), with its "
+    "Transcriber's Notes — the English text of record.",
+    "Internet Archive item leviathansivedem00hobb — catalogue record, "
+    "page-number index, and the secured files of the Source Ledger.",
+    "The Bible (Job 41) — the edition's motto, Hobbes's own citation.",
+    "Black's Law Dictionary, 2nd Edition (1910) — the parent "
+    "program's standing authority for terms of art in the apparatus.",
+]
+
+
+def front_matter(pdf, toc_entries):
+    """Returns nothing; composes the front matter. toc_entries is a
+    list of (label, folio-or-None) printed on the contents leaf; on
+    pass 1 folios may be None (printed as a fixed-width token)."""
+    # --- Title leaf ---
+    pdf.add_page()
+    if LOGO.exists():
+        pdf.image(str(LOGO), x=(PAGE_W - 34) / 2, y=18, w=34)
+    pdf.set_y(58)
+    centered(pdf, "LEVIATHAN", 30, height=11)
+    centered(pdf, "A PARALLEL EDITION  ·  (MAGVS)", 13, color=GOLD,
+             space_after=3)
+    centered(pdf, "THE ENGLISH OF 1651  FACING  THE LATIN OF 1668",
+             11.5, space_after=10)
+    centered(pdf, "Thomas Hobbes", 12.5, style="", space_after=14)
+    para(pdf, "The Flagpole on this volume claims the edition and "
+              "the apparatus only. Thomas Hobbes's texts, English "
+              "and Latin, are public domain; no claim reaches for "
+              "them.", size=9.5, height=5.2, align="C")
+    pdf.ln(6)
+    centered(pdf, "Authorship attributed exclusively to", 10,
+             style="", space_after=0)
+    centered(pdf, "Johnathan 'Qasparr' Monroe", 13, space_after=1)
+    centered(pdf, "(Greek, -ARR, All Rights Reserved, Without "
+                  "Prejudice)", 9.5, style="", space_after=6)
+    centered(pdf, THELEMIC_DATE, 10, style="", space_after=8)
+    centered(pdf, "Enterprise • Educational • Research & Development",
+             9.5, style="", space_after=1)
+    centered(pdf, "Method of Science, Aim of Religion", 9.5,
+             style="", space_after=10)
+    para(pdf, FLAGPOLE, size=9.5, height=5.2, align="C")
+    pdf.ln(8)
+    centered(pdf, PUBLISHER, 10.5, space_after=0)
+    centered(pdf, PROPRIETOR, 9, style="")
+    # --- Reviser's Preface ---
+    pdf.add_page()
+    centered(pdf, "REVISER'S PREFACE", 16, space_after=2)
+    centered(pdf, "TO THE PARALLEL EDITION", 11, color=GOLD,
+             space_after=4)
+    head_rule(pdf)
+    for num, title, paras in PREFACE:
+        roman_head(pdf, num, title)
+        for p in paras:
+            para(pdf, p)
+    para(pdf, CONTENT_TEST, size=9.5, height=5.2)
+    # --- Contents ---
+    pdf.add_page()
+    centered(pdf, "CONTENTS", 16, space_after=2)
+    head_rule(pdf)
+    for label, folio in toc_entries:
+        pdf.set_font("dejavu", "", 10.5)
+        tok = f"{folio:>4}" if folio is not None else "   —"
+        pdf.multi_cell(0, 6.0, f"{label}    {tok}", align="L",
+                       new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        pdf.ln(0.8)
+    para(pdf, "The edition is cumulative by brick: the contents "
+              "grow as the bricks land, and every brick is recorded "
+              "in the colophon.", size=9.5, height=5.2)
+
+
+def emit_blocks(pdf, blocks, side_label=None):
+    """Set a list of blocks (notes as centered subheads, prose as
+    justified paragraphs) at the current position."""
+    for b in blocks or []:
+        if "note" in b:
+            pdf.ln(1.0)
+            centered(pdf, b["note"], NOTE_SIZE, height=NOTE_H,
+                     style="B", space_after=1.2, color=GOLD)
+        else:
+            para(pdf, b["text"])
+
+
+def emit_parallel(pdf, plan, toc):
+    """Emit the planned spreads; record each unit's opening folio."""
+    for up in plan:
+        u = up["unit"]
+        first = True
+        for spread in up["spreads"]:
+            pdf.add_page()   # verso — Latin
+            if pdf.page_no() % 2 != 0:
+                raise AssertionError("verso parity failed")
+            if first:
+                toc[u["key"]] = pdf.page_no()
+                centered(pdf, "LATINE · 1668", 9, color=GREY,
+                         space_after=1)
+                centered(pdf, u["la_title"], 14, space_after=1)
+                centered(pdf, u["en_title"], 9.5, style="",
+                         color=GREY, space_after=2)
+                head_rule(pdf)
+            else:
+                centered(pdf, "LATINE · 1668", 8.5, style="",
+                         color=GREY, space_after=2)
+            for _idx, blocks in spread["la"]:
+                emit_blocks(pdf, blocks)
+            pdf.add_page()   # recto — English
+            if first:
+                centered(pdf, "ENGLISH · 1651", 9, color=GREY,
+                         space_after=1)
+                centered(pdf, u["en_title"], 14, space_after=1)
+                centered(pdf, u["la_title"], 9.5, style="",
+                         color=GREY, space_after=2)
+                head_rule(pdf)
+            else:
+                centered(pdf, "ENGLISH · 1651", 8.5, style="",
+                         color=GREY, space_after=2)
+            for _idx, blocks in spread["en"]:
+                emit_blocks(pdf, blocks)
+            first = False
+
+
+def collation_notes(pdf, report):
+    pdf.add_page()
+    centered(pdf, "COLLATION NOTES", 16, space_after=2)
+    centered(pdf, f"BRICK {BRICK} — THE INTRODUCTION AND "
+                  "PART I, CHAPTERS 1–3", 10.5, color=GOLD,
+             space_after=4)
+    head_rule(pdf)
+    notes = [
+        ("N1 — The Introduction's seat. In the 1668 volume the "
+         "Introductio stands under the display of PARS PRIMA · DE "
+         "HOMINE, inside Part I's heading; the English sets THE "
+         "INTRODUCTION before Part I. The edition follows each "
+         "text's own seating and notes the difference here, once."),
+        ("N2 — The ending the Latin does not have. The English "
+         "closes with A REVIEW, AND CONCLUSION; the Latin volume "
+         "instead appends an APPENDIX of three chapters (De Symbolo "
+         "Niceno; De Haeresi; De quibusdam Objectionibus contra "
+         "Leviathan), printed pp. 325–365 of the 1668 book. When "
+         "this edition reaches the end, the Appendix will face the "
+         "Review as a structural divergence, not as a translation."),
+        ("N3 — The Introduction's first page, adjudicated. The "
+         "folio's opening page (1668 p. 1) carries the decorated "
+         "initial, and the machine reading of that page interleaves "
+         "the initial's column with the text until the token "
+         "classes cannot honestly carry it. This page — and no "
+         "other in Brick 1 — is set from a reading of the leaf "
+         "itself, rendered from the secured facsimile PDF (leaf 9): "
+         "the edition's first exercise of the Source Ledger's "
+         "spot-adjudication provision, recorded in the Ledger's "
+         "amendment. The initial itself is restored as [N]aturam. "
+         "One typographic distinction is levelled by the declared "
+         "font tolerance and recorded here so it is not lost "
+         "silently: the 1668 page sets its equation-terms (Anima, "
+         "Artus, Praemia et Poenae, Nervi, and their fellows) in "
+         "italic; this edition's DejaVu Serif carries no italic "
+         "face, and the equations stand in the body face."),
+        ("N4 — A running head against its chapter. At printed "
+         "p. 13, inside Capvt III's closing passage (the finite / "
+         "infinite locus), the folio's running head reads 'Cap. 4' "
+         "in the machine reading, ahead of Capvt IV's display at "
+         "the passage's end. Whether the fault is the press's, the "
+         "scan's, or the reading machine's is UNCHARTED — "
+         "adjudication against the facsimile leaf has not been "
+         "performed. The text is set by the display headings, and "
+         "the anomaly stands here on the record."),
+        ("N5 — 'fine', thirteen times. The machine reading's 'fine' "
+         "in these chapters is the press's ſine (without), restored "
+         "to sine under the rule table; finis and its true forms "
+         "(finem, finis, finita) are protected and stand. The class "
+         "is recorded because the two words share a shape in the "
+         "OCR: the readings were adjudicated by context at every "
+         "locus, and the count is printed so the adjudication can "
+         "be audited."),
+        ("N6 — The Conjectura margin note. Capvt III's margin "
+         "carries 'Conjectura eventi' where the English margin "
+         "treats of prudence and conjecture; the machine reading "
+         "split the note and fused its shards into the body lines. "
+         "The shards were removed under the declared debris class "
+         "and the note set as a subhead at its locus, as Hobbes's "
+         "own furniture sets it."),
+        ("N7 — Paragraph drift, measured. "
+         + report["drift_text"]),
+        ("N8 — Residue, counted. After every declared class, "
+         + report["residue_text"]
+         + " These stand in the text exactly as the machine read "
+         "them; each is a named locus for the facsimile collation "
+         "that remains UNCHARTED."),
+        ("N9 — One garbled sentence, flagged whole. Capvt III's "
+         "sentence on place ('neque aliquid esse totum in uno "
+         "loco, et totum in altero, tempore eodem…') is garbled in "
+         "the machine reading beyond the declared classes (its "
+         "reading carries 'eflk' and 'io altcro' among its ruins). "
+         "The words are set as read, under the declared classes "
+         "only; the English face carries the sense; the Latin "
+         "locus is flagged for facsimile adjudication, UNCHARTED."),
+        ("N10 — The repairs, counted. The listed token repairs "
+         "(fused-word splits, drop-cap and ligature restorations, "
+         "one-letter substitutions in certain words) applied in "
+         "this brick number "
+         + str(report["repairs_applied"])
+         + " occurrences. The table itself stands printed in the "
+         "builder, build_leviathan_parallel.py, which is part of "
+         "this edition's record; the classes are declared in §IV "
+         "of the Preface. No repair is applied that is not in the "
+         "table."),
+    ]
+    for n in notes:
+        para(pdf, n, size=10, height=5.4)
+
+
+def back_matter(pdf):
+    pdf.add_page()
+    centered(pdf, "TABLE OF AUTHORITIES", 15, space_after=2)
+    centered(pdf, "(condensed)", 10, style="", color=GREY,
+             space_after=4)
+    head_rule(pdf)
+    for a in AUTHORITIES:
+        para(pdf, a, size=10, height=5.4)
+    pdf.ln(4)
+    centered(pdf, "COLOPHON", 15, space_after=4)
+    para(pdf, "This volume was built at the desk of the parallel "
+              "edition by the builder build_leviathan_parallel.py, "
+              f" Brick {BRICK}: front matter, the Introduction, and "
+              "Part I, Chapters 1–3 in parallel, with collation "
+              "notes. Sources asserted by hash at build time: "
+              "Gutenberg #3207 (English) and Internet Archive "
+              "leviathansivedem00hobb (Latin, 1668). Generation "
+              "note: set in DejaVu Serif; no synthetic italics are "
+              "used anywhere in the volume.", size=10, height=5.4)
+    para(pdf, "Authorship attributed exclusively to Johnathan "
+              "'Qasparr' Monroe (Greek, -ARR, All Rights Reserved, "
+              "Without Prejudice). " + PUBLISHER + "; " + PROPRIETOR
+              + ".", size=10, height=5.4)
+    para(pdf, FLAGPOLE, size=10, height=5.4, align="C")
+    centered(pdf, "93 — Live, Love, and let Love, Live.", 11,
+             space_after=0)
+
+
+def build_once(toc):
+    en = load_english_units()
+    la = load_latin_units()
+    units, drift = [], []
+    residue_tokens = {}
+    for key, en_title, la_title in UNITS_BUILT:
+        pairs, n_en, n_la = pair_blocks(en[key]["blocks"], la[key])
+        units.append({"key": key, "en_title": en_title,
+                      "la_title": la_title, "pairs": pairs})
+        drift.append(f"{la_title.split('—')[0].strip()}: English "
+                     f"{n_en} paragraph groups, Latin {n_la}; "
+                     f"paired {min(n_en, n_la)}, unpaired tail "
+                     f"{abs(n_en - n_la)}.")
+    # residue census over the built Latin
+    for key, _e, _l in UNITS_BUILT:
+        for blk in la[key]:
+            txt = blk.get("text") or blk.get("note") or ""
+            for tok in re.findall(r"[A-Za-zÀ-ÿ]+", txt):
+                if tok.lower() in LA_RESIDUE:
+                    residue_tokens[tok.lower()] = \
+                        residue_tokens.get(tok.lower(), 0) + 1
+    n_res = sum(residue_tokens.values())
+    # repairs census: occurrences in the raw seams of tokens whose
+    # lowercase form stands in the repair table
+    raw_lines = LA_SOURCE.read_bytes().decode(
+        "utf-8", errors="replace").split("\n")
+    n_rep = 0
+    for key, _e, _l in UNITS_BUILT:
+        a, b = LA_SEAMS[key]
+        for ln in raw_lines[a - 1:b]:
+            for tok in re.findall(r"[A-Za-zÀ-ÿ£?]+", ln):
+                if tok.lower() in LA_REPAIRS:
+                    n_rep += 1
+    report = {
+        "repairs_applied": n_rep,
+        "drift_text": " ".join(drift),
+        "residue_text": (
+            f"{n_res} garbled or unresolved tokens stand across "
+            f"Brick {BRICK}'s Latin "
+            f"({len(residue_tokens)} distinct forms: "
+            + ", ".join(sorted(residue_tokens)) + ")."),
+        "residue_tokens": residue_tokens,
+        "units": [{"key": u["key"], "pairs": len(u["pairs"])}
+                  for u in units],
+    }
+    pdf = Book(orientation="P", unit="mm", format="Letter")
+    pdf.set_margins(MARG_L, MARG_T, MARG_R)
+    pdf.set_auto_page_break(True, margin=18)
+    pdf.add_font("dejavu", "", f"{DEJAVU}/DejaVuSerif.ttf")
+    pdf.add_font("dejavu", "B", f"{DEJAVU}/DejaVuSerif-Bold.ttf")
+    # pass structure: front matter must end so the parallel section
+    # opens on a verso (even physical leaf)
+    toc_entries = [(t[1] + "  ·  " + t[2], toc.get(t[0]))
+                   for t in UNITS_BUILT]
+    toc_entries.insert(0, ("REVISER'S PREFACE", 2))
+    front_matter(pdf, toc_entries)
+    while pdf.page_no() % 2 == 0:
+        pdf.add_page()          # parity leaf (furniture, declared)
+    plan = plan_spreads(pdf, units)
+    new_toc = {}
+    pdf.set_auto_page_break(False)   # the planner owns the spreads
+    emit_parallel(pdf, plan, new_toc)
+    pdf.set_auto_page_break(True, margin=18)
+    collation_notes(pdf, report)
+    back_matter(pdf)
+    report["pages"] = pdf.page_no()
+    report["toc"] = new_toc
+    return pdf, report
+
+
+def main():
+    toc, last = {}, None
+    for _ in range(6):
+        pdf, report = build_once(toc)
+        if report["toc"] == toc and last == report["pages"]:
+            break
+        toc, last = report["toc"], report["pages"]
+    Book.folio_total = report["pages"]
+    pdf, report = build_once(toc)
+    assert report["toc"] == toc, "contents did not stabilize"
+    pdf.output(str(OUT))
+    REPORT.write_text(json.dumps(report, indent=1, ensure_ascii=False))
+    print(f"built {OUT.name}: {report['pages']} pages; "
+          f"toc={report['toc']}")
+    print("drift:", report["drift_text"])
+    print("residue:", report["residue_text"])
+
+
+if __name__ == "__main__":
+    sys.exit(main())
