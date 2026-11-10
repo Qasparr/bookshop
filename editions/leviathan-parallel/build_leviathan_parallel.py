@@ -275,14 +275,25 @@ UNITS_ALL = [
      "from Such Darknesse, and to Whom It Accreweth",
      "CAPVT XLVII — De Lucro ab huiusmodi Tenebris quid sit et "
      "quibus accrescat"),
+    # The ending: not counterparts. The English closes with the
+    # Review & Conclusion; the Latin volume closes with its
+    # Appendix of three chapters. They are set against each
+    # other as the structural divergence declared at N2 — the
+    # pairing is by position at the volume's end, and the Latin
+    # runs on alone when the English is spent (N36).
+    ("review", "A REVIEW, AND CONCLUSION",
+     "APPENDIX AD LEVIATHAN — De Symbolo Niceno · De Haeresi · "
+     "De quibusdam Objectionibus contra Leviathan"),
 ]
-BRICK = 17
-UNITS_BUILT = UNITS_ALL[:48]         # All 47 chapters in parallel
+BRICK = 18
+UNITS_BUILT = UNITS_ALL              # The whole volume, complete
 BRICK_SCOPE = ("front matter and the whole work in parallel: Part I "
                "(De Homine) — the Introduction and Chapters 1–16 — "
                "Part II (De Civitate), Chapters 17–31, Part III "
-               "(De Civitate Christiana), Chapters 32–43, and "
-               "Part IV (De Regno Tenebrarum), Chapters 44–47")
+               "(De Civitate Christiana), Chapters 32–43, Part IV "
+               "(De Regno Tenebrarum), Chapters 44–47, and the "
+               "Latin Appendix set against the English Review & "
+               "Conclusion as a structural divergence (N2, N36)")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -376,6 +387,14 @@ LA_SEAMS = {
     # (16279, its opening fragment 'APPEN-').
     "chXLVI": (15619, 16037),
     "chXLVII": (16038, 16278),
+    # Final Brick seam: the Latin Appendix entire — its first
+    # line the opening fragment 'APPEN-' (16279), its three
+    # displays at 16290 (De Symbolo Niceno), 17224 (De Haeresi),
+    # 17885 (De quibusdam Objectionibus); Capvt III closes at
+    # 18218 ('…doctrinam Theologorum privatorum superantia.'),
+    # before the volume's own FINIS and Index Capitum (18220+),
+    # which are the 1668 book's back matter, not its text (N36).
+    "review": (16279, 18218),
 }
 
 # ----------------------------------------------------------------------
@@ -437,6 +456,11 @@ LA_DROP_LINE_RES = [
     # XLIII's seam tail, line by line as the machine gives it.
     re.compile(r"^D\s+E\s+R\s*E\s*G\s*N\s*O$"),
     re.compile(r"^TENEBRARVM\.$"),
+    # Final Brick: the Appendix's own display lines inside its
+    # seam ('APPENDIX' / 'AD' / 'LEVIATHAN.').
+    re.compile(r"^APPENDIX$"),
+    re.compile(r"^A\s+D$"),
+    re.compile(r"^LEVIATHAN\.$"),
     re.compile(r"^C\s*A\s*[PF]\s*V\s*T.*$"),               # chapter display lines
     re.compile(r"^G\s*A\s*P\s*V\s*T.*$"),                  # (OCR's G for C)
     re.compile(r"^De\s+(Senfu|Imaginatione|Confequcntia|Strmone)\.$"),
@@ -538,6 +562,18 @@ LA_FURNITURE_BLOCKS = {
     "Deo",
     "Liziat* 1 1 1 1 Rerum",
     "321 De Regno Tenebrarum. Cap. 46",
+    # Final Brick, the Appendix: its opening hyphen shard and
+    # debris line; the catchword 'Ita' (for 'Itaque'); a running
+    # head in note shape ('Cap. 1. Appendix ad Leviathan.
+    # 319.'); and the signature shards with their catchwords at
+    # its leaf turns — each catchword's word standing whole in
+    # the text that follows (N36).
+    "Appen-", "3**", "Ita",
+    "Cap. r. Appendix ad Leviathan. $19",
+    "Lniat. u u u u sed",
+    "Leviau x x x x Deum",
+    "Levtnt. y y y y ^",
+    "Leviat, z z 2 z postea",
 }
 
 # Leaf-split paragraph openings that carry none of the six
@@ -568,6 +604,14 @@ LA_LEAF_SPLIT_FRAGMENTS = {
     # repeats the matter it stands beside (N35).
     "Per Exorcismos et caeteram Demonologiam populos terrent.",
     "Neque Lemures neque Clerici uxores ducunt.",
+    # Final Brick, the Appendix dialogue: two turns whose
+    # speaker marks the machine garbled past the dialogue class
+    # — an unmarked answer turn ('Ostende nunc quid sit quod
+    # Graeci appellant Hypostasin.') and an 'A.' read as 'A s^'
+    # ('A. Quid est Haeresis?'). Named, as the class cannot
+    # reach them honestly (N36).
+    "Ostende nunc quidsit quod Graeci appellant Hypostasin.",
+    "A s^ Uid est Hatesis?",
 }
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
@@ -1040,7 +1084,14 @@ def clean_latin_lines(lines):
                 or (len(b.get("note", "")) >= 25
                     and b.get("note", "").endswith(".")
                     and _prev_unfinished)
-                or b.get("note") in LA_LEAF_SPLIT_FRAGMENTS)):
+                or b.get("note") in LA_LEAF_SPLIT_FRAGMENTS
+                # Final Brick: the Appendix is a dialogue, and
+                # its short turns — opening with the speaker
+                # marks 'A.' / 'B.' — are body text the block
+                # classifier seated as notes by their brevity.
+                # A margin head does not open with a speaker
+                # mark; the class is confined to that shape.
+                or re.match(r"^[AB]\.\s", b.get("note", "")))):
             b = {"text": b["note"]}
         if (rejoined and "text" in b and "text" in rejoined[-1]
                 and rejoined[-1]["text"]
@@ -1992,6 +2043,30 @@ def collation_notes(pdf, report):
              "Demonologiam populos terrent.' and 'Neque Lemures "
              "neque Clerici uxores ducunt.' Both are seated as "
              "text by the named list and recorded here."),
+            ("N36 — The volume closes (Final Brick). The "
+             "Appendix stands where N2 said it would: against "
+             "the English Review & Conclusion, as a structural "
+             "divergence and not a translation. The two endings "
+             "share the volume's last opening — the Review's "
+             "paragraph groups face the Appendix's first — and "
+             "then the Latin runs on alone through its three "
+             "chapters entire (De Symbolo Niceno; De Haeresi; De "
+             "quibusdam Objectionibus contra Leviathan), for the "
+             "English has no more to say. The Appendix is a "
+             "dialogue, and its short turns, opening with the "
+             "speaker marks A. and B., are seated as text by a "
+             "class confined to that shape; two turns whose "
+             "marks the machine garbled past the class are named "
+             "in the fragment list. After Capvt III the 1668 "
+             "volume prints its own FINIS and an Index Capitum; "
+             "those are its back matter, not its text, and are "
+             "not reproduced — the edition closes with its own "
+             "contents, these notes, the Table of Authorities, "
+             "and the Colophon. What the two books hold between "
+             "them now stands in one volume: the Introduction, "
+             "forty-seven chapters in parallel, and both "
+             "endings, each in its own tongue, neither "
+             "harmonized into the other."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
