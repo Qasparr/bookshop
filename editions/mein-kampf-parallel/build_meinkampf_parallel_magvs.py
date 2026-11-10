@@ -135,6 +135,8 @@ BRICK1 = [
      "4. KAPITEL", "CHAPTER 4"),
     ("kap5", "5. KAPITEL — DER WELTKRIEG",
      "CHAPTER 5 — THE WORLD WAR", "5. KAPITEL", "CHAPTER 5"),
+    ("kap6", "6. KAPITEL — KRIEGSPROPAGANDA",
+     "CHAPTER 6 — WAR PROPAGANDA", "6. KAPITEL", "CHAPTER 6"),
 ]
 
 
@@ -481,6 +483,21 @@ TN = {
         "Printed 'die Dummheit der Fügner': Fügner for Lügner "
         "('liars'), an F-for-L misread. Translated per evident "
         "sense.",
+    ("kap6", 12):
+        "The hegen-for-liegen misread runs through this "
+        "chapter: here 'eines im Kampfe hegenden Volkes' for "
+        "liegenden; at ¶14 'in der Kürze des Verfahrens "
+        "hege' for liege; at ¶26 and ¶30 'hegt' for liegt. "
+        "Translated per evident sense throughout (cf. Kapitel "
+        "3, ¶140; Kapitel 4, ¶5; Kapitel 5, ¶81).",
+    ("kap6", 37):
+        "Printed 'seien des Gegners kennenlernte': seien for "
+        "seiten — 'which he came to know on himself from the "
+        "sides of the opponent'. Translated per evident sense.",
+    ("kap6", 38):
+        "Printed '„Krampf1': in this witness the closing "
+        "quotation mark after Krampf is misread as the figure "
+        "1. The German page prints it as found.",
 }
 
 
@@ -907,8 +924,8 @@ PREFACE_PARALLEL = [
     "In the Parents' Home, the second, Vienna Years of "
     "Learning and Suffering, the third, General Political "
     "Considerations from My Vienna Time, the fourth, "
-    "Munich, and the fifth, The World War. The chapters "
-    "follow, brick "
+    "Munich, the fifth, The World War, and the sixth, War "
+    "Propaganda. The chapters follow, brick "
     "by brick, in the book's own order; the volume closes with "
     "the Schlusswort in parallel, the Tower Audit entire, the "
     "Glossary, the Apparatus of OCR Loci, the Title Register, "
@@ -999,7 +1016,10 @@ def contents_page(pdf, toc):
               "kap4": ("4. Kapitel — München / Chapter 4 — "
                        "Munich", "Kapitel 4"),
               "kap5": ("5. Kapitel — Der Weltkrieg / Chapter 5 "
-                       "— The World War", "Kapitel 5")}
+                       "— The World War", "Kapitel 5"),
+              "kap6": ("6. Kapitel — Kriegspropaganda / "
+                       "Chapter 6 — War Propaganda",
+                       "Kapitel 6")}
     for key, _hd, _he, _rd, _re in BRICK1:
         name, short = labels[key]
         entries.append((f"{name} — in parallel", toc.get(key)))
@@ -1011,7 +1031,7 @@ def contents_page(pdf, toc):
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
     pdf.ln(4)
-    para(pdf, "Kapitel 6–12, the Schlusswort in parallel, the "
+    para(pdf, "Kapitel 7–12, the Schlusswort in parallel, the "
               "Tower Audit entire, the Glossary of Translation "
               "Rulings, the Apparatus of OCR Loci, the Title "
               "Register, the Table of Authorities, and the "
@@ -1126,7 +1146,8 @@ def build(toc, folio_total=None, log=None):
               "kap3": "3. Kapitel — Allgemeine politische "
                       "Betrachtungen aus meiner Wiener Zeit",
               "kap4": "4. Kapitel — München",
-              "kap5": "5. Kapitel — Der Weltkrieg"}
+              "kap5": "5. Kapitel — Der Weltkrieg",
+              "kap6": "6. Kapitel — Kriegspropaganda"}
     for key, head_de, head_en, run_de, run_en in BRICK1:
         de_list = german[key]
         en_list = load_translation(key)

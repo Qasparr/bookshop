@@ -132,15 +132,30 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   zero anomalies); opening spread (pp. 288–289) rendered and
   inspected.
 
+- **BRICK 6 — Kapitel 6** ("Kriegspropaganda"):
+  `translations/en-kap6.txt`, **71 units one-for-one**;
+  wired in as above; contents closing line moved to
+  "Kapitel 7–12"; preface made cumulative. **3 [TN]s**: the
+  hegen-for-liegen class collected across the chapter (¶13,
+  ¶14, ¶26, ¶30); seien for seiten at the ¶37 seam;
+  "Krampf1" (closing quote misread as the figure 1).
+  **PDF now 342 pages.** Verified by census: all 9 Kapitel 6
+  spreads pair even verso with odd recto at the identical
+  ¶ range, coverage ¶1–71 complete, no gaps, no overlaps
+  (159 spreads whole-book, zero anomalies); opening spread
+  (pp. 324–325) rendered and inspected.
+
 ## NEXT
 
-- **BRICK 6 — Kapitel 6** ("Kriegpropaganda"): write
-  `translations/en-kap6.txt` (71 units by the loader), add the
-  `("kap6", ...)` 5-tuple to the builder's `BRICK1` list, extend
-  both `labels` tables, move the contents closing line to
-  "Kapitel 7–12", add [TN]s, rebuild, verify by census, commit,
-  push. Then Bricks 7–13 likewise (Kapitel 7–12, one per
-  brick), per ARCHITECTURE §VII.
+- **BRICK 7 — Kapitel 7** ("Die Revolution"): dump the
+  German units to `work/de-kap7.txt` with the sibling-loader
+  routine used for Kapitel 3–6, verify the dump count against
+  the loader's census (136 units), write
+  `translations/en-kap7.txt`, add the `("kap7", ...)`
+  5-tuple and the `labels` entries, move the contents
+  closing line to "Kapitel 8–12", add [TN]s, rebuild, verify
+  by census, commit, push. Then Bricks 8–13 likewise
+  (Kapitel 8–12, one per brick), per ARCHITECTURE §VII.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary
   of Translation Rulings (seeded by the [TN] rulings: Volk,
