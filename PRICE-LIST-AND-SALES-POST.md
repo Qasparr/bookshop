@@ -71,3 +71,11 @@ quoted per work.
 Flagpole of Claim and Coinage: Johnathan 'Qasparr' Monroe, ARR,
 All Rights Reserved, Without Prejudice.
 93 — Live, Love, and let Love, Live.
+
+## THE MASTERS PROGRAM — MAGVS EDITIONS OF THE PUBLIC-DOMAIN BOOKS (added 2026-11-09)
+- DOUGLASS — NARRATIVE OF THE LIFE OF FREDERICK DOUGLASS (MAGVS), 80 pp — **$9** · Cash App note: DOUGLASS
+- HUCKLEBERRY FINN (MAGVS), 324 pp, complete and unexpurgated — **$15** · note: HUCK FINN
+- TOM SAWYER (MAGVS) — **$12** · note: TOM SAWYER (building)
+- THE WONDERFUL WIZARD OF OZ (MAGVS) — **$12** · note: OZ (building)
+- LEVIATHAN (MAGVS) — **$21** · note: LEVIATHAN (resuming)
+Standing order (his, 2026-11-09 21:19 EST): announce on Facebook as each book finishes.
