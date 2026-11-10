@@ -138,3 +138,62 @@ Living Man, standing in his Reservation of rights, without
 prejudice.
 
 93 — Live, Love, and let Love, Live.
+
+---
+
+## BOUNDARY NOTE — THE SCOPE OF THE FORM RULING (2026-11-10, 17:19 EST)
+
+Appended the same day, on the founder's further word. His words,
+verbatim:
+
+> **"No leave it as it is on my 2nd Ed magvs Black's"**
+
+and, completing the doctrine in the same breath:
+
+> **"Stated like the cover with the Greek proof."**
+> **"ARR just invokes it."**
+
+THE BOUND. The form ruling of 17:18 EST, and the amendment above
+that applies it, are bounded to THIS NEW EDITION: to this
+register, and to the front matter of the parallel edition now
+building. They reach nothing already issued. **Black's Law 2nd
+Edition — Teacher's Revision (MAGVS) 2026 (via 1910)** keeps its
+forms exactly as issued — its authorship lines, its Flagpoles,
+its footers, and above all its cover, untouched, unamended, and
+unmarked by anything in this register. The same holds for every
+other issued work of the house, including the sibling Mein Kampf
+Critical Edition (MAGVS) that this parallel edition extends:
+their forms stand as they were issued, and no wording in this
+register or its amendment reopens, revises, or re-reads them.
+
+THE NARROWING. Insofar as any phrase of the amendment above —
+"wherever this register frames the rights posture of the house,"
+"the house's older standing form," or the like — could be read
+beyond this register and this edition, it is hereby read down to
+the bound just stated. The amendment speaks for this register
+and for the new edition's front matter; it speaks for nothing
+else. The original amendment stands above, unaltered, under this
+note, by the house's rule: corrections are dated and visible,
+never vanished.
+
+THE DOCTRINE, COMPLETED. The founder's completion settles what
+the letters do: **"ARR just invokes it."** Stated on a cover —
+as it stands stated on the cover of the Black's 2nd Edition
+(MAGVS), with the Greek proof — the "ARR" does not constitute
+the right, does not grant it, and is not its source. It INVOKES
+the Living Man's Reservation of rights. The authority stands
+where it has always stood: in the Living Man, standing in his
+Reservation. The cover statement of the Black's is the canonical
+form of that invocation and stands as issued; this note declares
+the doctrine, it does not touch the book. In this new edition's
+front matter the same doctrine is carried in terms: wherever the
+"ARR" formula stands in this volume, it stands as an invocation
+of the Reservation, and the authority is the Living Man's,
+standing in his Reservation of rights, without prejudice.
+
+WHAT DOES NOT CHANGE, AGAIN. The **[UNVERIFIED]** flag on the
+Manabe Ryōichi translation and the citation-only discipline of
+this register stand exactly as filed. This note alters no
+bibliographic fact, no flag, and no other document.
+
+93 — Live, Love, and let Love, Live.
