@@ -258,14 +258,24 @@ UNITS_ALL = [
      "Reception into the Kingdome of Heaven",
      "CAPVT XLIII — De iis quae ad Receptionem in Regnum Coelorum "
      "sunt necessaria"),
+    # Part IV (De Regno Tenebrarum). Latin titles per display.
+    ("chXLIV", "CHAPTER XLIV — Of Spirituall Darknesse from "
+     "Misinterpretation of Scripture",
+     "CAPVT XLIV — De Tenebris Spiritualibus ab Interpretatione "
+     "non recta Scripturarum"),
+    ("chXLV", "CHAPTER XLV — Of Daemonology, and Other Reliques "
+     "of the Religion of the Gentiles",
+     "CAPVT XLV — De Daemonologia et aliis Reliquiis Religionum "
+     "Ethnicarum"),
 ]
-BRICK = 15
-UNITS_BUILT = UNITS_ALL[:44]         # Parts I–III complete
+BRICK = 16
+UNITS_BUILT = UNITS_ALL[:46]         # Parts I–III; Part IV to XLV
 BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
                "Introduction and Chapters 1–16 — the whole of "
-               "Part II (De Civitate), Chapters 17–31, and the whole "
+               "Part II (De Civitate), Chapters 17–31, the whole "
                "of Part III (De Civitate Christiana), Chapters "
-               "32–43, in parallel")
+               "32–43, and Part IV (De Regno Tenebrarum) Chapters "
+               "44–45 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -350,6 +360,10 @@ LA_SEAMS = {
     # the line before XLIV's display (14386), the PARS QVARTA
     # display standing inside its tail (14382–14383).
     "chXLIII": (13924, 14385),
+    # Brick 16 seams (Part IV): XLIV's display at 14386, XLV's
+    # at 15164; XLV closes the line before XLVI's display (15619).
+    "chXLIV": (14386, 15163),
+    "chXLV": (15164, 15618),
 }
 
 # ----------------------------------------------------------------------
@@ -499,6 +513,24 @@ LA_FURNITURE_BLOCKS = {
     "250 ue wvnaie ^nrijuana. v^ap. 4^",
     "Cap. 4$. De Civitate Chrijliana. i%j",
     "Osten-",
+    # Brick 16, Capvt XLV: a running head of the Part IV form
+    # standing alone as a block ('323 De Regno Tenebrarum.
+    # Cap. 45.', heavily garbled as read).
+    "3 izj. ut &egnv i eneurarum. v^ap. qy.",
+}
+
+# Leaf-split paragraph openings that carry none of the six
+# rejoin signatures yet are demonstrably the head of a paragraph
+# the leaf turn split — listed whole, as the repair table lists
+# whole tokens, each with its locus judged in the apparatus.
+# Brick 16, Capvt XLV: 'A Romanis ethnicis etiam est, quod
+# Papae sibi sumserunt nomen' — the sentence completes across
+# the leaf's head: '…nomen Pontificis Maximi. Non tamen nomen
+# illud ante sumserunt…' (N34). Its last word awaits the
+# genitive the next leaf's first word supplies; no signature
+# in the class names that shape, so the fragment is named.
+LA_LEAF_SPLIT_FRAGMENTS = {
+    "Aromanisethnicisetiamest, quod Papas sibi sumserunt nomen",
 }
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
@@ -970,7 +1002,8 @@ def clean_latin_lines(lines):
                              .startswith("&"))))
                 or (len(b.get("note", "")) >= 25
                     and b.get("note", "").endswith(".")
-                    and _prev_unfinished))):
+                    and _prev_unfinished)
+                or b.get("note") in LA_LEAF_SPLIT_FRAGMENTS)):
             b = {"text": b["note"]}
         if (rejoined and "text" in b and "text" in rejoined[-1]
                 and rejoined[-1]["text"]
@@ -1884,6 +1917,22 @@ def collation_notes(pdf, report):
              "in the text. The Latin closes the part in its own "
              "words: 'Atque haec de Regno Dei, et Politica "
              "Ecclesiastica dicta sufficiant.'"),
+            ("N34 — Part IV opens (Brick 16). Capvt XLIV–XLV "
+             "face the English of Chapters 44–45 under the PARS "
+             "QVARTA display seated at N33. Capvt XLV carries "
+             "one leaf-split opening that bears none of the six "
+             "signatures: 'A Romanis ethnicis etiam est, quod "
+             "Papae sibi sumserunt nomen' — its last word awaits "
+             "the genitive the next leaf's first word supplies "
+             "('…nomen Pontificis Maximi. Non tamen nomen illud "
+             "ante sumserunt…'). No honest general rule names "
+             "that shape, so the fragment is seated as text by "
+             "a named list (LA_LEAF_SPLIT_FRAGMENTS), one entry, "
+             "this locus — the same discipline as the whole-"
+             "token repair table: where the class cannot speak, "
+             "the datum is named, never stretched. A garbled "
+             "Part IV head standing as a block is listed as "
+             "furniture."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
