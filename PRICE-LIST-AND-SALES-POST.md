@@ -81,3 +81,50 @@ All Rights Reserved, Without Prejudice.
 - THE ART OF WAR (MAGVS), 121 pp, Giles 1910 complete — **$12** · note: ART OF WAR
 - MEIN KAMPF — Critical Edition (MAGVS), Vol. 1: German text whole, English correlation notes + full Tower Audit (36 items) — **$21** · note: MEIN KAMPF
 Standing order (his, 2026-11-09 21:19 EST): announce on Facebook as each book finishes.
+
+## THE PARALLEL EDITIONS (added 2026-11-10, bound complete the same evening)
+- LEVIATHAN — PARALLEL EDITION (MAGVS), 1,094 pp: the 1651 English facing the 1668 Latin, all 47 chapters, both endings, collation apparatus N1–N36 — **$30** · note: LEVIATHAN PARALLEL
+- MEIN KAMPF — PARALLEL CRITICAL EDITION (MAGVS), Vol. 1, 684 pp: the German facing a new house English translation, full Tower Audit, Glossary, OCR Apparatus, Title Register — **$30** · note: MEIN KAMPF PARALLEL
+Pricing (desk-set 2026-11-10 under his "price it fairly" order, his word reprices): the shelf's own curve sets small books dear per page and flagships cheap — Oz 100 pp at $12 against Leviathan 407 leaves at $21 (5.2¢/page). The parallels sit UNDER that curve, not over it: Leviathan Parallel at 2.7¢/page, Mein Kampf Parallel at 4.4¢/page. Fair as set; staple lambskin covers (purple · gold · green) struck for both, front and back.
+
+## DESK REVISION 2026-11-10 — full-shelf post v2 (for his stamp; nothing above altered)
+
+Status correction, verified this run: all seven masters PDFs stand on disk
+(bookshop/editions/*/ — DOUGLASS, HUCKLEBERRY-FINN, TOM-SAWYER,
+WIZARD-OF-OZ, LEVIATHAN, ART-OF-WAR, MEIN-KAMPF-VOL1). Tom Sawyer and
+Oz were marked "(building)" above; both are bound, pushed and announced
+on both houses (2026-11-10). Page counts as announced: Douglass 80,
+Huck Finn 324, Tom Sawyer 170, Oz 100, Leviathan 407, Art of War 121,
+Mein Kampf Vol. I 307 — 1,509 pages, one-of-each $102. Receipts issued:
+none; BOOK-0001 still awaits its first payer.
+
+## FULL-SHELF SALES POST v2 (draft, for his stamp)
+
+THE BOOKSHOP IS OPEN — seven books, one shelf.
+
+DOUGLASS — Narrative of the Life of Frederick Douglass (MAGVS), 80 pp — $9
+HUCKLEBERRY FINN (MAGVS), 324 pp, complete and unexpurgated — $15
+TOM SAWYER (MAGVS), 170 pp — $12
+THE WONDERFUL WIZARD OF OZ (MAGVS), 100 pp — $12
+LEVIATHAN by Thomas Hobbes (MAGVS), 407 leaves — $21
+THE ART OF WAR by Sun Tzu (MAGVS), 121 pp, Giles 1910 complete — $12
+MEIN KAMPF — Critical Edition (MAGVS), Vol. I: German text whole, English
+correlation notes + full Tower Audit — $21
+
+One of each: 1,509 pages, $102.
+
+Beside them, the Sphinx Cluster: THE NINE VOWELS (MAGVS) $9, THE RENDER
+CUBE (MAGVS) $9, LIBER SPHINGIS (MAGVS) $18 — or the whole cluster with
+the plate set for $30.
+
+The essays stand free on GitHub — that's house law; use is free and
+always was. What you buy here is the bound edition, and an author's keep.
+
+To buy: Cash App $axoneme, the book's title in the note. Your PDF and a
+numbered receipt come back on payment. Commissions open too: your text,
+your name, your work — audited on the same engine, failures printed with
+the findings. From $40, quoted per work.
+
+Flagpole of Claim and Coinage: Johnathan 'Qasparr' Monroe, ARR,
+All Rights Reserved, Without Prejudice.
+93 — Live, Love, and let Love, Live.
