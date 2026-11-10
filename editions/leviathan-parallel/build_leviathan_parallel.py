@@ -214,11 +214,11 @@ UNITS_ALL = [
     ("chXXXI", "CHAPTER XXXI — Of the Kingdom of God by Nature",
      "CAPVT XXXI — De Regno Dei Naturali"),
 ]
-BRICK = 8
-UNITS_BUILT = UNITS_ALL[:26]         # Part I complete; Part II to XXV
+BRICK = 9
+UNITS_BUILT = UNITS_ALL[:29]         # Part I complete; Part II to XXVIII
 BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
                "Introduction and Chapters 1–16 — and Part II "
-               "(De Civitate) Chapters 17–25 in parallel")
+               "(De Civitate) Chapters 17–28 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -262,6 +262,13 @@ LA_SEAMS = {
     "chXXIII": (6016, 6124),
     "chXXIV": (6125, 6297),
     "chXXV": (6298, 6493),
+    # Brick 9 seams, by content as before: XXVI's display is the
+    # spaced form at 6494 (its numeral without the press's point),
+    # XXVII's at 6940, XXVIII's spaced at 7381 with its numeral
+    # garbled ('X X V I I L').
+    "chXXVI": (6494, 6939),
+    "chXXVII": (6940, 7380),
+    "chXXVIII": (7381, 7629),
 }
 
 # ----------------------------------------------------------------------
@@ -334,6 +341,11 @@ LA_FURNITURE_BLOCKS = {
     # ('omnium'), the signature itself misread ('Ltviat.'); the
     # catchword's word stands at the next leaf's head.
     "Ltviat. rts omniun»",
+    # Brick 9, Capvt XXVIII: the decorated initial's shard
+    # standing alone before the paragraph it ornaments ('A
+    # Definitione Poenae deduco…'); the word stands whole at
+    # the paragraph's head.
+    "Ade*",
 }
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
@@ -750,13 +762,21 @@ def clean_latin_lines(lines):
         # paragraph the leaf turn split ('Septimo, … vel' /
         # 'viola-' / 'violationem …'; 'Decimo, … Bel-' / 'lum …').
         # A margin head is complete in the margin and never ends
-        # mid-word. Such fragments rejoin as text.
+        # mid-word. Such fragments rejoin as text. Brick 9 adds
+        # the third signature of the same split: a longer fragment
+        # with no terminal punctuation whose continuation opens
+        # lowercase (Capvt XXVIII's 'Nono, … Poena' / 'non est,
+        # sed factum hostile') — a paragraph in this book does not
+        # open lowercase except across a leaf turn, and a margin
+        # head does not trail off unfinished.
         if ("note" in b and (b["note"].endswith("-")
                 or (b["note"][-1] not in ".!?"
                     and idx + 1 < len(out)
                     and "text" in out[idx + 1]
-                    and len(out[idx + 1]["text"].split()) == 1
-                    and out[idx + 1]["text"].endswith("-")))):
+                    and (len(out[idx + 1]["text"].split()) == 1
+                         and out[idx + 1]["text"].endswith("-")
+                         or (len(b["note"]) >= 25
+                             and out[idx + 1]["text"][:1].islower()))))):
             b = {"text": b["note"]}
         if (rejoined and "text" in b and "text" in rejoined[-1]
                 and rejoined[-1]["text"]
@@ -1521,6 +1541,35 @@ def collation_notes(pdf, report):
              "the word it promised, 'omnium', stands at its "
              "paragraph's place: 'Vbi enim Civitas non est, ibi "
              "omnia omnium sunt'."),
+            ("N25 — Brick 9 scope. Capvt XXVI (De Legibus "
+             "Civilibus), Capvt XXVII (De Criminibus, "
+             "Excusationibus, et Extenuationibus), and Capvt "
+             "XXVIII (De Poenis et Praemiis) join the parallel "
+             "text. Capvt XXVIII's display stands spaced in the "
+             "machine reading with its numeral garbled ('X X V I "
+             "I L'); the seam was fixed by content — the Poena "
+             "definition that opens the English chapter — and "
+             "the heading is set from the census, as at N12."),
+            ("N26 — The leaf-split signatures, completed (Brick "
+             "9). The rejoin class of N20 gains its third "
+             "signature: a longer note-shaped fragment with no "
+             "terminal punctuation whose continuation opens "
+             "lowercase (Capvt XXVIII's 'Nono, … Poena' before "
+             "'non est, sed factum hostile'). Five fragments in "
+             "the earlier text convert with it — Capvt III's "
+             "sign sentence, Capvt VI's two appetite fragments, "
+             "Capvt XIV's pact-with-God fragment, Capvt XV's "
+             "foro-interno fragment — each a paragraph's opening "
+             "the leaf turn severed, each now standing as the "
+             "text it is; the word-audit against the Brick 8 "
+             "printing shows no word lost and no margin head "
+             "demoted that reads as a complete summary. Capvt "
+             "XXVIII's decorated-initial shard ('Ade*') is "
+             "listed as furniture; its word stands whole at its "
+             "paragraph's head ('A Definitione Poenae deduco…'). "
+             "Capvt XXVII's one margin note stands as printed: "
+             "'Et Mutilatio majus Crimen quam bonorum ereptio' — "
+             "Hobbes's own summary, complete in the margin."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
