@@ -1,7 +1,7 @@
 {
- "repairs_applied": 71,
- "drift_text": "INTRODUCTIO: English 9 paragraph groups, Latin 8; paired 8, unpaired tail 1. CAPVT I: English 5 paragraph groups, Latin 7; paired 5, unpaired tail 2. CAPVT II: English 10 paragraph groups, Latin 9; paired 9, unpaired tail 1. CAPVT III: English 12 paragraph groups, Latin 13; paired 12, unpaired tail 1. CAPVT IV: English 25 paragraph groups, Latin 26; paired 25, unpaired tail 1. CAPVT V: English 22 paragraph groups, Latin 21; paired 21, unpaired tail 1. CAPVT VI: English 60 paragraph groups, Latin 62; paired 60, unpaired tail 2. CAPVT VII: English 7 paragraph groups, Latin 10; paired 7, unpaired tail 3. CAPVT VIII: English 27 paragraph groups, Latin 34; paired 27, unpaired tail 7. CAPVT IX: English 45 paragraph groups, Latin 10; paired 10, unpaired tail 35. CAPVT X: English 51 paragraph groups, Latin 53; paired 51, unpaired tail 2. CAPVT XI: English 28 paragraph groups, Latin 32; paired 28, unpaired tail 4. CAPVT XII: English 32 paragraph groups, Latin 37; paired 32, unpaired tail 5. CAPVT XIII: English 15 paragraph groups, Latin 16; paired 15, unpaired tail 1. CAPVT XIV: English 37 paragraph groups, Latin 36; paired 36, unpaired tail 1. CAPVT XV: English 49 paragraph groups, Latin 46; paired 46, unpaired tail 3. CAPVT XVI: English 20 paragraph groups, Latin 19; paired 19, unpaired tail 1. CAPVT XVII: English 20 paragraph groups, Latin 14; paired 14, unpaired tail 6. CAPVT XVIII: English 36 paragraph groups, Latin 22; paired 22, unpaired tail 14. CAPVT XIX: English 27 paragraph groups, Latin 26; paired 26, unpaired tail 1. CAPVT XX: English 24 paragraph groups, Latin 25; paired 24, unpaired tail 1. CAPVT XXI: English 32 paragraph groups, Latin 24; paired 24, unpaired tail 8. CAPVT XXII: English 41 paragraph groups, Latin 36; paired 36, unpaired tail 5. CAPVT XXIII: English 14 paragraph groups, Latin 10; paired 10, unpaired tail 4. CAPVT XXIV: English 19 paragraph groups, Latin 15; paired 15, unpaired tail 4. CAPVT XXV: English 15 paragraph groups, Latin 16; paired 15, unpaired tail 1. CAPVT XXVI: English 55 paragraph groups, Latin 44; paired 44, unpaired tail 11. CAPVT XXVII: English 58 paragraph groups, Latin 50; paired 50, unpaired tail 8. CAPVT XXVIII: English 33 paragraph groups, Latin 28; paired 28, unpaired tail 5.",
- "residue_text": "29 garbled or unresolved tokens stand across Brick 9's Latin (22 distinct forms: afrkiamur, ccmpcfta, effecl, efficut, eflk, fa, facli, fadu, fen, fin, firaul, fj, fme, forie, fra, frry, ft, iutef, mentafem, mmm, pof, recluruseft).",
+ "repairs_applied": 72,
+ "drift_text": "INTRODUCTIO: English 9 paragraph groups, Latin 8; paired 8, unpaired tail 1. CAPVT I: English 5 paragraph groups, Latin 7; paired 5, unpaired tail 2. CAPVT II: English 10 paragraph groups, Latin 9; paired 9, unpaired tail 1. CAPVT III: English 12 paragraph groups, Latin 13; paired 12, unpaired tail 1. CAPVT IV: English 25 paragraph groups, Latin 26; paired 25, unpaired tail 1. CAPVT V: English 22 paragraph groups, Latin 21; paired 21, unpaired tail 1. CAPVT VI: English 60 paragraph groups, Latin 62; paired 60, unpaired tail 2. CAPVT VII: English 7 paragraph groups, Latin 10; paired 7, unpaired tail 3. CAPVT VIII: English 27 paragraph groups, Latin 34; paired 27, unpaired tail 7. CAPVT IX: English 45 paragraph groups, Latin 10; paired 10, unpaired tail 35. CAPVT X: English 51 paragraph groups, Latin 53; paired 51, unpaired tail 2. CAPVT XI: English 28 paragraph groups, Latin 32; paired 28, unpaired tail 4. CAPVT XII: English 32 paragraph groups, Latin 37; paired 32, unpaired tail 5. CAPVT XIII: English 15 paragraph groups, Latin 16; paired 15, unpaired tail 1. CAPVT XIV: English 37 paragraph groups, Latin 36; paired 36, unpaired tail 1. CAPVT XV: English 49 paragraph groups, Latin 46; paired 46, unpaired tail 3. CAPVT XVI: English 20 paragraph groups, Latin 18; paired 18, unpaired tail 2. CAPVT XVII: English 20 paragraph groups, Latin 14; paired 14, unpaired tail 6. CAPVT XVIII: English 36 paragraph groups, Latin 22; paired 22, unpaired tail 14. CAPVT XIX: English 27 paragraph groups, Latin 26; paired 26, unpaired tail 1. CAPVT XX: English 24 paragraph groups, Latin 25; paired 24, unpaired tail 1. CAPVT XXI: English 32 paragraph groups, Latin 24; paired 24, unpaired tail 8. CAPVT XXII: English 41 paragraph groups, Latin 36; paired 36, unpaired tail 5. CAPVT XXIII: English 14 paragraph groups, Latin 10; paired 10, unpaired tail 4. CAPVT XXIV: English 19 paragraph groups, Latin 15; paired 15, unpaired tail 4. CAPVT XXV: English 15 paragraph groups, Latin 16; paired 15, unpaired tail 1. CAPVT XXVI: English 55 paragraph groups, Latin 44; paired 44, unpaired tail 11. CAPVT XXVII: English 58 paragraph groups, Latin 50; paired 50, unpaired tail 8. CAPVT XXVIII: English 33 paragraph groups, Latin 28; paired 28, unpaired tail 5. CAPVT XXIX: English 23 paragraph groups, Latin 26; paired 23, unpaired tail 3. CAPVT XXX: English 35 paragraph groups, Latin 34; paired 34, unpaired tail 1. CAPVT XXXI: English 41 paragraph groups, Latin 24; paired 24, unpaired tail 17.",
+ "residue_text": "30 garbled or unresolved tokens stand across Brick 10's Latin (22 distinct forms: afrkiamur, ccmpcfta, effecl, efficut, eflk, fa, facli, fadu, fen, fin, firaul, fj, fme, forie, fra, frry, ft, iutef, mentafem, mmm, pof, recluruseft).",
  "residue_tokens": {
   "effecl": 1,
   "recluruseft": 1,
@@ -20,7 +20,7 @@
   "forie": 1,
   "iutef": 1,
   "eflk": 1,
-  "fin": 3,
+  "fin": 4,
   "ft": 1,
   "fa": 4,
   "mmm": 1,
@@ -142,9 +142,21 @@
   {
    "key": "chXXVIII",
    "pairs": 33
+  },
+  {
+   "key": "chXXIX",
+   "pairs": 26
+  },
+  {
+   "key": "chXXX",
+   "pairs": 35
+  },
+  {
+   "key": "chXXXI",
+   "pairs": 41
   }
  ],
- "pages": 441,
+ "pages": 512,
  "toc": {
   "intro": 6,
   "chI": 10,
@@ -174,6 +186,9 @@
   "chXXV": 344,
   "chXXVI": 358,
   "chXXVII": 394,
-  "chXXVIII": 422
+  "chXXVIII": 422,
+  "chXXIX": 436,
+  "chXXX": 458,
+  "chXXXI": 486
  }
 }

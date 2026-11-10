@@ -214,11 +214,11 @@ UNITS_ALL = [
     ("chXXXI", "CHAPTER XXXI — Of the Kingdom of God by Nature",
      "CAPVT XXXI — De Regno Dei Naturali"),
 ]
-BRICK = 9
-UNITS_BUILT = UNITS_ALL[:29]         # Part I complete; Part II to XXVIII
+BRICK = 10
+UNITS_BUILT = UNITS_ALL[:32]         # Parts I and II complete
 BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
-               "Introduction and Chapters 1–16 — and Part II "
-               "(De Civitate) Chapters 17–28 in parallel")
+               "Introduction and Chapters 1–16 — and the whole of "
+               "Part II (De Civitate), Chapters 17–31, in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -269,6 +269,12 @@ LA_SEAMS = {
     "chXXVI": (6494, 6939),
     "chXXVII": (6940, 7380),
     "chXXVIII": (7381, 7629),
+    # Brick 10 seams, by content as before: XXIX's display at 7630,
+    # XXX's at 7960, XXXI's at 8413 (its numeral garbled 'XXX L');
+    # XXXI closes the line before Part III's first display (8736).
+    "chXXIX": (7630, 7959),
+    "chXXX": (7960, 8412),
+    "chXXXI": (8413, 8735),
 }
 
 # ----------------------------------------------------------------------
@@ -312,6 +318,20 @@ LA_DROP_LINE_RES = [
     re.compile(r"^LE\s+VIATHAN$"),
     re.compile(r"^P\s*A\s*R\s*S.*PRIMA$"),
     re.compile(r"^D\s*E\s+H\s*O\s*M\s*I\s*N\s*E\.$"),
+    # Brick 10: the PARS TERTIA display standing inside Capvt
+    # XXXI's seam tail, line by line as the machine gives it,
+    # with its leaf-number debris ('*75').
+    re.compile(r"^D\s+E$"),
+    re.compile(r"^D\s+E\s+CIVITATE$"),
+    re.compile(r"^CHRISTIANA\.$"),
+    re.compile(r"^\*\d{1,3}$"),
+    # Brick 10, completing the same class for PARS SECUNDA: its
+    # display lines stood as note-shaped blocks at Capvt XVI's
+    # tail through Brick 9 ('De Civitate', 'S I V E',
+    # 'Repvblica.') — display furniture, never text (see N28).
+    re.compile(r"^DE\s+CIVITATE$"),
+    re.compile(r"^S\s*I\s*V\s*E$"),
+    re.compile(r"^REPVBLICA\.$"),
     re.compile(r"^C\s*A\s*[PF]\s*V\s*T.*$"),               # chapter display lines
     re.compile(r"^G\s*A\s*P\s*V\s*T.*$"),                  # (OCR's G for C)
     re.compile(r"^De\s+(Senfu|Imaginatione|Confequcntia|Strmone)\.$"),
@@ -672,7 +692,15 @@ def clean_latin_lines(lines):
                 # chapter's first paragraph. A wrapped title runs
                 # to two lines or more before any blank, so the
                 # comma rule is confined to the one-line case.
-                if last_title_line.endswith((".", ";")) \
+                # Brick 10: the machine's asterisk stands for a
+                # title's final stop where the character failed
+                # (Capvt XXIX: '…tenduntque ad dissolutionem
+                # ejm*') — a blank after it closes the title too;
+                # without this the state ate XXIX's first
+                # paragraph whole. Eating a paragraph is the
+                # worse failure, and the asterisk in this reading
+                # is a word-final debris mark.
+                if last_title_line.endswith((".", ";", "*")) \
                         or (title_lines == 1
                             and last_title_line.endswith(",")):
                     in_title = False
@@ -768,7 +796,17 @@ def clean_latin_lines(lines):
         # lowercase (Capvt XXVIII's 'Nono, … Poena' / 'non est,
         # sed factum hostile') — a paragraph in this book does not
         # open lowercase except across a leaf turn, and a margin
-        # head does not trail off unfinished.
+        # head does not trail off unfinished. Brick 10 adds the
+        # fourth: a fragment trailing off on a function word, its
+        # clause grammatically incomplete, whatever case the
+        # continuation opens with (Capvt XXIX's '…qui tres
+        # Animas in eodem' / 'Homine esse docuerunt…').
+        _frag_enders = {"in", "de", "ad", "cum", "et", "vel",
+                        "aut", "ut", "per", "ex", "ab", "pro",
+                        "sine", "inter", "contra", "eodem",
+                        "eadem", "illo", "illa"}
+        _last_word = (b.get("note", "").rstrip(".,;:!? ")
+                      .split() or [""])[-1].lower()
         if ("note" in b and (b["note"].endswith("-")
                 or (b["note"][-1] not in ".!?"
                     and idx + 1 < len(out)
@@ -776,7 +814,9 @@ def clean_latin_lines(lines):
                     and (len(out[idx + 1]["text"].split()) == 1
                          and out[idx + 1]["text"].endswith("-")
                          or (len(b["note"]) >= 25
-                             and out[idx + 1]["text"][:1].islower()))))):
+                             and out[idx + 1]["text"][:1].islower())
+                         or (len(b["note"]) >= 25
+                             and _last_word in _frag_enders))))):
             b = {"text": b["note"]}
         if (rejoined and "text" in b and "text" in rejoined[-1]
                 and rejoined[-1]["text"]
@@ -1570,6 +1610,42 @@ def collation_notes(pdf, report):
              "Capvt XXVII's one margin note stands as printed: "
              "'Et Mutilatio majus Crimen quam bonorum ereptio' — "
              "Hobbes's own summary, complete in the margin."),
+            ("N27 — Part II closes (Brick 10). With Capvt XXIX "
+             "(De iis rebus quae Civitatem labefactant, "
+             "tenduntque ad dissolutionem eius), Capvt XXX, and "
+             "Capvt XXXI (De Regno Dei Naturali) the parallel "
+             "text carries the whole of Pars Secunda, De "
+             "Civitate — fifteen chapters facing the English of "
+             "Chapters 17–31. Capvt XXX's heading follows its "
+             "chapter display, 'De Officio Summi Imperantis', "
+             "against the contents leaf's 'De Officio Summi "
+             "Imperii', as recorded forward at N21. Capvt XXIX's "
+             "first paragraph stands restored: its title's final "
+             "stop failed in the machine reading to an asterisk "
+             "('…dissolutionem ejm*'), and the title state, "
+             "waiting on terminal punctuation, had eaten the "
+             "paragraph ('Quanquam immortale nihil sit, quod "
+             "mortales faciunt…'); the state now closes on the "
+             "asterisk as on a stop. The rejoin class gains its "
+             "fourth signature — a fragment trailing off on a "
+             "function word, its clause incomplete (Capvt XXIX's "
+             "'…qui tres Animas in eodem' before 'Homine esse "
+             "docuerunt…')."),
+            ("N28 — The part displays, corrected whole (Brick "
+             "10). N19 recorded that the PARS SECUNDA display "
+             "drops inside Capvt XVI's seam under the display "
+             "classes; in fact only its first line fell — three "
+             "lines stood through Brick 9 as note-shaped blocks "
+             "at the chapter's tail ('De Civitate', 'S I V E', "
+             "'Repvblica.'). The record is corrected here, not "
+             "smoothed: the display now drops whole, and PARS "
+             "TERTIA's display, standing line by line inside "
+             "Capvt XXXI's seam with its leaf-number debris "
+             "('*75'), drops with it. Part displays are the "
+             "press's furniture; the edition sets its own part "
+             "seating in the contents and the colophon, and the "
+             "Latin volume's seating of each part title before "
+             "its first chapter stands recorded at N1 and here."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
