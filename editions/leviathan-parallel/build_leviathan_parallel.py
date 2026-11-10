@@ -157,11 +157,17 @@ UNITS_ALL = [
      "Oppositis"),
     ("chIX", "CHAPTER IX — Of the Several Subjects of Knowledge",
      "CAPVT IX — De Scientiarum Distributione"),
+    ("chX", "CHAPTER X — Of Power, Worth, Dignity, Honour, and "
+     "Worthiness", "CAPVT X — De Potentia, Dignitate, et Honore"),
+    ("chXI", "CHAPTER XI — Of the Difference of Manners",
+     "CAPVT XI — De Varietate Morum"),
+    ("chXII", "CHAPTER XII — Of Religion",
+     "CAPVT XII — De Religione"),
 ]
-BRICK = 3
-UNITS_BUILT = UNITS_ALL[:10]         # through Part I, Chapter 9
+BRICK = 4
+UNITS_BUILT = UNITS_ALL[:13]         # through Part I, Chapter 12
 BRICK_SCOPE = ("front matter, the Introduction, and Part I, "
-               "Chapters 1–9 in parallel")
+               "Chapters 1–12 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -176,6 +182,9 @@ LA_SEAMS = {
     "chVII": (1710, 1815),
     "chVIII": (1816, 2205),
     "chIX": (2206, 2265),
+    "chX": (2266, 2595),
+    "chXI": (2596, 2850),
+    "chXII": (2851, 3261),
 }
 
 # ----------------------------------------------------------------------
@@ -186,6 +195,7 @@ LA_DROP_LINE_RES = [
     re.compile(r"^Cap\. \d+;?\.?\s+.*\d+,$"),              # "Cap. 4; De Homint. 13,"
     re.compile(r"^\d+\s+De Homine\. Cap\. \d+\.$"),        # "14 De Homine. Cap. 4."
     re.compile(r"^Cap\. [a-z0-9]+\. .* \d+$"),             # "Cap. i. De Hominc. 5"
+    re.compile(r"^Cap\. \d+\..*$"),   # running heads, tail garbled
     re.compile(r"^C\s*A-?$"),                              # drop-cap debris "C A-"
     re.compile(r"^[JjH\|\^\s]+$"),                         # initial-border debris
     re.compile(r"^LE\s+VIATHAN$"),
@@ -256,6 +266,10 @@ LA_REPAIRS = {
     "irtus": "virtus",          # Capvt VIII ¶1: drop-cap V consumed
     "siint": "sunt",            # Capvt IX ¶1: ſunt misread whole
     "motta": "motus",           # Capvt IX: 'Magnitudo et Motus'
+    "mwes": "mores",            # Capvt XI ¶1: 'Per Mores intelligo'
+    "prajsentis": "praesentis", # Capvt XI: ſ read as j
+    "scelicitatem": "felicitatem",  # Capvt XI: F read as Sc
+    "sructus": "fructus",       # Capvt XII ¶1: f read as s
 }
 
 # Phrase-level repairs (2): fusions spanning a word boundary that no
@@ -1214,6 +1228,13 @@ def collation_notes(pdf, report):
              "the faces correspond by matter rather than by block, "
              "and the drift figure (N7) records the fact without "
              "forcing the tables into paragraphs."),
+            ("N17 — Capvt XI's three titles (Brick 4). The "
+             "contents leaf reads 'De Differentia Morum'; the "
+             "chapter's own display reads 'De Varietate Morum'; "
+             "the English chapter is 'Of the Difference of "
+             "Manners'. The edition's heading follows the chapter "
+             "display; all three forms stand recorded here, none "
+             "harmonized."),
             ("N13 — Drift and residue are cumulative. N7's drift "
              "table and N8's residue count are regenerated at every "
              "brick over the whole text built so far; their figures "
