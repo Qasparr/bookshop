@@ -71,7 +71,10 @@ MECHANISM / DOCTRINE -- how this builder works, and why:
           added Kapitel 10 (295 units), carrying at ¶180 the
           volume's one truncated sentence — the witness's own
           loss, flagged in a [TN] and carried to the final
-          Apparatus of OCR Loci.
+          Apparatus of OCR Loci. Brick 11 added Kapitel 11
+          (241 units), carrying the volume's heaviest load of
+          translator's notes (19), as the BRICKS ledger's open
+          flag foresaw.
   TOLERANCE  Any step that would change a word of the German body
           fails the edition. Any translation choice that softens,
           omits, or improves the original fails the translation
@@ -157,6 +160,9 @@ BRICK1 = [
     ("kap10", "10. KAPITEL — URSACHEN DES ZUSAMMENBRUCHS",
      "CHAPTER 10 — CAUSES OF THE COLLAPSE", "10. KAPITEL",
      "CHAPTER 10"),
+    ("kap11", "11. KAPITEL — VOLK UND RASSE",
+     "CHAPTER 11 — PEOPLE AND RACE", "11. KAPITEL",
+     "CHAPTER 11"),
 ]
 
 
@@ -644,6 +650,99 @@ TN = {
         "¶283 ('unserem sonstigen heben'); and at ¶285 'die "
         "Weichheit der fugend' for der Jugend ('of youth'). "
         "Translated per evident sense throughout.",
+    ("kap11", 36):
+        "Twice in this paragraph the life-word is misread: "
+        "printed 'die Grundlage des tatsächlichen Febens' "
+        "for Lebens, and 'die Farbe des Bebens bestimmt' "
+        "for des Lebens bestimmt. Translated per evident "
+        "sense in both places.",
+    ("kap11", 38):
+        "Printed 'der Bronnen versiegen': Bronnen for "
+        "Brunnen ('the well run dry'). Translated per "
+        "evident sense.",
+    ("kap11", 48):
+        "Printed 'hegt vor den Augen der staunenden Welt': "
+        "hegt for liegt — the hegen-for-liegen class "
+        "(cf. Kapitel 3, ¶140). Translated per evident "
+        "sense.",
+    ("kap11", 50):
+        "Printed 'auch für dir Rasse': dir for die. "
+        "Translated per evident sense.",
+    ("kap11", 52):
+        "Two garbles in this paragraph: 'der menschlichen "
+        "Kulture nt wicklung' stands broken for "
+        "Kulturentwicklung, and 'menschlicher "
+        "Fhlfskräfte' for Hilfskräfte ('help-forces'). "
+        "Translated per evident sense in both places.",
+    ("kap11", 59):
+        "Printed 'ihrer früheren sogenannten „Lreiheit“' "
+        "for Freiheit, and 'auf seinen Lähigkeiten' for "
+        "Fähigkeiten ('abilities') — the F-for-L class "
+        "twice in one paragraph. Translated per evident "
+        "sense.",
+    ("kap11", 70):
+        "Printed 'Nicht in den intellektuellen Gaben hegt "
+        "die Ursache': hegt for liegt, the standing class; "
+        "and in the organization sentence 'auf die "
+        "Vertretung ... verrichtet' stands for verzichtet "
+        "('renounces'). Translated per evident sense in "
+        "both places.",
+    ("kap11", 113):
+        "A run of the reversed class: printed 'der Jude "
+        "sei wirklich ein Lranzose' for Franzose "
+        "('Frenchman'); 'wider das heilige Lortkommen' for "
+        "Fortkommen ('advancement'); 'keine Blasse Ahnung' "
+        "for keine blasse Ahnung ('not a pale notion'). "
+        "Translated per evident sense throughout.",
+    ("kap11", 115):
+        "Printed 'nur für ein praktisches und "
+        "erträgliches heben im Diesseits': heben for Leben "
+        "('a bearable life in the this-side'). Translated "
+        "per evident sense.",
+    ("kap11", 134):
+        "Printed 'der tausendfach verdiente Föhn': Föhn — "
+        "the warm Alpine wind — for Lohn ('wage'). "
+        "Translated per evident sense.",
+    ("kap11", 135):
+        "Printed 'zu Tastern anleitet': Taster for Laster "
+        "('vices'). Translated per evident sense.",
+    ("kap11", 150):
+        "Printed 'das ganze öffentliche heben' for Leben, "
+        "and 'da er in der Tage ist' for in der Lage ist "
+        "('since he is in the position'). Translated per "
+        "evident sense in both places.",
+    ("kap11", 151):
+        "Printed 'der Hasser jeder wahren Kultur ... "
+        "jedes Fichtes': Fichtes for Lichtes ('of every "
+        "light'). Translated per evident sense.",
+    ("kap11", 161):
+        "Printed 'des alten Flandwerkers': Flandwerkers "
+        "for Handwerkers ('of the old handworker'), the "
+        "initial letter misread. Translated per evident "
+        "sense.",
+    ("kap11", 166):
+        "Printed 'der große Meister im Fügen': Fügen for "
+        "Lügen ('the great master in lying'). Translated "
+        "per evident sense.",
+    ("kap11", 176):
+        "Printed 'im wirtschaftlichen und politischen "
+        "Wahnwitz hegt der Sinn': hegt for liegt, the "
+        "standing class. Translated per evident sense.",
+    ("kap11", 197):
+        "Printed 'deren geniale Fähigkeit dem fuden an "
+        "sich schon als Gefahr erscheint': fuden for "
+        "Juden. Translated per evident sense.",
+    ("kap11", 198):
+        "Printed 'heißt nicht ehrlicher Kampf, sondern "
+        "Füge und Verleumdung': Füge for Lüge ('lie'). "
+        "Translated per evident sense.",
+    ("kap11", 221):
+        "The stages of the 'course of becoming' are "
+        "lettered a)–l) in the German (a ¶126 … k ¶206); "
+        "the last stage is printed '1)' — the figure one "
+        "— for the letter 'l)'. The English restores the "
+        "letter; the German page prints the figure as "
+        "found.",
 }
 
 
@@ -1117,7 +1216,8 @@ PREFACE_PARALLEL = [
     "Propaganda, the seventh, The Revolution, and the "
     "eighth, Beginning of My Political Activity, and the "
     "ninth, The German Workers' Party, and the tenth, "
-    "Causes of the Collapse. The chapters follow, brick "
+    "Causes of the Collapse, and the eleventh, People and "
+    "Race. The chapters follow, brick "
     "by brick, in the book's own order; the volume closes with "
     "the Schlusswort in parallel, the Tower Audit entire, the "
     "Glossary, the Apparatus of OCR Loci, the Title Register, "
@@ -1224,7 +1324,10 @@ def contents_page(pdf, toc):
                        "German Workers' Party", "Kapitel 9"),
               "kap10": ("10. Kapitel — Ursachen des "
                         "Zusammenbruchs / Chapter 10 — "
-                        "Causes of the Collapse", "Kapitel 10")}
+                        "Causes of the Collapse", "Kapitel 10"),
+              "kap11": ("11. Kapitel — Volk und Rasse / "
+                        "Chapter 11 — People and Race",
+                        "Kapitel 11")}
     for key, _hd, _he, _rd, _re in BRICK1:
         name, short = labels[key]
         entries.append((f"{name} — in parallel", toc.get(key)))
@@ -1236,7 +1339,7 @@ def contents_page(pdf, toc):
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
     pdf.ln(4)
-    para(pdf, "Kapitel 11–12, the Schlusswort in parallel, "
+    para(pdf, "Kapitel 12, the Schlusswort in parallel, "
           "the "
               "Tower Audit entire, the Glossary of Translation "
               "Rulings, the Apparatus of OCR Loci, the Title "
@@ -1360,7 +1463,8 @@ def build(toc, folio_total=None, log=None):
               "kap9": "9. Kapitel — Die deutsche "
                       "Arbeiterpartei",
               "kap10": "10. Kapitel — Ursachen des "
-                       "Zusammenbruchs"}
+                       "Zusammenbruchs",
+              "kap11": "11. Kapitel — Volk und Rasse"}
     for key, head_de, head_en, run_de, run_en in BRICK1:
         de_list = german[key]
         en_list = load_translation(key)

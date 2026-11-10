@@ -241,17 +241,45 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   Kapitel 10 opening at p. 412); opening spread
   (pp. 412–413) rendered and inspected.
 
+- **BRICK 11 — Kapitel 11** ("Volk und Rasse"):
+  `translations/en-kap11.txt`, **241 units
+  one-for-one**; wired in as above; contents closing
+  line moved to "Kapitel 12"; preface made cumulative.
+  **19 [TN]s** — the heaviest load of the volume, as
+  the OPEN FLAG below foresaw: Febens and Bebens für
+  Lebens (¶37); Bronnen für Brunnen (¶39); hegt für
+  liegt (¶49; again ¶71, with verrichtet für
+  verzichtet; again ¶177); dir für die (¶51); the
+  broken "Kulture nt wicklung" and Fhlfskräfte für
+  Hilfskräfte (¶53); Lreiheit and Lähigkeiten (¶60);
+  the reversed run Lranzose/Lortkommen/Blasse Ahnung
+  (¶114); heben für Leben (¶116); Föhn für Lohn
+  (¶135); Taster für Laster (¶136); heben für Leben
+  and Tage für Lage (¶151); Fichtes für Lichtes
+  (¶152); Flandwerkers für Handwerkers (¶162); Fügen
+  für Lügen (¶167); fuden für Juden (¶198); Füge für
+  Lüge (¶199); the lettered stages of the Werdegang,
+  a)–l), the last printed "1)" for "l)" (¶222).
+  **PDF now 589 pages.** Verified by census: all 39
+  Kapitel 11 spreads pair even verso with odd recto at
+  the identical ¶ range, coverage ¶1–241 complete
+  (277 spreads whole-book, zero anomalies; Kapitel
+  1–10 start pages unchanged, Kapitel 11 opening at
+  p. 510); opening spread (pp. 510–511) rendered and
+  inspected.
+
 ## NEXT
 
-- **BRICK 11 — Kapitel 11** ("Volk und Rasse"): write
-  `translations/en-kap11.txt` (241 units; German dump
-  already in `work/de-kap11.txt`), add the
-  `("kap11", ...)` 5-tuple and the `labels` entries,
-  move the contents closing line to "Kapitel 12", add
-  [TN]s (the heaviest load of the volume, per the OPEN
-  FLAG below), rebuild, verify by census, commit, push.
-  Then Brick 12 (Kapitel 12, 246 units) likewise, per
-  ARCHITECTURE §VII.
+- **BRICK 12 — Kapitel 12** (246 units; German dump
+  already in `work/de-kap12.txt`): write
+  `translations/en-kap12.txt`, add the
+  `("kap12", ...)` 5-tuple and the `labels` entries,
+  the contents closing line then points only to the
+  Schlusswort and the closing apparatus, add [TN]s,
+  rebuild, verify by census, commit, push. The
+  chapter's German title is to be taken from the
+  sibling loader's section head at wiring. Then the
+  FINAL BRICK, per ARCHITECTURE §VII.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary
   of Translation Rulings (seeded by the [TN] rulings: Volk,
