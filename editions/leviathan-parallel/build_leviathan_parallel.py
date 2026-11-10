@@ -250,13 +250,17 @@ UNITS_ALL = [
      "in Abraham, Moses, High Priests, and the Kings of Judah",
      "CAPVT XL — De Iure Regni Dei in Abrahamo, Mose, Summis "
      "Sacerdotibus et Regibus Iudae"),
+    ("chXLI", "CHAPTER XLI — Of the Office of Our Blessed Saviour",
+     "CAPVT XLI — De Servatoris Nostri Benedicti Officio"),
+    ("chXLII", "CHAPTER XLII — Of Power Ecclesiasticall",
+     "CAPVT XLII — De Potestate Ecclesiastica"),
 ]
-BRICK = 13
-UNITS_BUILT = UNITS_ALL[:41]         # Parts I–II; Part III to XL
+BRICK = 14
+UNITS_BUILT = UNITS_ALL[:43]         # Parts I–II; Part III to XLII
 BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
                "Introduction and Chapters 1–16 — the whole of "
                "Part II (De Civitate), Chapters 17–31, and Part III "
-               "(De Civitate Christiana) Chapters 32–40 in parallel")
+               "(De Civitate Christiana) Chapters 32–42 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -331,6 +335,12 @@ LA_SEAMS = {
     "chXXXVIII": (10467, 10916),
     "chXXXIX": (10917, 10996),
     "chXL": (10997, 11325),
+    # Brick 14 seams: XLI's display at 11326, XLII's at 11563
+    # (numeral garbled 'XLIL'; the chapter is fixed by its title,
+    # 'De Potestate Ecclesiastica'); XLII closes the line before
+    # XLIII's display (13924).
+    "chXLI": (11326, 11562),
+    "chXLII": (11563, 13923),
 }
 
 # ----------------------------------------------------------------------
@@ -456,6 +466,15 @@ LA_FURNITURE_BLOCKS = {
     # alone at the leaf turn; the word stands whole at the next
     # leaf's head ('Iacobi. Non est enim Deus mortuorum…').
     "Iacobi.",
+    # Brick 14, Capvt XLII: two catchwords standing alone at
+    # leaf turns ('Inquo' before 'In quo primum Concilio…';
+    # 'Ccetus', Coetus misread, before 'Coetus tamen illos
+    # elegit…'), and a running head of the Part III form
+    # standing alone as a block ('196 De Civitate Christiana.
+    # Cap. 42.', its numerals garbled) — its removal seats the
+    # severed tail it interrupted under signature six (N32).
+    "Inquo", "Ccetus",
+    "1)6 De 'Civitate ckrisiiana. Cap. 42.",
 }
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
@@ -1810,6 +1829,22 @@ def collation_notes(pdf, report):
              "Capvt XL closes the patriarchal sequence at the "
              "seam of XLI's display, fixed by its title ('De "
              "Servatoris nostri Benedicti Officio')."),
+            ("N32 — Capvt XLI–XLII (Brick 14). Capvt XLII, De "
+             "Potestate Ecclesiastica, is the volume's long "
+             "chapter — 48 pages in the 1668 printing (231–279 "
+             "by its contents leaf) — and its display numeral is "
+             "garbled in the machine reading ('CAPVT XLIL'); the "
+             "chapter is fixed by its title and its matter, and "
+             "the seam is set by content. Two catchwords are "
+             "listed ('Inquo', 'Ccetus'), and one standing head "
+             "of the Part III form ('196 De Civitate Christiana. "
+             "Cap. 42.') — its listing seats the severed sentence "
+             "tail it interrupted under the sixth signature: "
+             "'…& jus habent Pastores sub se' / '…constituendi "
+             "quos ipsi idoneos ad populum instruendum "
+             "judicabunt.' No margin note stands in the chapter "
+             "as cleaned: its summaries ride inside its "
+             "paragraphs in this part of the book."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
