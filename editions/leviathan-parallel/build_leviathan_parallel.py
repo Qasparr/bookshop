@@ -214,11 +214,11 @@ UNITS_ALL = [
     ("chXXXI", "CHAPTER XXXI — Of the Kingdom of God by Nature",
      "CAPVT XXXI — De Regno Dei Naturali"),
 ]
-BRICK = 6
-UNITS_BUILT = UNITS_ALL[:20]         # Part I complete; Part II opens
+BRICK = 7
+UNITS_BUILT = UNITS_ALL[:23]         # Part I complete; Part II to XXII
 BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
                "Introduction and Chapters 1–16 — and Part II "
-               "(De Civitate) Chapters 17–19 in parallel")
+               "(De Civitate) Chapters 17–22 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -250,6 +250,11 @@ LA_SEAMS = {
     "chXVII": (4254, 4409),
     "chXVIII": (4410, 4703),
     "chXIX": (4704, 5014),
+    # Brick 7 seams, by content as before: XX's display is the
+    # spaced form at 5015; XXI's at 5294; XXII's at 5642.
+    "chXX": (5015, 5293),
+    "chXXI": (5294, 5641),
+    "chXXII": (5642, 6015),
 }
 
 # ----------------------------------------------------------------------
@@ -259,7 +264,13 @@ LA_SEAMS = {
 LA_DROP_LINE_RES = [
     re.compile(r"^Cap\.\s+\d+;?\.?\s+.*\d+,$"),            # "Cap. 4; De Homint. 13,"
     re.compile(r"^\d+\s+De Homine\. Cap\. \d+\.$"),        # "14 De Homine. Cap. 4."
-    re.compile(r"^Cap\.\s+[a-z0-9]+\.\s+.*\s\d+$"),        # "Cap. i. De Hominc. 5"
+    re.compile(r"^Cap\.\s+\S+\s+.*\s\d+$"),                # "Cap. i. De Hominc. 5"
+    # Brick 7: the same heads with the chapter number itself
+    # garbled past digits ('Cap. zo. T>e Civitate. i o i';
+    # 'Cap. 2i„ De Civitate, icp'). The shape is the furniture's:
+    # Cap. + short token + short token + Civit- + tail.
+    re.compile(r"^Cap\.\s+\S{1,4}\s+\S{1,3}\s+Civit\w*[.,]\s+.*$"),
+    re.compile(r"^\S{1,3}\s+D\S*\s+Civitate\.\s+Cap\..*$"),  # "H4 D* Civitate. Cap. 22."
     re.compile(r"^Cap\.\s+\d+[.,]?\s+.*$"),  # running heads, tail garbled
     # Brick 6: Part II's running heads, in the machine's wide
     # spacing and with garbled tails the rules above cannot reach
@@ -302,6 +313,10 @@ LA_FURNITURE_BLOCKS = {
     # Brick 6, Capvt XIX: the same class ('Potestas' misread),
     # standing alone before the leaf's running head.
     "Po:eilas",
+    # Brick 7, Capvt XX: the ampersand's shard standing alone at
+    # a leaf turn ('Sc', the machine's reading of &); the
+    # conjunction itself stands at the next block's head.
+    "Sc",
 }
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
@@ -606,22 +621,33 @@ def clean_latin_lines(lines):
     kept = []
     in_title = False
     last_title_line = ""
+    title_lines = 0
     capvt_re = re.compile(r"^[CG]\s*A\s*P\s*V\s*T\b")
     for ln in lines:
         s = ln.strip()
         if capvt_re.match(s):
             in_title = True           # chapter display: title follows
             last_title_line = ""
+            title_lines = 0
             continue
         if in_title:
             if s == "":
                 # the title block ends at a blank only once its
                 # last line carries terminal punctuation; a blank
-                # inside a wrapped title does not end it
-                if last_title_line.endswith((".", ";")):
+                # inside a wrapped title does not end it. Brick 7:
+                # a ONE-LINE title trailing the press's comma is
+                # the whole title (Capvt XX: 'De Dominio Paterno
+                # & Despotico,') — without this, the state ate the
+                # chapter's first paragraph. A wrapped title runs
+                # to two lines or more before any blank, so the
+                # comma rule is confined to the one-line case.
+                if last_title_line.endswith((".", ";")) \
+                        or (title_lines == 1
+                            and last_title_line.endswith(",")):
                     in_title = False
                 continue
             last_title_line = s
+            title_lines += 1
             continue                  # the chapter's own title lines
         if re.fullmatch(r"[A-Z];?", s):
             continue                  # a drop-cap shard standing alone
@@ -1420,6 +1446,36 @@ def collation_notes(pdf, report):
              "declares. One debris token is added to the residue "
              "register: 'mmm', signature waste standing inside "
              "Capvt XVII's definition paragraph, counted at N8."),
+            ("N21 — Brick 7 scope. Capvt XX (De Dominio Paterno "
+             "et Despotico), Capvt XXI (De Libertate Civium), and "
+             "Capvt XXII (De Systematibus Civium) join the "
+             "parallel text. One title-form divergence stands on "
+             "the record: Capvt XXX's heading, when its brick "
+             "comes, will follow its chapter display ('De Officio "
+             "Summi Imperantis'); the volume's contents leaf reads "
+             "'De Officio Summi Imperii'. Both forms are the "
+             "book's own; the display governs, as at N15 and N17."),
+            ("N22 — A title-state repair, and the furniture "
+             "widening continued (Brick 7). Capvt XX's display "
+             "title ends with the press's comma ('De Dominio "
+             "Paterno & Despotico,'), and the title state — which "
+             "ends a chapter's title at a blank only after "
+             "terminal punctuation, lest a wrapped title be cut — "
+             "thereby ate the chapter's whole first paragraph "
+             "('Civitatem per Acquisitionem voco…'). The state now "
+             "also closes on a blank after a ONE-LINE title "
+             "trailing a comma; a wrapped title runs to two lines "
+             "or more before any blank, so no true title can be "
+             "cut by the rule, and the paragraph stands restored. "
+             "The running-head classes were widened once more for "
+             "this brick's garbles (the chapter number itself "
+             "misread: 'Cap. zo. T>e Civitate. i o i'; 'H4 D* "
+             "Civitate. Cap. 22.'); three heads the Brick 6 "
+             "printing still carried in Part I and Capvt XVIII "
+             "fall with them, recorded here under N20's doctrine. "
+             "One shard is listed as furniture: Capvt XX's 'Sc', "
+             "the ampersand's debris at a leaf turn, its "
+             "conjunction standing at the next block's head."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
