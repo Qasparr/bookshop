@@ -318,16 +318,29 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   the edition keeps every other mid-sentence break
   in step (cf. Kapitel 1, ¶28).
 
+- **BRICK 13 — Schlusswort**: `translations/
+  en-schluss.txt`, **5 units one-for-one**; wired
+  in as above; contents closing line moved to the
+  closing apparatus alone. The Schlusswort's
+  German is clean of the witness's misread
+  classes — no merged emphasis, no F/L misreads,
+  no broken words stand in it — and it carries
+  **no [TN]**; its notes page carries the two
+  carried notes of the Critical Edition alone.
+  **PDF now 662 pages.** Verified by census: the
+  Schlusswort's single spread pairs even verso
+  with odd recto at ¶1–5 complete (312 spreads
+  whole-book, zero anomalies; Kapitel 1–12 start
+  pages unchanged, Schlusswort opening at
+  p. 660); opening spread (pp. 660–661) rendered
+  and inspected. Word-audit against the Brick 12
+  build: within pp. 1–658 only the contents page
+  differs, by exactly this brick's wiring.
+
 ## NEXT
 
-- **BRICK 13 — Schlusswort** (5 units; German dump
-  already in `work/de-schluss.txt`; draft
-  translation in `translations/en-schluss.txt`):
-  add the `("schluss", ...)` 5-tuple and the
-  `labels` entries, the contents closing line then
-  points only to the closing apparatus, rebuild,
-  verify by census, commit, push. Then the FINAL
-  BRICK, per ARCHITECTURE §VII.
+- **FINAL BRICK** — per ARCHITECTURE §VII, as
+  listed below.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary
   of Translation Rulings (seeded by the [TN] rulings: Volk,

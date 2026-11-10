@@ -75,8 +75,11 @@ MECHANISM / DOCTRINE -- how this builder works, and why:
           (241 units), carrying the volume's heaviest load of
           translator's notes (19), as the BRICKS ledger's open
           flag foresaw. Brick 12 added Kapitel 12 (246
-          units), the last chapter; the Schlusswort and the
-          closing apparatus remain for the final brick.
+          units), the last chapter. Brick 13 added the
+          Schlusswort (5 units), its German clean of the
+          witness's misread classes and carrying no [TN];
+          the closing apparatus remains for the final
+          brick.
   TOLERANCE  Any step that would change a word of the German body
           fails the edition. Any translation choice that softens,
           omits, or improves the original fails the translation
@@ -171,6 +174,8 @@ BRICK1 = [
      "CHAPTER 12 — THE FIRST DEVELOPMENT-TIME OF THE "
      "NATIONAL SOCIALIST GERMAN WORKERS' PARTY",
      "12. KAPITEL", "CHAPTER 12"),
+    ("schluss", "SCHLUSSWORT", "CONCLUDING WORD",
+     "SCHLUSSWORT", "CONCLUDING WORD"),
 ]
 
 
@@ -1380,7 +1385,9 @@ def contents_page(pdf, toc):
                         "Arbeiterpartei / Chapter 12 — The "
                         "First Development-Time of the "
                         "National Socialist German Workers' "
-                        "Party", "Kapitel 12")}
+                        "Party", "Kapitel 12"),
+              "schluss": ("Schlusswort — Concluding Word",
+                          "Schlusswort")}
     for key, _hd, _he, _rd, _re in BRICK1:
         name, short = labels[key]
         entries.append((f"{name} — in parallel", toc.get(key)))
@@ -1392,12 +1399,10 @@ def contents_page(pdf, toc):
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
     pdf.ln(4)
-    para(pdf, "The Schlusswort in parallel, "
-          "the "
-              "Tower Audit entire, the Glossary of Translation "
-              "Rulings, the Apparatus of OCR Loci, the Title "
-              "Register, the Table of Authorities, and the "
-              "Colophon follow in the bricks after this one; this "
+    para(pdf, "The Tower Audit entire, the Glossary of "
+              "Translation Rulings, the Apparatus of OCR Loci, "
+              "the Title Register, the Table of Authorities, "
+              "and the Colophon follow in the final brick; this "
               "contents grows with the volume.",
          size=10, space_after=0)
 
@@ -1521,7 +1526,8 @@ def build(toc, folio_total=None, log=None):
               "kap12": "12. Kapitel — Die erste "
                        "Entwicklungszeit der "
                        "Nationalsozialistischen Deutschen "
-                       "Arbeiterpartei"}
+                       "Arbeiterpartei",
+              "schluss": "Schlusswort"}
     for key, head_de, head_en, run_de, run_en in BRICK1:
         de_list = german[key]
         en_list = load_translation(key)
