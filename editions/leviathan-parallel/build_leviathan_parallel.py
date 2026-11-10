@@ -143,9 +143,18 @@ UNITS_ALL = [
     ("chII", "CHAPTER II — Of Imagination", "CAPVT II — De Imaginatione"),
     ("chIII", "CHAPTER III — Of Consequence, or Train of Imaginations",
      "CAPVT III — De Consequentia sive Serie Imaginationum"),
+    ("chIV", "CHAPTER IV — Of Speech", "CAPVT IV — De Sermone"),
+    ("chV", "CHAPTER V — Of Reason, and Science",
+     "CAPVT V — De Ratione et Scientia"),
+    ("chVI", "CHAPTER VI — Of the Interior Beginnings of Voluntary "
+     "Motion, commonly called the Passions",
+     "CAPVT VI — De Principiis internis Motus Voluntarii, quae "
+     "vulgo Passiones appellantur"),
 ]
-BRICK = 1
-UNITS_BUILT = UNITS_ALL[:4]          # Brick 1: Intro + Part I, Ch. 1–3
+BRICK = 2
+UNITS_BUILT = UNITS_ALL[:7]          # through Part I, Chapter 6
+BRICK_SCOPE = ("front matter, the Introduction, and Part I, "
+               "Chapters 1–6 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -154,6 +163,9 @@ LA_SEAMS = {
     "chI": (213, 278),
     "chII": (280, 504),
     "chIII": (506, 705),
+    "chIV": (706, 1054),
+    "chV": (1055, 1303),
+    "chVI": (1304, 1709),
 }
 
 # ----------------------------------------------------------------------
@@ -226,9 +238,90 @@ LA_REPAIRS = {
     "seipsumj": "seipsum", "alirs": "aliis",
     "quasidesesla": "quasi desessa", "siia": "sua",
     "succeslionem": "successionem",
+    # a decorated-initial column shard fused into Capvt IV's first
+    # sentence ("collata tamen Semwh cum inventione"): deleted, the
+    # sentence's own words being whole on both sides of it
+    "semwh": "",
 }
 # Repairs are keyed case-insensitively; the values carry the case.
 LA_REPAIRS = {k.lower(): v for k, v in LA_REPAIRS.items()}
+
+# FACSIMILE FIRST-BLOCK OVERRIDES for chapter openings whose
+# decorated-initial leaves garble the same way (Brick 2): Capvt V
+# (1668 p. 20; secured PDF leaf 28) and Capvt VI (1668 p. 25; PDF
+# leaf 33). Each entry: (assertion substring of the garbled OCR
+# block, [blocks to set]). The margin note the leaf carries is set
+# first, as Hobbes's furniture.
+LA_FACSIMILE_FIRST = {
+    "chV": ("Xatm", [
+        {"note": "Ratio."},
+        {"text": "[Q]ui ratiocinatur, vel Totum quaerit Additione "
+                 "partium; vel Residuum, Subtractione partis a "
+                 "parte: id quod (si verbis fiat) nihil aliud est, "
+                 "praeter Conceptionem consequentiae Nominis partis "
+                 "ad Nomen totius, vel Nominum totius et partis ad "
+                 "Nomen partis reliquae. Quanquam autem in rebus "
+                 "quibusdam (ut in numeris) aliae sint operationes, "
+                 "praeter Additionem et Subtractionem, ut "
+                 "Multiplicatio et Divisio, in idem tamen recidunt; "
+                 "nam Multiplicatio est aequalium inter se Additio; "
+                 "et Divisio aliud non est, quam ejusdem rei, "
+                 "quoties possumus, Subtractio. Neque Numeris solis "
+                 "operationes illae conveniunt, sed omni rerum "
+                 "generi, quarum una alteri addi vel auferri potest. "
+                 "Sicut enim Arithmetici Addere et Subtrahere solent "
+                 "in Numeris; ita Geometrae facere idem docent in "
+                 "Lineis, Figuris, Angulis, Proportionibus, "
+                 "Temporibus, Gradibus velocitatis, Virium, "
+                 "Potentiae, et caeteris. Idem etiam Logici faciunt "
+                 "in consequentiis verborum, Addentes duo nomina ad "
+                 "faciendam propositionem, et duas propositiones ad "
+                 "faciendum Syllogismum, et plures Syllogismos ad "
+                 "faciendam Demonstrationem; et a summa sive "
+                 "conclusione Syllogismi subtrahunt unam "
+                 "propositionem, ad inveniendam alteram. Etiam "
+                 "Scriptores Politici addunt simul plura pacta, ad "
+                 "inveniendum hominis Officium; et Iuris Consulti "
+                 "addunt simul Leges et Facta ad inveniendum, quid "
+                 "sit in actionibus hominum privatorum Ius et "
+                 "Injuria. Ubicunque locus est Additioni, et "
+                 "Subtractioni, ibi etiam locus est Rationi; et ubi "
+                 "illis locus non est, ibi neque rationi locus est."},
+    ]),
+    "chVI": ("Duosuntmotuumin", [
+        {"note": "Motus Vitalis et Animalis."},
+        {"text": "[D]uo sunt Motuum in Animalibus genera ipsis "
+                 "propria. Quorum unus est Vitalis, in generatione "
+                 "inceptus, et sine interruptione per totam vitam "
+                 "continuatus; qualis est Motus Sanguinis, Pulsus, "
+                 "Spirationis, Concoctionis, Nutritionis, "
+                 "Excretionis, qui Imaginationis Auxilio non "
+                 "indigent. Alter dicitur Animalis, et Voluntarius; "
+                 "qualis est incessus, locutio, et artuum Motus, "
+                 "qualem prius animo cogitaveramus. Sensum, Motum "
+                 "esse in Organis, et Partibus internis corporis "
+                 "humani, factum ab Objectis Visis, Auditis, etc. "
+                 "Phantasiam autem esse ejusdem Motus post "
+                 "Sensionem reliquias, dictum ante est in Cap. "
+                 "primo et secundo. Quoniam autem incessus, "
+                 "loquela, et similes Motus Voluntarii, semper "
+                 "dependent ab aliqua praecedente cogitatione, Quo, "
+                 "qua via, et Quid, manifestum est Phantasiam "
+                 "Motuum omnium voluntariorum Principium internum "
+                 "primum esse. Etsi autem sint qui Motum omnino "
+                 "ullum esse negant, ubi res mota invisibilis, aut "
+                 "spatium in quo movetur, propter brevitatem, "
+                 "insensibile est, illud tamen non impedit, quo "
+                 "minus hujusmodi Motus sint. Quantulumcunque enim "
+                 "spatium sit, id quod Movetur per spatium majus, "
+                 "cujus parvum illud spatium pars est, per illud "
+                 "etiam necessario movebitur. Principia haec Motus "
+                 "parva, intra humanum corpus sita, antequam "
+                 "incedendo, loquendo, percutiendo, caeterisque "
+                 "actionibus visibilibus appareant, vocantur "
+                 "Conatus."},
+    ]),
+}
 
 # FACSIMILE OVERRIDE — the Introduction's first printed page (1668
 # p. 1; secured PDF leaf 9). The machine reading of this art page is
@@ -328,6 +421,8 @@ def _long_s_token(tok):
         return tok
     if t in LA_REPAIRS:
         r = LA_REPAIRS[t]
+        if r == "":
+            return ""               # listed deletion (a shard)
         return (r[0].upper() + r[1:]) if cap and r[0].islower() else r
     # R0: the OCR's "fb" digraph reads the 1668 ſo (no native Latin fb).
     t2 = t.replace("fb", "so")
@@ -372,8 +467,25 @@ def clean_latin_lines(lines):
     Returns a list of blocks: {"text": ...} prose, {"note": ...}
     margin notes (mirroring the English parse's furniture)."""
     kept = []
+    in_title = False
+    last_title_line = ""
+    capvt_re = re.compile(r"^[CG]\s*A\s*P\s*V\s*T\b")
     for ln in lines:
         s = ln.strip()
+        if capvt_re.match(s):
+            in_title = True           # chapter display: title follows
+            last_title_line = ""
+            continue
+        if in_title:
+            if s == "":
+                # the title block ends at a blank only once its
+                # last line carries terminal punctuation; a blank
+                # inside a wrapped title does not end it
+                if last_title_line.endswith((".", ";")):
+                    in_title = False
+                continue
+            last_title_line = s
+            continue                  # the chapter's own title lines
         if any(rx.match(s) for rx in LA_DROP_LINE_RES):
             continue
         kept.append(ln)
@@ -457,8 +569,8 @@ def clean_latin_lines(lines):
     # shards stood inside Capvt III's prudence passage; the note is
     # set as Hobbes set it, in the margin — here, as a subhead).
     for i, b in enumerate(out):
-        if "text" in b and b["text"].startswith(
-                "Sicut Prudentia est praesumptio Futuri"):
+        if "text" in b and "Prudentia est praesumptio Futuri" \
+                in b["text"]:
             out.insert(i, {"note": "Conjectura eventi."})
             break
     return out
@@ -569,6 +681,12 @@ def load_latin_units():
                for blk in intro[:6]), "considerabo list seam failed"
     del intro[:5]
     out["intro"] = LA_FACSIMILE_INTRO + intro
+    # Chapter openings on decorated-initial leaves (Brick 2):
+    # first block set from the facsimile reading, as the Intro's.
+    for key, (probe, blocks) in LA_FACSIMILE_FIRST.items():
+        first = out[key][0].get("text", "")
+        assert probe in first, f"facsimile seam failed for {key}"
+        out[key] = blocks + out[key][1:]
     assert not any("Typographicae" in (blk.get("text") or "")
                    for blk in out["chIII"]), "Ch. IV seam overrun"
     return out
@@ -936,9 +1054,8 @@ def emit_parallel(pdf, plan, toc):
 def collation_notes(pdf, report):
     pdf.add_page()
     centered(pdf, "COLLATION NOTES", 16, space_after=2)
-    centered(pdf, f"BRICK {BRICK} — THE INTRODUCTION AND "
-                  "PART I, CHAPTERS 1–3", 10.5, color=GOLD,
-             space_after=4)
+    centered(pdf, f"BRICKS 1–{BRICK} — CUMULATIVE", 10.5,
+             color=GOLD, space_after=4)
     head_rule(pdf)
     notes = [
         ("N1 — The Introduction's seat. In the 1668 volume the "
@@ -1019,6 +1136,42 @@ def collation_notes(pdf, report):
          "of the Preface. No repair is applied that is not in the "
          "table."),
     ]
+    if BRICK >= 2:
+        notes += [
+            ("N11 — Brick 2 scope. Capvt IV (De Sermone), Capvt V "
+             "(De Ratione et Scientia), and Capvt VI (De Principiis "
+             "internis Motus Voluntarii) join the parallel text. "
+             "Capvt VI's title in the folio display runs to three "
+             "lines and a second sentence (et de Orationibus quibus "
+             "eae declarantur); the edition's heading carries the "
+             "title's first sentence, and the whole stands here."),
+            ("N12 — Capvt IV's opening display. The chapter's "
+             "display heading stands in the machine reading with "
+             "its initial misread ('G A P V T IV', 'Do Strmone'); "
+             "the seam was fixed by content — the Typographicae "
+             "passage that opens the English Chapter IV — and the "
+             "heading is set from the census. The reading machine's "
+             "forms stand in this note, not in the text."),
+            ("N14 — Two more leaves adjudicated (Brick 2). The "
+             "opening leaves of Capvt V (1668 p. 20) and Capvt VI "
+             "(p. 25) carry decorated initials and garble in the "
+             "same way as the Introduction's page; their first "
+             "paragraphs, with the margin notes the leaves carry "
+             "(Ratio.; Motus Vitalis et Animalis.), are set from "
+             "readings of the leaves rendered from the secured "
+             "facsimile PDF (leaves 28 and 33), under the same "
+             "spot-adjudication provision, and the Ledger's "
+             "amendment is extended to name them. One lesser shard "
+             "of the same family in Capvt IV ('Semwh', an initial-"
+             "column fragment fused into the chapter's first "
+             "sentence) is deleted as a listed repair, the "
+             "sentence's own words being whole on both sides of it."),
+            ("N13 — Drift and residue are cumulative. N7's drift "
+             "table and N8's residue count are regenerated at every "
+             "brick over the whole text built so far; their figures "
+             "in this volume supersede the same notes in earlier "
+             "bricks, which stand in the edition's git history."),
+        ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
 
@@ -1035,9 +1188,9 @@ def back_matter(pdf):
     centered(pdf, "COLOPHON", 15, space_after=4)
     para(pdf, "This volume was built at the desk of the parallel "
               "edition by the builder build_leviathan_parallel.py, "
-              f" Brick {BRICK}: front matter, the Introduction, and "
-              "Part I, Chapters 1–3 in parallel, with collation "
-              "notes. Sources asserted by hash at build time: "
+              f"cumulative through Brick {BRICK}: {BRICK_SCOPE}, "
+              "with collation notes. Sources asserted by hash at "
+              "build time: "
               "Gutenberg #3207 (English) and Internet Archive "
               "leviathansivedem00hobb (Latin, 1668). Generation "
               "note: set in DejaVu Serif; no synthetic italics are "

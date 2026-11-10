@@ -161,6 +161,15 @@ under the font tolerance is recorded in N3. No other locus has been
 facsimile-adjudicated; every other flag in this ledger stands
 UNCHARTED exactly as written.
 
+**Extension at Brick 2 (2026-11-10):** the same provision was
+exercised at two further named loci of the same defect family —
+the decorated-initial opening leaves of Capvt V (1668 p. 20;
+secured PDF leaf 28) and Capvt VI (1668 p. 25; PDF leaf 33). Their
+first paragraphs and margin notes are set from desk readings of
+those leaves (builder constant LA_FACSIMILE_FIRST; apparatus note
+N14). The adjudicated set is now exactly three leaves: PDF 9, 28,
+33. All other flags stand UNCHARTED.
+
 ## VI. THE FOUR-ELEMENT TEST OF THIS LEDGER
 
 - **Inputs:** Gutenberg #3207 (secured 2026-11-02, hash of record);
