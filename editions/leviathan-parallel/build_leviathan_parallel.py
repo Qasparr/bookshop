@@ -236,13 +236,27 @@ UNITS_ALL = [
      "Prophets", "CAPVT XXXVI — De Verbo Dei et Prophetis"),
     ("chXXXVII", "CHAPTER XXXVII — Of Miracles, and Their Use",
      "CAPVT XXXVII — De Miraculis et eorum Usu"),
+    ("chXXXVIII", "CHAPTER XXXVIII — Of the Signification in "
+     "Scripture of Eternall Life, Hell, Salvation, the World to "
+     "Come, and Redemption",
+     "CAPVT XXXVIII — De Significatione quam habent in Scripturis "
+     "Sacris Vocabula Vita Aeterna, Infernum, Salvatio, Mundus "
+     "Venturus et Redemptio"),
+    ("chXXXIX", "CHAPTER XXXIX — Of the Signification in Scripture "
+     "of the Word Church",
+     "CAPVT XXXIX — De Significatione quam habet in Scripturis "
+     "Sacris Vocabulum Ecclesia"),
+    ("chXL", "CHAPTER XL — Of the Rights of the Kingdome of God, "
+     "in Abraham, Moses, High Priests, and the Kings of Judah",
+     "CAPVT XL — De Iure Regni Dei in Abrahamo, Mose, Summis "
+     "Sacerdotibus et Regibus Iudae"),
 ]
-BRICK = 12
-UNITS_BUILT = UNITS_ALL[:38]         # Parts I–II; Part III to XXXVII
+BRICK = 13
+UNITS_BUILT = UNITS_ALL[:41]         # Parts I–II; Part III to XL
 BRICK_SCOPE = ("front matter, the whole of Part I (De Homine) — the "
                "Introduction and Chapters 1–16 — the whole of "
                "Part II (De Civitate), Chapters 17–31, and Part III "
-               "(De Civitate Christiana) Chapters 32–37 in parallel")
+               "(De Civitate Christiana) Chapters 32–40 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -311,6 +325,12 @@ LA_SEAMS = {
     "chXXXV": (9565, 9777),
     "chXXXVI": (9778, 10243),
     "chXXXVII": (10244, 10466),
+    # Brick 13 seams: XXXVIII's display at 10467, XXXIX's at
+    # 10917 (a short chapter, 80 lines), XL's at 10997; XL closes
+    # the line before XLI's display (11326).
+    "chXXXVIII": (10467, 10916),
+    "chXXXIX": (10917, 10996),
+    "chXL": (10997, 11325),
 }
 
 # ----------------------------------------------------------------------
@@ -432,6 +452,10 @@ LA_FURNITURE_BLOCKS = {
     # Brick 12, Capvt XXXVI: the catchword shard '&de' — the
     # next leaf's opening '& de' read in the foot of the last.
     "&de",
+    # Brick 13, Capvt XXXVIII: the catchword 'Iacobi.' standing
+    # alone at the leaf turn; the word stands whole at the next
+    # leaf's head ('Iacobi. Non est enim Deus mortuorum…').
+    "Iacobi.",
 }
 
 # Margin-debris shards fused into body lines by the OCR (Capvt III,
@@ -1775,6 +1799,17 @@ def collation_notes(pdf, report):
              "this part uniformly so. The fact is printed, not "
              "harmonized; the facing is by paragraph, and the "
              "drift figures at N7 carry it chapter by chapter."),
+            ("N31 — Capvt XXXVIII–XL (Brick 13). The part's "
+             "condensation deepens in Capvt XXXIX: four Latin "
+             "paragraph groups face nine English, the definitions "
+             "of Ecclesia carried in long periods where the "
+             "English divides them — the extreme of the measure "
+             "recorded at N30, printed in the drift at N7. One "
+             "catchword is listed ('Iacobi.', Capvt XXXVIII, the "
+             "word standing whole at the next leaf's head). "
+             "Capvt XL closes the patriarchal sequence at the "
+             "seam of XLI's display, fixed by its title ('De "
+             "Servatoris nostri Benedicti Officio')."),
         ]
     for n in notes:
         para(pdf, n, size=10, height=5.4)
