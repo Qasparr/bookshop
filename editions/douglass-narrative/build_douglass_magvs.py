@@ -60,6 +60,19 @@ MECHANISM / DOCTRINE -- how this builder works, and why:
   fpdf2 discipline (house gotcha, AGENTS.md 2026-10-04): every
   multi_cell is called with new_x=XPos.LMARGIN, new_y=YPos.NEXT so
   the pen returns to the left margin instead of dying at the right.
+
+  ADDENDUM TO THE MECHANISM (2026-11-09, founder's order): a
+  frontispiece plate now stands in the book -- an original portrait
+  in the manner of a Leonardo study sheet, after Douglass's
+  documented likeness, struck for this edition by the house press.
+  It is bound as ONE unfoliated leaf immediately after the title
+  page (house precedent: the Black's front-matter leaf): it carries
+  no footer and does not advance the folio count, so every printed
+  folio and total in the book is unchanged (physical pages 81,
+  folios 80). The plate is new work and is captioned as new work;
+  the 1845 portrait remains absent from the electronic text, and
+  the apparatus records both facts side by side, neither smoothed
+  into the other.
 """
 
 import re
@@ -76,6 +89,28 @@ HERE = Path(__file__).resolve().parent
 SOURCE = HERE / "source" / "pg23.txt"          # Project Gutenberg #23
 LOGO = Path.home() / "workspace" / "templates" / "doctrine-logo.png"
 OUT = HERE / "DOUGLASS-NARRATIVE-MAGVS.pdf"
+
+# The founder-commissioned frontispiece plate (2026-11-09): generated
+# in the manner of a Leonardo study sheet; the builder converts the
+# delivered WebP to a print PNG once and binds the PNG thereafter.
+PLATE_WEBP = HERE / ("media-generation-douglass-leonardo-portrait-"
+                     "0-522e99c0-a4ef-4637-a901-e90987273475.webp")
+PLATE_PNG = HERE / "PLATE-DOUGLASS-PORTRAIT.png"
+PLATE_PAGE = 2     # physical page of the unfoliated frontispiece leaf
+PLATE_CAPTION = (
+    "An original plate struck for this edition in the manner of a "
+    "Leonardo study sheet, after the author's documented likeness. "
+    "It is a modern work of the house press, made by the founder's "
+    "order — it is NOT the portrait of the 1845 edition.")
+
+
+def folio_no(physical):
+    """Printed folio of a physical page. The plate leaf (physical
+    page PLATE_PAGE) is unfoliated: pages before it count as
+    themselves, pages after it count one less. This is what keeps
+    every printed folio and the contents identical to the first
+    binding while the physical book gains one leaf."""
+    return physical if physical < PLATE_PAGE else physical - 1
 
 NOTO = "/usr/share/fonts/truetype/noto"        # body face: true italics
 DEJAVU = "/usr/share/fonts/truetype/dejavu"    # display face
@@ -184,13 +219,23 @@ def load_sections():
 # The book
 # ----------------------------------------------------------------------
 class Book(FPDF):
+    folio_total = None    # foliated page count, learned from pass one
+
     def footer(self):
-        # Teacher's Edition footer; {nb} resolves after alias call.
+        # The frontispiece leaf is unfoliated front matter (house
+        # precedent: the Black's unfoliated front-matter leaf): no
+        # footer is printed on it, and folio_no() keeps every other
+        # page's printed number exactly as in the first binding.
+        if self.page_no() == PLATE_PAGE:
+            return
+        # Teacher's Edition footer; the total is the foliated count
+        # ({nb} serves pass one, whose sheets are discarded).
         self.set_y(-14)
         self.set_font("dejavu", "", 7.5)
         self.set_text_color(90, 90, 90)
-        self.cell(0, 8, FOOTER.format(n=self.page_no(), m="{nb}"),
-                  align="C")
+        total = self.folio_total if self.folio_total else "{nb}"
+        self.cell(0, 8, FOOTER.format(n=folio_no(self.page_no()),
+                                      m=total), align="C")
 
 
 def para(pdf, text, size=10.5, height=5.8, align="J", space_after=2.2,
@@ -254,6 +299,38 @@ def title_page(pdf):
               "it; the Flagpole above claims the revision and the "
               "apparatus only, and nothing of Douglass.",
          size=9.5, height=5, align="C", space_after=0)
+
+
+def ensure_plate_png():
+    """Convert the delivered plate WebP to the print PNG, once.
+
+    The plate was delivered as a generated WebP (1120 x 2240, a 1:2
+    study sheet -- about 296 dpi at the bound width, honest print
+    resolution). fpdf2 binds the PNG; the conversion is a format
+    change only, pixels untouched in substance."""
+    if not PLATE_PNG.exists():
+        from PIL import Image
+        Image.open(PLATE_WEBP).convert("RGB").save(PLATE_PNG, "PNG")
+    return PLATE_PNG
+
+
+def frontispiece_page(pdf):
+    """The plate leaf: physical page 2, unfoliated, before all else
+    but the title page. The portrait stands large and centered; the
+    caption beneath it, in the book's dress, states in the open what
+    the plate is and what it is not."""
+    ensure_plate_png()
+    pdf.add_page()
+    img_w = 96.0
+    img_h = img_w * 2.0          # the plate is struck at 1:2
+    pdf.image(str(PLATE_PNG), x=(pdf.w - img_w) / 2, y=16, w=img_w,
+              h=img_h)
+    pdf.set_y(16 + img_h + 9)
+    centered(pdf, "PLATE — FREDERICK DOUGLASS", "dejavu", "B", 12.5,
+             8, 2)
+    rule(pdf, 50)
+    para(pdf, PLATE_CAPTION, size=10, height=5.4, align="C",
+         space_after=0)
 
 
 def imprint_page(pdf):
@@ -457,7 +534,7 @@ def contents_page(pdf, toc):
 def text_sections(pdf, sections, toc):
     for heading, paras in sections:
         pdf.add_page()
-        toc[heading] = pdf.page_no()
+        toc[heading] = folio_no(pdf.page_no())
         centered(pdf, heading, "dejavu", "B", 15, 10, 1)
         if heading in SUBLINES:
             centered(pdf, SUBLINES[heading], "noto", "I", 10.5, 6, 2)
@@ -479,10 +556,10 @@ def text_sections(pdf, sections, toc):
 
 def apparatus_pages(pdf, toc):
     pdf.add_page()
-    toc["apparatus"] = pdf.page_no()
-    centered(pdf, "APPARATUS OF THE REVISION", "dejavu", "B", 13, 9, 2)
+    toc["apparatus"] = folio_no(pdf.page_no())
+    centered(pdf, "APPARATUS OF THE REVISION", "dejavu", "B", 13, 8, 2)
     centered(pdf, "What was done to the text, stated in the open",
-             "noto", "I", 10.5, 6, 6)
+             "noto", "I", 10.5, 6, 4)
     para(pdf, "The text of the Narrative in this edition is the text "
               "of Project Gutenberg eBook #23, which carries the 1845 "
               "Boston edition. The following operations, and no "
@@ -505,16 +582,29 @@ def apparatus_pages(pdf, toc):
         "the electronic text carries no portrait, and none is "
         "fabricated for this edition. The gap is shown, not hidden.",
     ]:
-        para(pdf, line, size=10, space_after=1.8)
+        para(pdf, line, size=10, space_after=1.0)
+    para(pdf, "ADDENDUM — 2026-11-09, by the founder's order. A "
+              "frontispiece plate was struck for this edition and "
+              "bound as an unfoliated leaf after the title page: an "
+              "original portrait in the manner of a Leonardo study "
+              "sheet, after Douglass's documented likeness — a modern "
+              "work of the house press, made this day. The absence "
+              "recorded in item 5 stands exactly as written: the "
+              "portrait of the 1845 edition is not carried in the "
+              "electronic text, and this plate is not that portrait "
+              "and pretends to be nothing else. The absence is of the "
+              "1845 portrait; the plate is new work, labeled as new.",
+         size=10, height=5.4, space_after=1.0)
     para(pdf, "No chapter notes have been invented for this edition. "
               "An honest apparatus frame is the deliverable; annotation "
               "beyond the Reviser's Preface awaits the founder's pen "
-              "and is marked UNCHARTED until then.", size=10)
+              "and is marked UNCHARTED until then.", size=10,
+         space_after=1.4)
 
-    toc["authorities"] = pdf.page_no()
-    pdf.ln(2)
+    toc["authorities"] = folio_no(pdf.page_no())
+    pdf.ln(1)
     centered(pdf, "TABLE OF AUTHORITIES (CONDENSED)", "dejavu", "B",
-             12, 8, 4)
+             12, 8, 3)
     for a in [
         "Douglass, Frederick. Narrative of the Life of Frederick "
         "Douglass, an American Slave. Boston: Anti-Slavery Office, "
@@ -531,10 +621,10 @@ def apparatus_pages(pdf, toc):
         "The Teacher's Edition format (house directive, 2026) — the "
         "dress of this revision.",
     ]:
-        para(pdf, a, size=10, space_after=1.8)
+        para(pdf, a, size=10, space_after=1.0)
 
     pdf.add_page()
-    toc["colophon"] = pdf.page_no()
+    toc["colophon"] = folio_no(pdf.page_no())
     centered(pdf, "COLOPHON", "dejavu", "B", 13, 9, 6)
     para(pdf, "This Teacher's Revision (MAGVS) of the Narrative of "
               "the Life of Frederick Douglass was generated on "
@@ -556,7 +646,8 @@ def apparatus_pages(pdf, toc):
              "B", 12, 8)
 
 
-def build(toc):
+def build(toc, folio_total=None):
+    Book.folio_total = folio_total
     pdf = Book(orientation="P", unit="mm", format="Letter")
     pdf.set_margins(22, 20, 22)
     pdf.set_auto_page_break(True, margin=20)
@@ -576,6 +667,7 @@ def build(toc):
 
     sections = load_sections()
     title_page(pdf)
+    frontispiece_page(pdf)     # the plate leaf: physical 2, unfoliated
     imprint_page(pdf)
     toc["imprint"] = 2
     elements_page(pdf)
@@ -591,10 +683,14 @@ def build(toc):
 def main():
     toc = {}
     pdf, toc = build(toc)          # pass one: measure
-    pdf, toc = build(toc)          # pass two: contents numbered
+    # Folios exclude the one unfoliated plate leaf; pass two prints
+    # the learned total so the last page still reads "-- 80 of 80 --".
+    folio_total = pdf.pages_count - 1
+    pdf, toc = build(toc, folio_total)   # pass two: contents numbered
     pdf.output(str(OUT))
     print(f"BUILT {OUT}")
-    print(f"pages: {pdf.pages_count}")
+    print(f"physical pages: {pdf.pages_count}")
+    print(f"folios: {folio_total}")
     print(f"bytes: {OUT.stat().st_size}")
     for k, v in toc.items():
         print(f"  {k}: p.{v}")
