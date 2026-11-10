@@ -55,17 +55,38 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   21–23, 24–30, 31–34, 35–40, 41–44, 45–48, 49–53, 54–59,
   60–62 — complete, no gaps, no overlaps); sample pages rendered
   and inspected. No unit required a sentence split.
+  Committed `24db8b9` (boundary note `b50b975`).
+- **BRICK 2 — Kapitel 2** ("Wiener Lehr- und Leidensjahre"):
+  `translations/en-kap2.txt`, **349 units one-for-one** (counts
+  asserted at build); wired into the builder's `BRICK1` list and
+  both label tables; preface and contents made cumulative.
+  **17 [TN]s**: Judentum and Weltanschauung and Rasse at first
+  occurrence; the chapter's F→L misread class (Liier, Lrechheit,
+  Lurcht, Lormen/Lorderungen/Leinde/Lrage, Lolgen/Lorm);
+  hebe/liebe, Tragen/Fragen, fe/je, Febens/Finie,
+  Fobeshymnen/Lobeshymnen; the name locus **Fueger → Lueger**
+  (¶254, restored in the English, flagged); fudenfrage/
+  Judenfrage; the wanting noun at ¶342 (Erde supplied in the
+  English, gap flagged); the bare divider unit "A" (¶202)
+  carried as found.
+  **PDF now 129 pages.** Verified by full running-head census:
+  all 40 Kapitel 2 spreads pair even verso with odd recto at the
+  identical ¶ range, coverage ¶1–349 complete, no gaps, no
+  overlaps, no unit split; sample recto (p. 49) rendered and
+  inspected.
 
 ## NEXT
 
-- **BRICK 2 — Kapitel 2** ("Wiener Lehr- und Leidensjahre"):
-  write `translations/en-kap2.txt` (one-for-one with the loader),
-  add `("kap2", ...)` to the builder's `BRICK1` list (rename it
-  SECTIONS as it grows), add [TN]s for first occurrences falling
-  in the chapter (watch: Rasse, Weltanschauung, Führer, Juden-
-  compounds), extend `labels` and `contents_page`, rebuild,
-  verify, commit, push. Then Bricks 3–13 likewise (Kapitel 3–12,
-  one per brick), per ARCHITECTURE §VII.
+- **BRICK 3 — Kapitel 3** ("Allgemeine politische Betrachtungen
+  aus meiner Wiener Zeit"): write `translations/en-kap3.txt`
+  (420 units by the loader — the largest chapter of the volume;
+  it may itself be laid in two sittings of one brick), add the
+  `("kap3", ...)` 5-tuple to the builder's `BRICK1` list, extend
+  both `labels` tables, move the contents closing line to
+  "Kapitel 4–12", add [TN]s (watch first occurrences: Führer,
+  Propaganda, Parlament compounds), rebuild, verify by census,
+  commit, push. Then Bricks 4–13 likewise (Kapitel 4–12, one per
+  brick), per ARCHITECTURE §VII.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary
   of Translation Rulings (seeded by the [TN] rulings: Volk,

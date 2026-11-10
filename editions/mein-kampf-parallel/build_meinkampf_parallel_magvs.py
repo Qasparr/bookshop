@@ -122,6 +122,9 @@ BRICK1 = [
     ("vorwort", "VORWORT", "FOREWORD", "VORWORT", "FOREWORD"),
     ("kap1", "1. KAPITEL — IM ELTERNHAUS", "CHAPTER 1 — IN THE "
      "PARENTS' HOME", "1. KAPITEL", "CHAPTER 1"),
+    ("kap2", "2. KAPITEL — WIENER LEHR- UND LEIDENSJAHRE",
+     "CHAPTER 2 — VIENNA YEARS OF LEARNING AND SUFFERING",
+     "2. KAPITEL", "CHAPTER 2"),
 ]
 
 
@@ -227,6 +230,78 @@ TN = {
         "letterspaced emphasis of the printed book defeated "
         "across five lines of OCR. The German page prints it as "
         "found; the English translates the evident reading.",
+    ("kap2", 12):
+        "Marxismus and Judentum named together, as the chapter's "
+        "programme. Judentum is rendered 'Jewry' throughout the "
+        "edition — the collective noun the German carries — "
+        "never softened to 'the Jews' where the abstraction is "
+        "the author's own. [First occurrence.]",
+    ("kap2", 19):
+        "Weltanschauung: rendered 'world-view' throughout — the "
+        "author's own keystone term for a total doctrine held as "
+        "faith; 'ideology' would modernise it past recognition. "
+        "[First occurrence.]",
+    ("kap2", 49):
+        "Printed 'Liier rächt sich': an OCR misread of Hier "
+        "rächt sich.",
+    ("kap2", 95):
+        "Printed 'ätzende Lrechheit': an OCR misread of ätzende "
+        "Frechheit ('corroding impudence').",
+    ("kap2", 102):
+        "Printed 'Die hebe bürgerliche Mitwelt': an OCR misread "
+        "of Die liebe bürgerliche Mitwelt.",
+    ("kap2", 125):
+        "Printed 'zwei wichtigsten Tragen': an OCR misread of "
+        "zwei wichtigsten Fragen.",
+    ("kap2", 155):
+        "Printed 'fe mehr ich mich': an OCR misread of je mehr "
+        "ich mich.",
+    ("kap2", 162):
+        "Printed 'die Lurcht vor dem wilden Köter': an OCR "
+        "misread of die Furcht.",
+    ("kap2", 175):
+        "The F-to-L misread class runs through this stretch of "
+        "the chapter: here 'in den Lormen' for in den Formen; "
+        "then Forderungen as 'Lorderungen' (¶176, ¶179), Feinde "
+        "as 'Leinde' (¶177), Frage as 'Lrage' (¶182, ¶185). The "
+        "German page prints every instance as found; the "
+        "English translates the evident readings.",
+    ("kap2", 202):
+        "A single letter stands as its own unit in the witness "
+        "— a printed divider mark of the book's internal "
+        "sectioning, carried as found.",
+    ("kap2", 246):
+        "Printed 'innerpolitischen Febens' and 'erster Finie': "
+        "OCR misreads of innerpolitischen Lebens and erster "
+        "Linie.",
+    ("kap2", 253):
+        "Printed 'süßlichen Fobeshymnen': an OCR misread of "
+        "süßlichen Lobeshymnen ('sugary praise-hymns').",
+    ("kap2", 254):
+        "Printed 'Dr. Karl Fueger': an OCR misread of Dr. Karl "
+        "Lueger, the Christian-Social mayor of Vienna. The "
+        "German page prints the name as found; the English "
+        "restores the evident reading, the locus flagged here "
+        "and in the Apparatus of OCR Loci — a name is a fact, "
+        "and the fact is Lueger.",
+    ("kap2", 332):
+        "Printed 'die Lolgen', 'Die Lrage', 'letzten Lorm': OCR "
+        "misreads of die Folgen, Die Frage, letzten Form.",
+    ("kap2", 336):
+        "Printed 'Kenntnis der fudenfrage': an OCR misread of "
+        "Kenntnis der Judenfrage.",
+    ("kap2", 342):
+        "The witness reads 'das ewig nur auf dieser lebt' — "
+        "the noun is wanting (the printed book reads auf dieser "
+        "Erde lebt). The English supplies 'earth' per the "
+        "evident sense; the gap is flagged here, not repaired "
+        "on the German page.",
+    ("kap2", 345):
+        "Rasse: rendered 'race' throughout the edition. The "
+        "word is the load-bearing term of the book's doctrine "
+        "and is neither narrowed to 'breed' nor widened to "
+        "'species'; its period scientific pretension is part of "
+        "what the Tower Audit weighs. [First occurrence.]",
 }
 
 
@@ -648,9 +723,10 @@ PREFACE_PARALLEL = [
     "in the Glossary at the back, so the consistency of the "
     "translation can itself be audited.",
 
-    "This first brick contains the front matter and the opening "
-    "of the book: the Widmung, the Vorwort, and the first "
-    "chapter, In the Parents' Home. The chapters follow, brick "
+    "This volume contains the front matter and the opening "
+    "of the book: the Widmung, the Vorwort, the first chapter, "
+    "In the Parents' Home, and the second, Vienna Years of "
+    "Learning and Suffering. The chapters follow, brick "
     "by brick, in the book's own order; the volume closes with "
     "the Schlusswort in parallel, the Tower Audit entire, the "
     "Glossary, the Apparatus of OCR Loci, the Title Register, "
@@ -729,7 +805,10 @@ def contents_page(pdf, toc):
                           "Widmung"),
               "vorwort": ("Vorwort — Foreword", "Vorwort"),
               "kap1": ("1. Kapitel — Im Elternhaus / Chapter 1 — "
-                       "In the Parents' Home", "Kapitel 1")}
+                       "In the Parents' Home", "Kapitel 1"),
+              "kap2": ("2. Kapitel — Wiener Lehr- und "
+                       "Leidensjahre / Chapter 2 — Vienna Years "
+                       "of Learning and Suffering", "Kapitel 2")}
     for key, _hd, _he, _rd, _re in BRICK1:
         name, short = labels[key]
         entries.append((f"{name} — in parallel", toc.get(key)))
@@ -741,7 +820,7 @@ def contents_page(pdf, toc):
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
     pdf.ln(4)
-    para(pdf, "Kapitel 2–12, the Schlusswort in parallel, the "
+    para(pdf, "Kapitel 3–12, the Schlusswort in parallel, the "
               "Tower Audit entire, the Glossary of Translation "
               "Rulings, the Apparatus of OCR Loci, the Title "
               "Register, the Table of Authorities, and the "
@@ -851,7 +930,8 @@ def build(toc, folio_total=None, log=None):
     toc["protocol"] = 6
     contents_page(pdf, toc)
     labels = {"widmung": "Widmung", "vorwort": "Vorwort",
-              "kap1": "1. Kapitel — Im Elternhaus"}
+              "kap1": "1. Kapitel — Im Elternhaus",
+              "kap2": "2. Kapitel — Wiener Lehr- und Leidensjahre"}
     for key, head_de, head_en, run_de, run_en in BRICK1:
         de_list = german[key]
         en_list = load_translation(key)
