@@ -151,6 +151,10 @@ BOOKS = [
      "SUN TZU", "c. 500 BC · GILES 1910",
      "Thirteen short chapters, twenty-four centuries old, and still the sharpest book on conflict ever written: know the ground, know the force, know yourself — and prize above all the acme of skill, breaking the enemy's resistance without fighting. Lionel Giles's 1910 translation, the scholarly standard for fifty years, stands complete here with his Introduction and critical notes. The ancient text and the translation are public domain, unaltered in substance.",
      "“All warfare is based on deception.”"),
+    ("meinkampf", "MEIN KAMPF", "A CRITICAL EDITION (MAGVS)",
+     "ADOLF HITLER", "1925",
+     "The German text of the first volume (1925), printed whole and unaltered — and answered. A critical Teacher's Revision (MAGVS): English notes to every chapter carrying present-day correlations, and a full Tower Audit in which the book's factual claims, autobiographical legends, prophecies, and racial doctrine are weighed against the standard historical record and tiered, claim by claim. An audit, not an endorsement: the text is printed so that it can be examined — and it is examined.",
+     "An audited text can be answered. An unaudited one can only be feared."),
 ]
 
 # Strike filter: with slug arguments, strike only those covers; with

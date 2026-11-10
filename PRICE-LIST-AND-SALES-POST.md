@@ -79,4 +79,5 @@ All Rights Reserved, Without Prejudice.
 - THE WONDERFUL WIZARD OF OZ (MAGVS) — **$12** · note: OZ (building)
 - LEVIATHAN (MAGVS), 407 leaves — **$21** · note: LEVIATHAN
 - THE ART OF WAR (MAGVS), 121 pp, Giles 1910 complete — **$12** · note: ART OF WAR
+- MEIN KAMPF — Critical Edition (MAGVS), Vol. 1: German text whole, English correlation notes + full Tower Audit (36 items) — **$21** · note: MEIN KAMPF
 Standing order (his, 2026-11-09 21:19 EST): announce on Facebook as each book finishes.
