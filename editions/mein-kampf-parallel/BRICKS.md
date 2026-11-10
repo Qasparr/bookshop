@@ -145,17 +145,39 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   (159 spreads whole-book, zero anomalies); opening spread
   (pp. 324–325) rendered and inspected.
 
+- **BRICK 7 — Kapitel 7** ("Die Revolution"):
+  `translations/en-kap7.txt`, **136 units one-for-one**;
+  wired in as above; contents closing line moved to
+  "Kapitel 8–12"; preface made cumulative. German dumps for
+  Kapitel 7–12 and the Schlusswort were also struck this
+  brick via `sib.load_sections()` and verified against the
+  loader's census (136 · 49 · 48 · 295 · 241 · 246 · 5) —
+  `work/de-kap7.txt` … `de-schluss.txt`. **5 [TN]s**: the
+  Fazarett cluster (¶44–45, ¶47); Ficht for Licht (¶82);
+  Lrühjahrs — the F/L class reversed (¶115); the closing
+  L-cluster (Lührer, Lreiheit, Lront, Letzen, Lreilich,
+  ¶117–118); the Thermopylae epitaph adaptation (¶127).
+  **PDF now 376 pages.** Verified by census: all 16
+  Kapitel 7 spreads pair even verso with odd recto at the
+  identical ¶ range, coverage ¶1–136 complete, no gaps, no
+  overlaps (175 spreads whole-book, zero anomalies);
+  opening spread (pp. 344–345) rendered and inspected.
+  (Build incident, recorded per house practice: the ¶117
+  [TN] first carried a straight ASCII quote where the
+  German closing quote “ belongs, breaking the builder's
+  syntax; caught at compile, the single character
+  corrected, nothing else touched.)
+
 ## NEXT
 
-- **BRICK 7 — Kapitel 7** ("Die Revolution"): dump the
-  German units to `work/de-kap7.txt` with the sibling-loader
-  routine used for Kapitel 3–6, verify the dump count against
-  the loader's census (136 units), write
-  `translations/en-kap7.txt`, add the `("kap7", ...)`
-  5-tuple and the `labels` entries, move the contents
-  closing line to "Kapitel 8–12", add [TN]s, rebuild, verify
-  by census, commit, push. Then Bricks 8–13 likewise
-  (Kapitel 8–12, one per brick), per ARCHITECTURE §VII.
+- **BRICK 8 — Kapitel 8** ("Beginn meiner politischen
+  Tätigkeit"): write `translations/en-kap8.txt` (49 units;
+  German dump already in `work/de-kap8.txt`), add the
+  `("kap8", ...)` 5-tuple and the `labels` entries, move
+  the contents closing line to "Kapitel 9–12", add [TN]s,
+  rebuild, verify by census, commit, push. Then Bricks
+  9–13 likewise (Kapitel 9–12, one per brick), per
+  ARCHITECTURE §VII.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary
   of Translation Rulings (seeded by the [TN] rulings: Volk,
