@@ -150,11 +150,18 @@ UNITS_ALL = [
      "Motion, commonly called the Passions",
      "CAPVT VI — De Principiis internis Motus Voluntarii, quae "
      "vulgo Passiones appellantur"),
+    ("chVII", "CHAPTER VII — Of the Ends or Resolutions of Discourse",
+     "CAPVT VII — De Discursuum Determinationibus"),
+    ("chVIII", "CHAPTER VIII — Of Virtues and Defects Intellectual",
+     "CAPVT VIII — De Virtutibus Intellectualibus et Defectibus "
+     "Oppositis"),
+    ("chIX", "CHAPTER IX — Of the Several Subjects of Knowledge",
+     "CAPVT IX — De Scientiarum Distributione"),
 ]
-BRICK = 2
-UNITS_BUILT = UNITS_ALL[:7]          # through Part I, Chapter 6
+BRICK = 3
+UNITS_BUILT = UNITS_ALL[:10]         # through Part I, Chapter 9
 BRICK_SCOPE = ("front matter, the Introduction, and Part I, "
-               "Chapters 1–6 in parallel")
+               "Chapters 1–9 in parallel")
 
 # Latin seams in the secured djvu text, 1-based lines, by content
 # (SOURCE-LEDGER §III.4): unit key -> (first line, last line).
@@ -166,6 +173,9 @@ LA_SEAMS = {
     "chIV": (706, 1054),
     "chV": (1055, 1303),
     "chVI": (1304, 1709),
+    "chVII": (1710, 1815),
+    "chVIII": (1816, 2205),
+    "chIX": (2206, 2265),
 }
 
 # ----------------------------------------------------------------------
@@ -242,7 +252,19 @@ LA_REPAIRS = {
     # sentence ("collata tamen Semwh cum inventione"): deleted, the
     # sentence's own words being whole on both sides of it
     "semwh": "",
+    # Brick 3 loci, same certainty classes:
+    "irtus": "virtus",          # Capvt VIII ¶1: drop-cap V consumed
+    "siint": "sunt",            # Capvt IX ¶1: ſunt misread whole
+    "motta": "motus",           # Capvt IX: 'Magnitudo et Motus'
 }
+
+# Phrase-level repairs (2): fusions spanning a word boundary that no
+# token rule can reach. (1) Capvt VII ¶1 'vel m Adeptione' — the
+# tail of 'in' fused as a stray token; the English face reads
+# 'either in Adeption or Rejection'. (2) reserved.
+LA_PHRASE_REPAIRS = [
+    ("vel m Adeptione", "vel in Adeptione"),
+]
 # Repairs are keyed case-insensitively; the values carry the case.
 LA_REPAIRS = {k.lower(): v for k, v in LA_REPAIRS.items()}
 
@@ -486,6 +508,8 @@ def clean_latin_lines(lines):
                 continue
             last_title_line = s
             continue                  # the chapter's own title lines
+        if re.fullmatch(r"[A-Z];?", s):
+            continue                  # a drop-cap shard standing alone
         if any(rx.match(s) for rx in LA_DROP_LINE_RES):
             continue
         kept.append(ln)
@@ -523,6 +547,9 @@ def clean_latin_lines(lines):
         # token-level long-s restoration + repairs
         text = re.sub(r"[A-Za-zÀ-ÿ£?]+",
                       lambda m: _long_s_token(m.group(0)), text)
+        # phrase-level repairs (listed at LA_PHRASE_REPAIRS)
+        for old, new in LA_PHRASE_REPAIRS:
+            text = text.replace(old, new)
         # punctuation spacing (typographic only)
         text = re.sub(r"\s+([,.;:!?])", r"\1", text)
         text = re.sub(r"\s+", " ", text).strip()
@@ -1166,6 +1193,27 @@ def collation_notes(pdf, report):
              "column fragment fused into the chapter's first "
              "sentence) is deleted as a listed repair, the "
              "sentence's own words being whole on both sides of it."),
+            ("N15 — Titles that differ within the volume (Brick "
+             "3). Capvt VIII carries two title forms in the 1668 "
+             "book itself: the contents leaf reads 'De Virtutibus "
+             "et Defectibus Intellectualibus', the chapter's own "
+             "display 'De Virtutibus Intellectualibus et "
+             "Defectibusque Oppositis'; the edition's heading "
+             "follows the chapter display. Capvt IX's Latin title, "
+             "'De Scientiarum Distributione' — of the distribution "
+             "of the sciences — answers an English title of another "
+             "sense, 'Of the severall Subjects of Knowledge'; both "
+             "stand as printed, the divergence recorded, not "
+             "harmonized."),
+            ("N16 — Capvt IX's tables (Brick 3). The English "
+             "chapter prints its division of the sciences as two "
+             "formal tables, which the machine reading carries as "
+             "fifty-five small paragraph groups; the Latin casts "
+             "the same division as continuous prose in twelve "
+             "groups. Pairing follows group order; in this chapter "
+             "the faces correspond by matter rather than by block, "
+             "and the drift figure (N7) records the fact without "
+             "forcing the tables into paragraphs."),
             ("N13 — Drift and residue are cumulative. N7's drift "
              "table and N8's residue count are regenerated at every "
              "brick over the whole text built so far; their figures "

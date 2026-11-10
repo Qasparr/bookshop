@@ -1,7 +1,7 @@
 {
- "repairs_applied": 54,
- "drift_text": "INTRODUCTIO: English 9 paragraph groups, Latin 8; paired 8, unpaired tail 1. CAPVT I: English 5 paragraph groups, Latin 7; paired 5, unpaired tail 2. CAPVT II: English 10 paragraph groups, Latin 13; paired 10, unpaired tail 3. CAPVT III: English 12 paragraph groups, Latin 15; paired 12, unpaired tail 3. CAPVT IV: English 25 paragraph groups, Latin 29; paired 25, unpaired tail 4. CAPVT V: English 22 paragraph groups, Latin 23; paired 22, unpaired tail 1. CAPVT VI: English 60 paragraph groups, Latin 64; paired 60, unpaired tail 4.",
- "residue_text": "18 garbled or unresolved tokens stand across Brick 2's Latin (18 distinct forms: afrkiamur, ccmpcfta, effecl, efficut, eflk, facli, fadu, fen, fin, firaul, fj, fme, forie, fra, frry, iutef, mentafem, recluruseft).",
+ "repairs_applied": 56,
+ "drift_text": "INTRODUCTIO: English 9 paragraph groups, Latin 8; paired 8, unpaired tail 1. CAPVT I: English 5 paragraph groups, Latin 7; paired 5, unpaired tail 2. CAPVT II: English 10 paragraph groups, Latin 13; paired 10, unpaired tail 3. CAPVT III: English 12 paragraph groups, Latin 15; paired 12, unpaired tail 3. CAPVT IV: English 25 paragraph groups, Latin 29; paired 25, unpaired tail 4. CAPVT V: English 22 paragraph groups, Latin 23; paired 22, unpaired tail 1. CAPVT VI: English 60 paragraph groups, Latin 64; paired 60, unpaired tail 4. CAPVT VII: English 7 paragraph groups, Latin 9; paired 7, unpaired tail 2. CAPVT VIII: English 27 paragraph groups, Latin 37; paired 27, unpaired tail 10. CAPVT IX: English 45 paragraph groups, Latin 10; paired 10, unpaired tail 35.",
+ "residue_text": "19 garbled or unresolved tokens stand across Brick 3's Latin (19 distinct forms: afrkiamur, ccmpcfta, effecl, efficut, eflk, facli, fadu, fen, fin, firaul, fj, fme, forie, fra, frry, ft, iutef, mentafem, recluruseft).",
  "residue_tokens": {
   "effecl": 1,
   "recluruseft": 1,
@@ -20,7 +20,8 @@
   "forie": 1,
   "iutef": 1,
   "eflk": 1,
-  "fin": 1
+  "fin": 1,
+  "ft": 1
  },
  "units": [
   {
@@ -50,9 +51,21 @@
   {
    "key": "chVI",
    "pairs": 64
+  },
+  {
+   "key": "chVII",
+   "pairs": 9
+  },
+  {
+   "key": "chVIII",
+   "pairs": 37
+  },
+  {
+   "key": "chIX",
+   "pairs": 45
   }
  ],
- "pages": 84,
+ "pages": 123,
  "toc": {
   "intro": 6,
   "chI": 10,
@@ -60,6 +73,9 @@
   "chIII": 26,
   "chIV": 36,
   "chV": 50,
-  "chVI": 62
+  "chVI": 62,
+  "chVII": 82,
+  "chVIII": 88,
+  "chIX": 114
  }
 }
