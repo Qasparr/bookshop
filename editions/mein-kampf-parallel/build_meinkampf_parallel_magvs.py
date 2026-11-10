@@ -77,9 +77,21 @@ MECHANISM / DOCTRINE -- how this builder works, and why:
           flag foresaw. Brick 12 added Kapitel 12 (246
           units), the last chapter. Brick 13 added the
           Schlusswort (5 units), its German clean of the
-          witness's misread classes and carrying no [TN];
-          the closing apparatus remains for the final
-          brick.
+          witness's misread classes and carrying no [TN].
+          The FINAL BRICK closed the volume: the Tower
+          Audit entire, carried from the sibling builder's
+          data unchanged (36 items, six groups, with its
+          introduction); the Glossary of Translation
+          Rulings, collected from the first-occurrence
+          [TN]s; the Apparatus of OCR Loci, every flagged
+          locus of the witness in one register; the Title
+          Register (Entry J-1, the Japanese witness,
+          printed from apparatus/ entire, with its form
+          amendment and boundary note; Japanese glyphs on
+          the CJK fallback face, switched on only for the
+          back matter); the Table of Authorities; and the
+          Colophon, carrying the founder's form per the
+          Reservation leaf.
   TOLERANCE  Any step that would change a word of the German body
           fails the edition. Any translation choice that softens,
           omits, or improves the original fails the translation
@@ -851,6 +863,16 @@ def new_book():
         pdf.add_font(family, "BI", f"{NOTO}/{fname}-BoldItalic.ttf")
     pdf.add_font("dejavu", "", f"{DEJAVU}/DejaVuSerif.ttf")
     pdf.add_font("dejavu", "B", f"{DEJAVU}/DejaVuSerif-Bold.ttf")
+    # The CJK fallback (house precedent, Divine Nine Abroad
+    # III): registered here, but only SWITCHED ON by build()
+    # immediately before the back matter that carries Japanese
+    # glyphs, so no standing page's typesetting can shift.
+    pdf.add_font("cjk", "",
+                 "/usr/share/fonts/opentype/noto/"
+                 "NotoSerifCJK-Regular.ttc")
+    pdf.add_font("cjk", "B",
+                 "/usr/share/fonts/opentype/noto/"
+                 "NotoSerifCJK-Bold.ttc")
     return pdf
 
 
@@ -1393,18 +1415,20 @@ def contents_page(pdf, toc):
         entries.append((f"{name} — in parallel", toc.get(key)))
         entries.append((f"Translator's Notes and Carried Notes — "
                         f"{short}", toc.get(key + ":notes")))
+    entries += [("THE TOWER AUDIT — carried entire from the "
+                 "Critical Edition", toc.get("audit")),
+                ("Glossary of Translation Rulings",
+                 toc.get("glossary")),
+                ("Apparatus of OCR Loci", toc.get("ocr")),
+                ("Title Register — Entry J-1: The Japanese "
+                 "Witness", toc.get("register")),
+                ("Table of Authorities", toc.get("authorities")),
+                ("Colophon", toc.get("colophon"))]
     for name, page in entries:
         pdf.set_font("noto", "", 10.5)
         label = f"{name}    {page}" if page else name
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
-    pdf.ln(4)
-    para(pdf, "The Tower Audit entire, the Glossary of "
-              "Translation Rulings, the Apparatus of OCR Loci, "
-              "the Title Register, the Table of Authorities, "
-              "and the Colophon follow in the final brick; this "
-              "contents grows with the volume.",
-         size=10, space_after=0)
 
 
 # ----------------------------------------------------------------------
@@ -1482,6 +1506,659 @@ def notes_pages(pdf, key, label, toc):
 
 
 # ----------------------------------------------------------------------
+# Back matter (the FINAL BRICK, ARCHITECTURE SSVII): the carried
+# Tower Audit entire; the Glossary of Translation Rulings; the
+# Apparatus of OCR Loci; the Title Register (Entry J-1, printed
+# from apparatus/); the Table of Authorities; the Colophon.
+# ----------------------------------------------------------------------
+def audit_pages(pdf, toc):
+    pdf.add_page()
+    toc["audit"] = pdf.page_no()
+    centered(pdf, "THE TOWER AUDIT", "dejavu", "B", 15, 10, 1)
+    centered(pdf, "The Claim Register of This Volume — carried "
+                  "entire from the Critical Edition (MAGVS), "
+                  "unchanged", "noto", "I", 11, 6, 5)
+    para(pdf, "Carrier's note (this edition): the Audit that "
+              "follows is the Critical Edition's register, "
+              "imported from the sibling builder's data and "
+              "printed entire — thirty-six items in six groups, "
+              "with its own introduction — as ARCHITECTURE SSII.2 "
+              "provides. Nothing in it is re-tiered, re-worded, "
+              "or abridged here; the parallel body it weighs "
+              "stands on the facing pages before it, in both "
+              "tongues, so its citations can be checked against "
+              "the English of this edition as against the "
+              "German.", space_after=4)
+    for p in sib.AUDIT_INTRO:
+        para(pdf, p)
+    for group, items in sib.AUDIT:
+        pdf.ln(3)
+        if pdf.get_y() > pdf.h - 50:
+            pdf.add_page()
+        centered(pdf, group, "dejavu", "B", 11.5, 7, 3)
+        for code, claim, tier, why in items:
+            if pdf.get_y() > pdf.h - 42:
+                pdf.add_page()
+            pdf.set_font("dejavu", "B", 10.5)
+            pdf.multi_cell(0, 5.8, f"{code} — [{tier}]",
+                           new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+            para(pdf, f"Claim: {claim}", size=10.5, height=5.6,
+                 space_after=0.6)
+            para(pdf, why, size=10, height=5.4, space_after=3.4)
+
+
+# The Glossary: every ruling of the Translation Protocol SSIV.4,
+# collected from the first-occurrence [TN]s so the consistency of
+# the translation can itself be audited. (term, rendering,
+# first occurrence, the ruling)
+GLOSSARY = [
+    ("Volk", "“people”", "Widmung, ¶1",
+     "The word's range — a people as nation, as ethnic body, as "
+     "the collective subject of history — is held by no single "
+     "English word. “People” is held throughout; where the text "
+     "narrows Volk toward blood and descent, a translator's note "
+     "names the German rather than bending the English."),
+    ("Bewegung", "“movement”", "Widmung, ¶5",
+     "Never a mere motion: the word names the National Socialist "
+     "movement as one collective actor, and carries — as in “our "
+     "movement” — the loyalty of a confession."),
+    ("völkisch", "“folkish”", "Kapitel 1, ¶40",
+     "The adjective of Volk in its narrowed period sense: not "
+     "“national”, which would launder the narrowing, and not "
+     "“racial”, which would overshoot it. Deliberately unlovely, "
+     "and held throughout."),
+    ("Judentum", "“Jewry”", "Kapitel 2, ¶13",
+     "The collective noun the German carries — never softened to "
+     "“the Jews” where the abstraction is the author's own."),
+    ("Weltanschauung", "“world-view”", "Kapitel 2, ¶20",
+     "The author's keystone term for a total doctrine held as "
+     "faith; “ideology” would modernise it past recognition."),
+    ("Rasse", "“race”", "Kapitel 2, ¶346",
+     "The load-bearing term of the book's doctrine: neither "
+     "narrowed to “breed” nor widened to “species”. Its period "
+     "scientific pretension is part of what the Tower Audit "
+     "weighs."),
+    ("Propaganda", "“propaganda”", "Kapitel 3, ¶130",
+     "The word's period sense — the organized working upon the "
+     "mass mind — which the text first names as the press's "
+     "office and later raises to a doctrine of the movement."),
+    ("Führer", "“leader”", "Kapitel 3, ¶162",
+     "And the compounds with it — Führergedanke (“leader-"
+     "thought”), Führertum. The title-sense the word later "
+     "acquired is not read back into the text of 1925. The word "
+     "stands already four times in Kapitel 2, where no note was "
+     "set; the ruling is stated where the chapter makes the "
+     "word's office its subject."),
+    ("Lebensraum", "“living-space”", "Kapitel 4, ¶43",
+     "First in its plain spatial sense — the room at a people's "
+     "disposal. Where the later chapters raise the word into the "
+     "doctrine of soil to be taken in the East, the rendering "
+     "does not change; the Audit weighs the doctrine."),
+    ("The compound field", "carried whole",
+     "Kapitel 3, ¶5",
+     "The text's invective compounds — Parlamentswanzen "
+     "(“parliament-bedbugs”) is the type case — are carried "
+     "whole into the English, never dissolved into a politer "
+     "periphrasis."),
+    ("Names", "restored in the English", "Kapitel 2, ¶255",
+     "A name is a fact. Where the witness garbles one — Lueger "
+     "printed “Fueger” (Kapitel 2, ¶255), the Regiment List "
+     "printed “Fist” (Kapitel 5, ¶43), Schmidt printed "
+     "“Schmiedt Ernst” (Kapitel 8, ¶1) — the German page prints "
+     "the witness as found and the English restores the fact, "
+     "flagged in a [TN] at the locus and entered in the "
+     "Apparatus."),
+    ("Quotations", "carried as the author carries them",
+     "Kapitel 3, ¶78",
+     "Goethe's “Spottgeburt aus Dreck und Feuer” (Kapitel 3, "
+     "¶78), Schiller's Pappenheimer and his poet-word "
+     "(Kapitel 4, ¶49, ¶137), and the Thermopylae epitaph "
+     "adapted at Kapitel 7, ¶127 stand in the English as the "
+     "author sets them; the Audit, not the translation, weighs "
+     "the use he makes of them."),
+]
+
+
+def glossary_pages(pdf, toc):
+    pdf.add_page()
+    toc["glossary"] = pdf.page_no()
+    centered(pdf, "GLOSSARY OF TRANSLATION RULINGS", "dejavu",
+             "B", 13, 8, 2)
+    centered(pdf, "The Protocol's rulings, collected — so the "
+                  "consistency of the translation can itself be "
+                  "audited", "noto", "I", 10.5, 6, 4)
+    para(pdf, "Each ruling below was first stated in a "
+              "translator's note ([TN]) at the term's first "
+              "occurrence, as the Protocol requires; the notes "
+              "stand in their places after each section. What is "
+              "collected here is the ruling and its reason, so "
+              "that a reader who finds the rendering anywhere in "
+              "the volume can check it against the rule that "
+              "governs it. Judgment, per the founder's law, lives "
+              "in these rulings' reasons and in the Audit — never "
+              "inside the translated sentences themselves.")
+    for term, rendering, locus, ruling in GLOSSARY:
+        if pdf.get_y() > pdf.h - 42:
+            pdf.add_page()
+        pdf.set_font("dejavu", "B", 11)
+        pdf.multi_cell(0, 6, f"{term} — rendered {rendering}",
+                       new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+        para(pdf, f"First occurrence: {locus}. {ruling}",
+             size=10.5, space_after=3.4)
+
+
+# The Apparatus of OCR Loci: every locus flagged in a [TN],
+# collected. (section label, [(unit, printed, reading), ...]).
+# The classes are declared in the apparatus's introduction; the
+# register prints the locus as found first, then the reading the
+# English translates.
+OCR_LOCI = [
+    ("Widmung", [
+        (6, "lö.Oktober 1924", "16. Oktober 1924 — a figure "
+         "misread in the dateline"),
+    ]),
+    ("Kapitel 1", [
+        (2, "GleichesBlutgehörtineingemeinsamesReich",
+         "Gleiches Blut gehört in ein gemeinsames Reich — "
+         "letterspaced emphasis merged"),
+        (9, "im Lreien; keinen Lall; in Lorm",
+         "im Freien; keinen Fall; in Form"),
+        (19, "Lormulare; Lechtboden", "Formulare; Fechtboden"),
+        (26, "ichwurdeNationalist", "ich wurde Nationalist — "
+         "emphasis merged"),
+        (28, "…verstehenundbe / greifen.",
+         "…verstehen und begreifen — the merged sentence split "
+         "across two paragraph blocks; the English keeps the "
+         "same break"),
+        (31, "Nationalitäten-staa t; das heben und Wachsen",
+         "Nationalitätenstaat (broken across a space); das "
+         "Leben und Wachsen"),
+        (34, "dieKämpfer d i e L a u e n dieVerräter",
+         "die Kämpfer, die Lauen, die Verräter — emphasis "
+         "merged"),
+        (37, "mit fünfzehn fahren", "mit fünfzehn Jahren"),
+        (44, "Wesentlichesbehalten, Unwesentlichesvergessen",
+         "Wesentliches behalten, Unwesentliches vergessen — "
+         "emphasis merged"),
+        (52, "the whole sentence merged",
+         "a letterspaced-emphasis sentence the OCR defeats "
+         "across five lines; the English translates the evident "
+         "reading"),
+    ]),
+    ("Kapitel 2", [
+        (50, "Liier rächt sich", "Hier rächt sich"),
+        (96, "ätzende Lrechheit", "ätzende Frechheit"),
+        (103, "Die hebe bürgerliche Mitwelt",
+         "Die liebe bürgerliche Mitwelt"),
+        (126, "zwei wichtigsten Tragen", "zwei wichtigsten "
+         "Fragen"),
+        (156, "fe mehr ich mich", "je mehr ich mich"),
+        (163, "die Lurcht vor dem wilden Köter", "die Furcht"),
+        (176, "in den Lormen; Lorderungen (¶176, ¶179); "
+         "Leinde (¶177); Lrage (¶182, ¶185)",
+         "in den Formen; Forderungen; Feinde; Frage — the "
+         "F-to-L class at work"),
+        (203, "“A” standing as its own unit",
+         "a printed divider mark of the book's internal "
+         "sectioning — not a misread; carried as found"),
+        (247, "innerpolitischen Febens; erster Finie",
+         "innerpolitischen Lebens; erster Linie"),
+        (254, "süßlichen Fobeshymnen", "süßlichen "
+         "Lobeshymnen"),
+        (255, "Dr. Karl Fueger", "Dr. Karl Lueger — the name "
+         "restored in the English (see the Glossary, Names)"),
+        (333, "die Lolgen; Die Lrage; letzten Lorm",
+         "die Folgen; Die Frage; letzten Form"),
+        (337, "Kenntnis der fudenfrage", "Kenntnis der "
+         "Judenfrage"),
+        (343, "das ewig nur auf dieser lebt",
+         "the noun is wanting — the printed book reads “auf "
+         "dieser Erde lebt”; the English supplies “earth” per "
+         "the evident sense"),
+    ]),
+    ("Kapitel 3", [
+        (42, "versäum ten", "versäumten — broken across a "
+         "space"),
+        (47, "der Grund stein", "der Grundstein"),
+        (109, "Lührer; Leilschen; Perikies; Lederhändler "
+         "(¶110)", "Führer; Feilschen; Perikles; Federhändler"),
+        (159, "Schliefern", "Schleichern"),
+        (171, "als ihr größte Stadt", "als ihre größte Stadt "
+         "— the possessive defective"),
+        (245, "Die Fage in Österreich; auszu drücken (¶246)",
+         "Die Frage in Österreich; auszudrücken"),
+        (286, "großen zielen", "großen Zielen — a case fault "
+         "of the scan"),
+        (371, "zu hegen; bei ihr hegt (¶140)",
+         "zu liegen; bei ihr liegt — the hegen-for-liegen "
+         "class"),
+    ]),
+    ("Kapitel 4", [
+        (3, "heb und teuer", "lieb und teuer"),
+        (5, "hegt wohl mitbegründet; Verschlagenheit hegen "
+         "(¶146)", "liegt wohl mitbegründet; Verschlagenheit "
+         "liegen"),
+        (99, "Welthandelspobtik", "Welthandelspolitik"),
+        (105, "erhabenen Eehrern", "erhabenen Lehrern"),
+        (150, "des Rätsels Fösung; marxistische Fehre; diese "
+         "Fehre (¶151); in meinem heben (¶151); politischen "
+         "Febens (¶151); theoretische Fiteratur (¶151)",
+         "des Rätsels Lösung; marxistische Lehre; diese "
+         "Lehre; in meinem Leben; politischen Lebens; "
+         "theoretische Literatur"),
+    ]),
+    ("Kapitel 5", [
+        (7, "sich wieder zuzückzuverlieren", "sich wieder "
+         "zurückzuverlieren — a doubled-syllable garble"),
+        (15, "dem Schicksal seinen kauf zu lassen",
+         "seinen Lauf — the idiom is dem Schicksal seinen "
+         "Lauf lassen"),
+        (17, "des Fosschlagens", "des Losschlagens"),
+        (18, "an der Fage", "an der Frage"),
+        (41, "Fiedes; Fied", "Liedes; Lied"),
+        (43, "des Regiments Fist", "des Regiments List — the "
+         "name restored in the English (see the Glossary, "
+         "Names)"),
+        (81, "allein hegt die allererste Voraussetzung",
+         "allein liegt"),
+        (90, "E rohe rungs willen", "Eroberungswillen — "
+         "broken into spaced fragments"),
+        (95, "die Dummheit der Fügner", "der Lügner"),
+    ]),
+    ("Kapitel 6", [
+        (13, "eines im Kampfe hegenden Volkes; hege (¶14); "
+         "hegt (¶26, ¶30)", "liegenden Volkes; liege; liegt — "
+         "the hegen-for-liegen class through the chapter"),
+        (38, "seien des Gegners kennenlernte", "seiten des "
+         "Gegners"),
+        (39, "„Krampf1", "the closing quotation mark after "
+         "Krampf misread as the figure 1"),
+    ]),
+    ("Kapitel 7", [
+        (44, "Fazarett (also ¶47); „massein; bei der Feitung "
+         "(¶45)", "Lazarett; „masseln (front slang, "
+         "grumbling); bei der Leitung"),
+        (82, "ein grellrotes Ficht", "ein grellrotes Licht"),
+        (115, "dem des Lrühjahrs", "dem des Frühjahrs — the "
+         "F/L class reversed"),
+        (117, "die „Lührer“; „Lreiheit, Schönheit und "
+         "Würde“; an der Lront; den roten Letzen; Lreilich "
+         "(¶118)", "die „Führer“; „Freiheit, Schönheit und "
+         "Würde“; an der Front; den roten Fetzen; Freilich"),
+    ]),
+    ("Kapitel 8", [
+        (1, "Schmiedt Ernst", "the comrade's name transposed "
+         "and spelled Schmiedt for Schmidt — given in its "
+         "natural order and spelling in the English (see the "
+         "Glossary, Names)"),
+        (20, "hegt (twice in the paragraph)", "liegt — the "
+         "hegen-for-liegen class"),
+    ]),
+    ("Kapitel 9", [
+        (23, "Der Vorsitzende der „Reichsorganisation“ war "
+         "ein Herr Harrer, der von München Anton Drexler",
+         "the sentence stands without its second verb — the "
+         "English supplies it per evident construction; the "
+         "German page prints the sentence as found"),
+    ]),
+    ("Kapitel 10", [
+        (72, "Kriechern und Schliefern", "Kriechern und "
+         "Schleichern"),
+        (99, "hegt (twice in the paragraph)", "liegt"),
+        (117, "fede Halbheit", "Jede Halbheit"),
+        (121, "in beiden Lällen die Lolgen; in Lrage kommen",
+         "in beiden Fällen die Folgen; in Frage kommen — the "
+         "reversed run of the class"),
+        (126, "in ihrem Fiebesleben; die Taster der Eltern",
+         "in ihrem Liebesleben; die Laster der Eltern"),
+        (128, "den heben Gott zu bitten", "den lieben Gott"),
+        (138, "hegen bleiben", "liegen bleiben"),
+        (170, "die darunter am meisten Feidende; ihre Fage "
+         "(and ¶171)", "die darunter am meisten Leidende; "
+         "ihre Frage"),
+        (176, "Prostituierang (the heading)", "Prostituierung"),
+        (180, "Diese scheint im Gegenteil eher eine Feindin "
+         "wahrer Geistes- und Lebenshöhe zu —",
+         "SOURCE LOCUS: the sentence stands in the witness "
+         "without its completion — the secured OCR text itself "
+         "breaks off at “zu” and the heading unit follows. "
+         "The printed book's completion (of the form “sein "
+         "scheint”) does not stand in this witness; whether "
+         "the loss is the scan's or the printing's cannot be "
+         "decided from it [UNVERIFIED]. The English carries "
+         "the fragment uncompleted. The same truncation "
+         "necessarily stands in the sibling Critical Edition "
+         "(one source, one loader)"),
+        (219, "Der Flumanitätsdusel", "Der Humanitätsdusel"),
+        (252, "im Angriff hegt und hegen kann", "im Angriff "
+         "liegt und liegen kann"),
+        (282, "im sonstigen heben (and ¶283); die Weichheit "
+         "der fugend (¶285)", "im sonstigen Leben; die "
+         "Weichheit der Jugend"),
+    ]),
+    ("Kapitel 11", [
+        (37, "des tatsächlichen Febens; die Farbe des "
+         "Bebens bestimmt", "des tatsächlichen Lebens; die "
+         "Farbe des Lebens bestimmt"),
+        (39, "der Bronnen versiegen", "der Brunnen "
+         "versiegen"),
+        (49, "hegt vor den Augen der staunenden Welt",
+         "liegt — and again at ¶71 (with “verrichtet” for "
+         "verzichtet, “renounces”) and at ¶177"),
+        (51, "auch für dir Rasse", "auch für die Rasse"),
+        (53, "der menschlichen Kulture nt wicklung; "
+         "menschlicher Fhlfskräfte", "der menschlichen "
+         "Kulturentwicklung; menschlicher Hilfskräfte"),
+        (60, "ihrer früheren sogenannten „Lreiheit“; auf "
+         "seinen Lähigkeiten", "„Freiheit“; auf seinen "
+         "Fähigkeiten"),
+        (114, "der Jude sei wirklich ein Lranzose; wider "
+         "das heilige Lortkommen; keine Blasse Ahnung",
+         "ein Franzose; wider das heilige Fortkommen; keine "
+         "blasse Ahnung"),
+        (116, "ein praktisches und erträgliches heben im "
+         "Diesseits", "ein praktisches und erträgliches "
+         "Leben im Diesseits"),
+        (135, "der tausendfach verdiente Föhn", "der "
+         "tausendfach verdiente Lohn — the Alpine wind "
+         "printed for the wage"),
+        (136, "zu Tastern anleitet", "zu Lastern anleitet"),
+        (151, "das ganze öffentliche heben; da er in der "
+         "Tage ist", "das ganze öffentliche Leben; da er in "
+         "der Lage ist"),
+        (152, "jedes Fichtes", "jedes Lichtes"),
+        (162, "des alten Flandwerkers", "des alten "
+         "Handwerkers"),
+        (167, "der große Meister im Fügen", "der große "
+         "Meister im Lügen"),
+        (198, "dem fuden an sich", "dem Juden an sich"),
+        (199, "heißt nicht ehrlicher Kampf, sondern Füge "
+         "und Verleumdung", "sondern Lüge und Verleumdung"),
+        (222, "the last stage lettered “1)”",
+         "the stages of the “course of becoming” are "
+         "lettered a)–l); the last is printed with the "
+         "figure one for the letter l — the English "
+         "restores the letter"),
+    ]),
+    ("Kapitel 12", [
+        (10, "fetzt versucht ihr", "jetzt versucht ihr"),
+        (41, "in der Rasse hegende Eigenschaften; hegt "
+         "(¶84, ¶95, ¶115, ¶141)", "in der Rasse liegende "
+         "Eigenschaften; liegt — the hegen-for-liegen class "
+         "through the chapter"),
+        (174, "einem solchen bürgerlichen Trätäklub",
+         "garbled in this witness past certain restoration; "
+         "the sentence's sense — a bourgeois talking-club "
+         "whose harmlessness the Reds knew better than its "
+         "members — is plain, and the English renders "
+         "“debating-club” per evident sense [Reading "
+         "UNVERIFIED]"),
+        (236, "vor gähnender Feere sprechen", "vor "
+         "gähnender Leere sprechen"),
+        (243, "der deutschen Nation das heben "
+         "wiedergewinnen soll", "das Leben wiedergewinnen "
+         "soll"),
+        (246, "Die Bewegung nahm ihren kauf", "Die Bewegung "
+         "nahm ihren Lauf — the volume's narrative last "
+         "line; the locus stands in the sibling Critical "
+         "Edition's apparatus as well (one source, one "
+         "text)"),
+    ]),
+    ("Schlusswort", []),
+]
+
+
+def ocr_pages(pdf, toc):
+    pdf.add_page()
+    toc["ocr"] = pdf.page_no()
+    centered(pdf, "APPARATUS OF OCR LOCI", "dejavu", "B", 13,
+             8, 2)
+    centered(pdf, "Every flagged locus of the witness, "
+                  "collected — the German prints as found; the "
+                  "English translates the reading",
+             "noto", "I", 10.5, 6, 4)
+    para(pdf, "The German text of this edition is one OCR "
+              "witness — the Internet Archive text of the Eher "
+              "unabridged printing, 851.–855. Auflage, 1943 — "
+              "and a witness has faults. They are declared on "
+              "the Source leaf in classes, flagged in "
+              "translator's notes ([TN]) where they stand, and "
+              "collected here in one register, so that no reader "
+              "mistakes the scan's faults for the author's words, "
+              "or the author's words for the scan's. The classes: "
+              "(a) letterspaced emphasis defeated by the OCR, "
+              "words merged or broken; (b) single-letter "
+              "misreads, above all the witness's F-for-L class "
+              "and its twin, hegen printed for liegen; (c) "
+              "wanting text — a noun, a verb, and, at Kapitel "
+              "10, ¶180, a sentence's whole completion; (d) one "
+              "word garbled past certain restoration (Kapitel "
+              "12, ¶174). No locus is emended on the German "
+              "page; the reading stands beside the printed form "
+              "and the English translates the reading. Where a "
+              "reading cannot be verified from the witness, it "
+              "is flagged UNVERIFIED in terms.")
+    para(pdf, "A first-edition (1925) facsimile collation, "
+              "which would settle the open loci against the "
+              "book's first state, is UNCHARTED future work, as "
+              "the Source leaf declares.", space_after=4)
+    for label, entries in OCR_LOCI:
+        if pdf.get_y() > pdf.h - 42:
+            pdf.add_page()
+        pdf.set_font("dejavu", "B", 11)
+        pdf.multi_cell(0, 6, label.upper(), new_x=XPos.LMARGIN,
+                       new_y=YPos.NEXT)
+        pdf.ln(1)
+        if not entries:
+            para(pdf, "No locus flagged: the Schlusswort's text "
+                      "stands in this witness clean of the "
+                      "classes above.", size=10.5,
+                 space_after=3.4)
+        for unit, printed, reading in entries:
+            para(pdf, f"¶{unit} — printed “{printed}” — read: "
+                      f"{reading}.", size=10.5, space_after=1.6)
+        pdf.ln(2.4)
+
+
+def _md_emphasis(text):
+    """The Register's lightweight markdown, translated to the
+    fpdf2 markdown dialect (para() carries markdown=True):
+    **bold** survives as-is; single-asterisk italics become
+    __italics__. Bold spans are parked before the italic pass."""
+    text = text.replace("**", "\x00")
+    text = re.sub(r"\*([^*\n]+)\*", r"__\1__", text)
+    return text.replace("\x00", "**")
+
+
+def register_pages(pdf, toc):
+    """Print Title Register Entry J-1 from apparatus/, as filed
+    (ARCHITECTURE SSV): the markdown's structure becomes the
+    page's structure — headings, the register's three forms,
+    the copyright discipline with its UNVERIFIED flag, the
+    founder's form amendment, and the boundary note — entire,
+    unabridged. The file's HTML filing header is not part of the
+    entry and is skipped. Japanese glyphs ride the CJK fallback
+    face (set by build() before this call)."""
+    pdf.add_page()
+    toc["register"] = pdf.page_no()
+    raw = (HERE / "apparatus" /
+           "TITLE-REGISTER-JAPANESE-WITNESS.md").read_text(
+               encoding="utf-8")
+    lines = raw.split("\n")
+    start = next(i for i, ln in enumerate(lines)
+                 if ln.startswith("# "))
+    lines = lines[start:]
+    buf = []
+
+    def flush():
+        if buf:
+            text = _md_emphasis(" ".join(x.strip() for x in buf))
+            para(pdf, text)
+            buf.clear()
+
+    def flush_quote(quote):
+        if quote:
+            text = _md_emphasis(" ".join(x.strip() for x in quote))
+            pdf.set_x(pdf.l_margin + 8)
+            para(pdf, text, size=10.5)
+            quote.clear()
+
+    quote = []
+    for ln in lines:
+        s = ln.strip()
+        if s.startswith("> "):
+            flush()
+            quote.append(s[2:])
+            continue
+        flush_quote(quote)
+        if not s:
+            flush()
+        elif s == "---":
+            flush()
+            rule(pdf, 60)
+        elif s.startswith("### "):
+            flush()
+            pdf.ln(2)
+            pdf.set_font("dejavu", "B", 11.5)
+            pdf.multi_cell(0, 6.5, _md_emphasis(s[4:]),
+                           new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+            pdf.ln(2)
+        elif s.startswith("## "):
+            flush()
+            pdf.ln(3)
+            pdf.set_font("dejavu", "B", 12)
+            pdf.multi_cell(0, 7, _md_emphasis(s[3:]),
+                           new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+            pdf.ln(2)
+        elif s.startswith("# "):
+            flush()
+            centered(pdf, _md_emphasis(s[2:]), "dejavu", "B",
+                     12.5, 7.5, 2)
+            centered(pdf, "Apparatus entry of this edition — as "
+                          "filed, with its amendment and its "
+                          "boundary note", "noto", "I", 10.5, 6, 4)
+        elif s.startswith("- "):
+            flush()
+            pdf.set_x(pdf.l_margin + 5)
+            para(pdf, "• " + _md_emphasis(s[2:]), space_after=1.2)
+        elif re.match(r"^\d+\.\s", s):
+            flush()
+            pdf.set_x(pdf.l_margin + 5)
+            para(pdf, _md_emphasis(s), space_after=1.2)
+        else:
+            buf.append(ln)
+    flush()
+    flush_quote(quote)
+
+
+def authorities_page(pdf, toc):
+    pdf.add_page()
+    toc["authorities"] = pdf.page_no()
+    centered(pdf, "TABLE OF AUTHORITIES (CONDENSED)", "dejavu",
+             "B", 12, 8, 3)
+    for a in [
+        "Hitler, Adolf. Mein Kampf. Erster Band: Eine "
+        "Abrechnung. Munich: Franz Eher Nachf., 18 July 1925. "
+        "(Text as printed in the unabridged Eher edition, "
+        "851.–855. Auflage, 1943 — see the Source leaf.)",
+        "Internet Archive item “MeinKampfBand1-Eine"
+        "Abrechnung” — OCR source text of the 1943 printing; "
+        "SHA-256 as recorded in the sibling edition's Source "
+        "Ledger; cross-witness “AdolfHitlerMeinKampfDEUTSCH” "
+        "as recorded there.",
+        "Sakai Ryūji (trans.). 『余の闘争』 (Yo no Tōsō). "
+        "Tokyo: Naigai-sha, 1932 — the first Japanese edition; "
+        "cited bibliographically in the Title Register, Entry "
+        "J-1.",
+        "Tōa Kenkyūjo (East Asia Research Institute) (trans.). "
+        "『我が闘争』 (Waga Tōsō). 1942; reprinted 2018 — "
+        "cited bibliographically in the Title Register.",
+        "Manabe Ryōichi (trans.). 『吾が鬪爭』 (Waga Tōsō). "
+        "Tokyo: Kōfūkan, 1942 — the edition's Japanese witness "
+        "of record. Its copyright status is UNVERIFIED and it "
+        "is NOT assumed public domain; cited bibliographically "
+        "only, its text nowhere reproduced (see the Title "
+        "Register).",
+        "Hartmann, Christian, et al. (eds.). Hitler, Mein "
+        "Kampf: Eine kritische Edition. Munich–Berlin: "
+        "Institut für Zeitgeschichte, 2016 — the scholarly "
+        "benchmark edition.",
+        "Kershaw, Ian. Hitler 1889–1936: Hubris (1998); "
+        "Hitler 1936–1945: Nemesis (2000).",
+        "Ullrich, Volker. Adolf Hitler: Die Jahre des "
+        "Aufstiegs 1889–1939 (2013); Eng. Hitler: Ascent "
+        "1889–1939 (2016).",
+        "Hamann, Brigitte. Hitlers Wien: Lehrjahre eines "
+        "Diktators (1996); Eng. Hitler's Vienna (1999).",
+        "Weber, Thomas. Hitler's First War (2010).",
+        "The Gemlich letter, Adolf Hitler to Adolf Gemlich, "
+        "16 September 1919 — the Audit's documentary anchor "
+        "(C4).",
+        "Hasher, Lynn, David Goldstein & Thomas Taylor. "
+        "“Cognitive Consequences of Believing in False "
+        "Information” / the illusory truth effect, Journal of "
+        "Verbal Learning and Verbal Behavior 16 (1977) — and "
+        "successors.",
+        "UNESCO Statements on Race (1950, 1951); American "
+        "Society of Human Genetics, statement on genetics and "
+        "racial supremacy (2018) — for Audit D1.",
+        "Graves, Philip. “The Truth about ‘The Protocols’,” "
+        "The Times, 16–18 August 1921; Berne trial judgment "
+        "(1934–35) — for Audit B6.",
+        "Manheim, Ralph (trans.). Mein Kampf. Boston, 1943 — "
+        "NOT an authority of this edition: in copyright, and "
+        "never consulted, copied, or paraphrased in the making "
+        "of this edition's translation (Translation Protocol, "
+        "§1). Entered here so that its absence from the "
+        "translation's making is itself a matter of record.",
+        "The Teacher's Edition format (house directive, "
+        "2026) — the dress of this revision.",
+    ]:
+        para(pdf, a, size=10, space_after=1.0)
+
+
+def colophon_page(pdf, toc):
+    pdf.add_page()
+    toc["colophon"] = pdf.page_no()
+    centered(pdf, "COLOPHON", "dejavu", "B", 13, 9, 6)
+    para(pdf, "This Parallel Critical Edition (MAGVS) of Mein "
+              "Kampf, Erster Band, was generated on " +
+              THELEMIC_DATE + ", by a programmatic builder "
+              "(fpdf2; Noto Serif, DejaVu Serif, and Noto Serif "
+              "CJK faces) from the public-domain source named "
+              "in the Table of Authorities, under the Teacher's "
+              "Edition format of this house. The English "
+              "translation printed in it is this house's own, "
+              "made for this edition from the German text of "
+              "record; the Tower Audit, the chapter notes, and "
+              "the correlations are carried entire from the "
+              "Critical Edition (MAGVS).")
+    para(pdf, "Published by Bleats Publishing Group. SPARROW "
+              "(Sole Proprietorship) — Johnathan 'Qasparr' "
+              "Monroe, Proprietor — is the legal publisher of "
+              "record.")
+    para(pdf, "The translation, the apparatus, and the audit "
+              "are the work of Johnathan 'Qasparr' Monroe, to "
+              "whom their authorship is attributed exclusively, "
+              + FOUNDER_FORM + ". Wherever the letters stand "
+              "in the Flagpole below, they stand — in this "
+              "volume — as an invocation of the Living Man's "
+              "Reservation of rights, as the Reservation leaf "
+              "declares; the founder's form is carried here in "
+              "terms, bounded to this edition, and no other "
+              "issued work of the house is touched by it. The "
+              "German text is public domain and is claimed by "
+              "no one in this volume. This edition is an audit, "
+              "not an endorsement.")
+    para(pdf, "Method of Science. Aim of Religion.", align="C")
+    pdf.ln(4)
+    para(pdf, FLAGPOLE, size=10, height=5.4, align="C",
+         space_after=4)
+    centered(pdf, "93 — Live, Love, and let Love, Live.",
+             "dejavu", "B", 12, 8)
+
+
+# ----------------------------------------------------------------------
 # Build (two-pass, as with the sibling editions)
 # ----------------------------------------------------------------------
 def build(toc, folio_total=None, log=None):
@@ -1539,6 +2216,18 @@ def build(toc, folio_total=None, log=None):
         print_section(pdf, key, head_de, head_en, run_de, run_en,
                       spreads, toc, log)
         notes_pages(pdf, key, labels[key], toc)
+    # THE FINAL BRICK — the closing apparatus, in the order the
+    # contents promises: the carried Tower Audit entire, the
+    # Glossary, the Apparatus of OCR Loci, the Title Register,
+    # the Table of Authorities, the Colophon.
+    audit_pages(pdf, toc)
+    glossary_pages(pdf, toc)
+    ocr_pages(pdf, toc)
+    pdf.set_fallback_fonts(["cjk"])
+    register_pages(pdf, toc)
+    authorities_page(pdf, toc)
+    pdf.set_fallback_fonts([])
+    colophon_page(pdf, toc)
     return pdf, toc
 
 

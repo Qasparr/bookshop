@@ -337,23 +337,79 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   build: within pp. 1–658 only the contents page
   differs, by exactly this brick's wiring.
 
+- **FINAL BRICK — THE CLOSING APPARATUS; THE
+  VOLUME IS COMPLETE.** In the contents' order:
+  **the Tower Audit entire** (pp. 663–670) —
+  imported from the sibling builder's data
+  (`sib.AUDIT` + `sib.AUDIT_INTRO`, both constants
+  confirmed in the sibling file) and printed
+  unchanged under a carrier's note: **36 items in
+  six groups** (W 2 · A 12 · B 7 · C 6 · D 6 ·
+  E 3), tiers PROVEN 10 · SUPPORTED 1 ·
+  CONTESTED 6 · FALSE 17 · UNVERIFIED 2 —
+  **Glossary of Translation Rulings** (pp.
+  671–672): twelve rulings collected from the
+  first-occurrence [TN]s (Volk, Bewegung,
+  völkisch, Judentum, Weltanschauung, Rasse,
+  Propaganda, Führer, Lebensraum, the compound
+  field, Names, Quotations) — **Apparatus of OCR
+  Loci** (pp. 673–678): every locus flagged in a
+  [TN], collected by section — 93 register
+  entries, the collected runs among them —
+  with the class
+  introduction and the standing UNCHARTED
+  (first-edition facsimile collation) declared;
+  the source locus of Kapitel 10, ¶180 and the
+  unverified reading of Kapitel 12, ¶174 carried
+  in terms — **Title Register** (pp. 679–682):
+  Entry J-1 printed entire from `apparatus/`,
+  as filed, with the founder's form amendment
+  and the boundary note; the Japanese glyphs
+  ride the Noto Serif CJK fallback face,
+  switched on for the back matter only (the
+  house precedent of the Divine Nine Abroad III
+  builder), so no standing page's typesetting
+  shifted — **Table of Authorities** (p. 683),
+  condensed, the three Japanese translations
+  cited bibliographically and Manheim entered
+  expressly as NOT an authority of this edition
+  — **Colophon** (p. 684), carrying the
+  founder's form per the Reservation leaf.
+  **PDF now 684 pages — the volume stands
+  bound and complete**: front matter; Widmung,
+  Vorwort, Kapitel 1–12 and the Schlusswort in
+  parallel (312 spreads); the closing apparatus.
+  Verified: census re-run on the bound volume —
+  312 spreads, zero anomalies, every section's
+  coverage complete, every standing start page
+  unchanged; word-audit against the Brick 13
+  build — within pp. 1–662 only the contents
+  page differs, by exactly this brick's entries;
+  all 36 Audit item codes present in the bound
+  text; the register's Japanese forms
+  (『吾が鬪爭』『余の闘争』『我が闘争』, 眞鍋良一)
+  extract and render as printed; audit opening
+  (p. 663), glossary opening (p. 671), register
+  opening (p. 679) and colophon (p. 684)
+  rendered and inspected. Announcement is the
+  desk's, on the founder's standing pattern.
+
 ## NEXT
 
-- **FINAL BRICK** — per ARCHITECTURE §VII, as
-  listed below.
-- **FINAL BRICK** — Schlusswort in parallel; the carried Tower
-  Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary
-  of Translation Rulings (seeded by the [TN] rulings: Volk,
-  Bewegung, völkisch, and every first-occurrence note after);
-  Apparatus of OCR Loci; Title Register (Entry J-1 prints from
-  `apparatus/`); Table of Authorities; Colophon (the colophon
-  carries the founder's form per the Reservation leaf).
+- Nothing in this volume's scope. Volume 2 is a
+  separate commission, on the founder's word.
 
 ## OPEN FLAGS
 
-- The sibling builder's `AUDIT_INTRO` constant is referenced by
-  the final brick; confirm its name in the sibling file when
-  that brick is built (the audit body is `sib.AUDIT`).
+- CLOSED at the final brick: the sibling's
+  `AUDIT_INTRO` constant exists under that name
+  and was imported with `sib.AUDIT`, as wired.
+- STANDING, unchanged: a first-edition (1925)
+  facsimile collation remains UNCHARTED (entered
+  in the Apparatus of OCR Loci and on the Source
+  leaf); the Kapitel 10, ¶180 completion remains
+  UNVERIFIED from this witness; the Kapitel 12,
+  ¶174 reading remains UNVERIFIED.
 - The contents page lists Brick 1 only, by design; it must grow
   with each brick (entries are computed from the section list —
   keep `contents_page` in step when sections are added).
