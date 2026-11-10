@@ -139,6 +139,9 @@ BRICK1 = [
      "CHAPTER 6 — WAR PROPAGANDA", "6. KAPITEL", "CHAPTER 6"),
     ("kap7", "7. KAPITEL — DIE REVOLUTION",
      "CHAPTER 7 — THE REVOLUTION", "7. KAPITEL", "CHAPTER 7"),
+    ("kap8", "8. KAPITEL — BEGINN MEINER POLITISCHEN "
+     "TÄTIGKEIT", "CHAPTER 8 — BEGINNING OF MY POLITICAL "
+     "ACTIVITY", "8. KAPITEL", "CHAPTER 8"),
 ]
 
 
@@ -533,6 +536,18 @@ TN = {
         "Gesetz es befahl.' The author sets Deutschland in "
         "Sparta's place and duty in the law's; the English "
         "carries his words as he gives them.",
+    ("kap8", 0):
+        "Printed 'Schmiedt Ernst': the comrade's name stands "
+        "in the witness transposed and spelled Schmiedt for "
+        "Schmidt. A name is a fact (cf. Kapitel 2, ¶196); "
+        "the English gives it in its natural order and "
+        "spelling.",
+    ("kap8", 19):
+        "Twice in this paragraph 'hegt' for liegt ('the "
+        "greatness of the one lies... its significance lies') "
+        "— the hegen-for-liegen misread entered at Kapitel "
+        "3, ¶140. Translated per evident sense in both "
+        "places.",
 }
 
 
@@ -960,7 +975,8 @@ PREFACE_PARALLEL = [
     "Learning and Suffering, the third, General Political "
     "Considerations from My Vienna Time, the fourth, "
     "Munich, the fifth, The World War, the sixth, War "
-    "Propaganda, and the seventh, The Revolution. The "
+    "Propaganda, the seventh, The Revolution, and the "
+    "eighth, Beginning of My Political Activity. The "
     "chapters follow, brick "
     "by brick, in the book's own order; the volume closes with "
     "the Schlusswort in parallel, the Tower Audit entire, the "
@@ -1058,7 +1074,11 @@ def contents_page(pdf, toc):
                        "Kapitel 6"),
               "kap7": ("7. Kapitel — Die Revolution / "
                        "Chapter 7 — The Revolution",
-                       "Kapitel 7")}
+                       "Kapitel 7"),
+              "kap8": ("8. Kapitel — Beginn meiner "
+                       "politischen Tätigkeit / Chapter 8 — "
+                       "Beginning of My Political Activity",
+                       "Kapitel 8")}
     for key, _hd, _he, _rd, _re in BRICK1:
         name, short = labels[key]
         entries.append((f"{name} — in parallel", toc.get(key)))
@@ -1070,7 +1090,7 @@ def contents_page(pdf, toc):
         pdf.multi_cell(0, 6.4, label, new_x=XPos.LMARGIN,
                        new_y=YPos.NEXT)
     pdf.ln(4)
-    para(pdf, "Kapitel 8–12, the Schlusswort in parallel, the "
+    para(pdf, "Kapitel 9–12, the Schlusswort in parallel, the "
               "Tower Audit entire, the Glossary of Translation "
               "Rulings, the Apparatus of OCR Loci, the Title "
               "Register, the Table of Authorities, and the "
@@ -1187,7 +1207,9 @@ def build(toc, folio_total=None, log=None):
               "kap4": "4. Kapitel — München",
               "kap5": "5. Kapitel — Der Weltkrieg",
               "kap6": "6. Kapitel — Kriegspropaganda",
-              "kap7": "7. Kapitel — Die Revolution"}
+              "kap7": "7. Kapitel — Die Revolution",
+              "kap8": "8. Kapitel — Beginn meiner "
+                      "politischen Tätigkeit"}
     for key, head_de, head_en, run_de, run_en in BRICK1:
         de_list = german[key]
         en_list = load_translation(key)

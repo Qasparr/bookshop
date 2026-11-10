@@ -168,15 +168,28 @@ Scientific Illuminism: the Method of Science, the Aim of Religion.
   syntax; caught at compile, the single character
   corrected, nothing else touched.)
 
+- **BRICK 8 — Kapitel 8** ("Beginn meiner politischen
+  Tätigkeit"): `translations/en-kap8.txt`, **49 units
+  one-for-one**; wired in as above; contents closing line
+  moved to "Kapitel 9–12"; preface made cumulative.
+  **2 [TN]s**: the transposed name "Schmiedt Ernst"
+  (¶1); hegt for liegt twice in the programmatist
+  paragraph (¶20). **PDF now 394 pages.** Verified by
+  census: all 8 Kapitel 8 spreads pair even verso with
+  odd recto at the identical ¶ range, coverage ¶1–49
+  complete, no gaps, no overlaps (183 spreads whole-book,
+  zero anomalies); opening spread (pp. 378–379) rendered
+  and inspected.
+
 ## NEXT
 
-- **BRICK 8 — Kapitel 8** ("Beginn meiner politischen
-  Tätigkeit"): write `translations/en-kap8.txt` (49 units;
-  German dump already in `work/de-kap8.txt`), add the
-  `("kap8", ...)` 5-tuple and the `labels` entries, move
-  the contents closing line to "Kapitel 9–12", add [TN]s,
-  rebuild, verify by census, commit, push. Then Bricks
-  9–13 likewise (Kapitel 9–12, one per brick), per
+- **BRICK 9 — Kapitel 9** ("Die deutsche Arbeiterpartei"):
+  write `translations/en-kap9.txt` (48 units; German dump
+  already in `work/de-kap9.txt`), add the `("kap9", ...)`
+  5-tuple and the `labels` entries, move the contents
+  closing line to "Kapitel 10–12", add [TN]s, rebuild,
+  verify by census, commit, push. Then Bricks 10–13
+  likewise (Kapitel 10–12, one per brick), per
   ARCHITECTURE §VII.
 - **FINAL BRICK** — Schlusswort in parallel; the carried Tower
   Audit entire (import `sib.AUDIT` + `sib.AUDIT_INTRO`); Glossary
