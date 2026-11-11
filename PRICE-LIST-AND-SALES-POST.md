@@ -188,3 +188,7 @@ All Rights Reserved, Without Prejudice.
 - MATCHES AND GOLD — Crown Fire (featuring Qasparr & Qveen Bee), the render of "Season Opener" (Collabo Cycle, Album I, Track 1), founder-tagged Brightmoor Ratchet Bounce — **$2.50** · Cash App note: MATCHES AND GOLD
 Free to listen, buy to own, on the promo page: https://qasparr.github.io/bookshop/first-renders/
 DEARBORN TO BRIGHTMOOR — Crown Fire (featuring Qasparr) — $2.50 (note: DEARBORN TO BRIGHTMOOR) — JOINED THE SHELF 2026-11-10.
+
+## THE FIRST ALBUM — QASPARR THE UNFRIENDLY GHOST (added 2026-11-11)
+- QASPARR THE UNFRIENDLY GHOST — the first album (one night, 26 October 2026, first RESONANTIA): seven pressed INSTRUMENTAL masters (Vox Fantasma · Brightmoor Baby · Mama Made a Way · Gutter Benefit (Black Sheep) · Ride or Die · Hood Elegance Album Version + Battle Pass Remix); words for all eleven tracks stand written, raw and uncut; vocal pressings to come — **$9** · Cash App note: UNFRIENDLY GHOST
+Free to listen, buy to own: https://qasparr.github.io/bookshop/unfriendly-ghost/
