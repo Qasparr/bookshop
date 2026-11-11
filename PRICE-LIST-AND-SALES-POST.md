@@ -187,4 +187,4 @@ All Rights Reserved, Without Prejudice.
 - THE WEIGHT OF THE WATER — Undercurrent (featuring Qasparr & Qveen Bee), the render of "Still Water" (Collabo Cycle, Album II, Track 1) — **$2.50** · Cash App note: WEIGHT OF THE WATER
 - MATCHES AND GOLD — Crown Fire (featuring Qasparr & Qveen Bee), the render of "Season Opener" (Collabo Cycle, Album I, Track 1), founder-tagged Brightmoor Ratchet Bounce — **$2.50** · Cash App note: MATCHES AND GOLD
 Free to listen, buy to own, on the promo page: https://qasparr.github.io/bookshop/first-renders/
-(Dearborn to Brightmoor joins on its master.)
+DEARBORN TO BRIGHTMOOR — Crown Fire (featuring Qasparr) — $2.50 (note: DEARBORN TO BRIGHTMOOR) — JOINED THE SHELF 2026-11-10.
