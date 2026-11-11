@@ -4,3 +4,4 @@ receipts/
 coupons.txt
 config.json
 __pycache__/
+editions/leviathan-parallel/source/*.pdf
