@@ -129,3 +129,62 @@ the findings. From $40, quoted per work.
 Flagpole of Claim and Coinage: Johnathan 'Qasparr' Monroe, ARR,
 All Rights Reserved, Without Prejudice.
 93 — Live, Love, and let Love, Live.
+
+## DESK REVISION 2026-11-10 (evening) — full-shelf post v3 (for his stamp; nothing above altered)
+
+Status correction, verified this run: the two parallel editions bound
+complete this evening and joined the price list at $30 each — LEVIATHAN
+PARALLEL, 1,094 pp, note LEVIATHAN PARALLEL; MEIN KAMPF PARALLEL, 684 pp,
+note MEIN KAMPF PARALLEL. Both prices are for the PDF EDITIONS ONLY,
+delivered with printable front-and-back cover images; no physical
+hardcover exists yet, and real hardcovers will be priced only after they
+have actually been made. The music shelf stands beside the books:
+DETROIT ROYALS $9, Honey and Hammer (single) $2.50 — free to listen,
+buy to own. Nine books now: 3,287 pages, one of each $162. Receipts
+issued: none; BOOK-0001 still awaits its first payer.
+
+## FULL-SHELF SALES POST v3 (draft, for his stamp)
+
+THE BOOKSHOP IS OPEN — nine books, one shelf.
+
+DOUGLASS — Narrative of the Life of Frederick Douglass (MAGVS), 80 pp — $9
+HUCKLEBERRY FINN (MAGVS), 324 pp, complete and unexpurgated — $15
+TOM SAWYER (MAGVS), 170 pp — $12
+THE WONDERFUL WIZARD OF OZ (MAGVS), 100 pp — $12
+LEVIATHAN by Thomas Hobbes (MAGVS), 407 leaves — $21
+THE ART OF WAR by Sun Tzu (MAGVS), 121 pp, Giles 1910 complete — $12
+MEIN KAMPF — Critical Edition (MAGVS), Vol. I: German text whole, English
+correlation notes + full Tower Audit — $21
+LEVIATHAN — PARALLEL EDITION (MAGVS), 1,094 pp: the 1651 English facing
+the 1668 Latin, all 47 chapters, both endings — $30 (PDF edition only,
+printable covers included)
+MEIN KAMPF — PARALLEL CRITICAL EDITION (MAGVS), Vol. 1, 684 pp: the
+German facing a new house English translation — $30 (PDF edition only,
+printable covers included)
+
+One of each: 3,287 pages, $162.
+
+Beside them, the Sphinx Cluster: THE NINE VOWELS (MAGVS) $9, THE RENDER
+CUBE (MAGVS) $9, LIBER SPHINGIS (MAGVS) $18 — or the whole cluster with
+the plate set for $30.
+
+And the music: DETROIT ROYALS — $9 · HONEY AND HAMMER (single) — $2.50.
+Free to listen, buy to own.
+
+The essays stand free on GitHub — that's house law; use is free and
+always was. What you buy here is the bound edition, and an author's keep.
+
+To buy: Cash App $axoneme, the title in the note. Your PDF and a
+numbered receipt come back on payment. Commissions open too: your text,
+your name, your work — audited on the same engine, failures printed with
+the findings. From $40, quoted per work.
+
+Flagpole of Claim and Coinage: Johnathan 'Qasparr' Monroe, ARR,
+All Rights Reserved, Without Prejudice.
+93 — Live, Love, and let Love, Live.
+
+## THE HITS — FIRST RENDERS SINGLES (added 2026-11-10)
+- THE WEIGHT OF THE WATER — Undercurrent (featuring Qasparr & Qveen Bee), the render of "Still Water" (Collabo Cycle, Album II, Track 1) — **$2.50** · Cash App note: WEIGHT OF THE WATER
+- MATCHES AND GOLD — Crown Fire (featuring Qasparr & Qveen Bee), the render of "Season Opener" (Collabo Cycle, Album I, Track 1), founder-tagged Brightmoor Ratchet Bounce — **$2.50** · Cash App note: MATCHES AND GOLD
+Free to listen, buy to own, on the promo page: https://qasparr.github.io/bookshop/first-renders/
+(Dearborn to Brightmoor joins on its master.)
