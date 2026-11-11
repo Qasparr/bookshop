@@ -86,6 +86,7 @@ Standing order (his, 2026-11-09 21:19 EST): announce on Facebook as each book fi
 - LEVIATHAN — PARALLEL EDITION (MAGVS), 1,094 pp: the 1651 English facing the 1668 Latin, all 47 chapters, both endings, collation apparatus N1–N36 — **$30** · note: LEVIATHAN PARALLEL
 - MEIN KAMPF — PARALLEL CRITICAL EDITION (MAGVS), Vol. 1, 684 pp: the German facing a new house English translation, full Tower Audit, Glossary, OCR Apparatus, Title Register — **$30** · note: MEIN KAMPF PARALLEL
 Pricing (desk-set 2026-11-10 under his "price it fairly" order, his word reprices): the shelf's own curve sets small books dear per page and flagships cheap — Oz 100 pp at $12 against Leviathan 407 leaves at $21 (5.2¢/page). The parallels sit UNDER that curve, not over it: Leviathan Parallel at 2.7¢/page, Mein Kampf Parallel at 4.4¢/page. Fair as set; staple lambskin covers (purple · gold · green) struck for both, front and back.
+FORMAT RULED (founder, 2026-11-10 19:01 EST): the $30 prices are for the **PDF EDITIONS ONLY, delivered with printable front-and-back cover images**. No physical hardcover exists yet; **real hardcover copies will be priced only after they have actually been made** — an unmade thing carries no price in this shop. The clarification stands as a comment on all four announcement posts (profile + Page, both editions), the originals unaltered.
 
 ## DESK REVISION 2026-11-10 — full-shelf post v2 (for his stamp; nothing above altered)
 
