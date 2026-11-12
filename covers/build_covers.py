@@ -96,7 +96,7 @@ def front(slug, title, subtitle, author, year):
     foil_text(img, (W // 2, band_y + 60), "TEACHER'S REVISION (MAGVS)", fb, fill=GREEN)
     img.save(os.path.join(OUT, f"FRONT-{slug}.png"))
 
-def back(slug, title_short, synopsis, pull):
+def back(slug, title_short, synopsis, pull, note=None):
     img = leather(); frame(img)
     drw = ImageDraw.Draw(img)
     fh = ImageFont.truetype(SERIFB, 60)
@@ -114,11 +114,12 @@ def back(slug, title_short, synopsis, pull):
         foil_text(img, (W // 2, y), line, fp); y += 74
     ff = ImageFont.truetype(SERIF, 36)
     y = H - 560
+    if note is None:
+        note = ["The revision and apparatus are the reviser's;",
+                "the master's text is public domain and stands",
+                "unaltered in substance."]
     for line in ["Flagpole of Claim and Coinage:", "Johnathan 'Qasparr' Monroe, ARR,",
-                 "All Rights Reserved, Without Prejudice.",
-                 "The revision and apparatus are the reviser's;",
-                 "the master's text is public domain and stands",
-                 "unaltered in substance."]:
+                 "All Rights Reserved, Without Prejudice."] + note:
         foil_text(img, (W // 2, y), line, ff, fill=CREAM, shadow=False); y += 52
     y += 26
     foil_text(img, (W // 2, y), "BLEATS PUBLISHING GROUP", ImageFont.truetype(SERIFB, 46), fill=GOLD)
@@ -163,7 +164,19 @@ BOOKS = [
      "ADOLF HITLER", "1925 · 2026",
      "The German text whole and unaltered, facing the house's own new English translation — literal and unsparing, judgment carried in the apparatus: the full Tower Audit (36 items, tiered claim by claim), a Glossary of Translation Rulings, an Apparatus of OCR Loci, and the Title Register with the 1942 Koufukan Japanese witness of record, cited bibliographically only. 684 pages, census-verified: every German paragraph faces its English. An audit, never an endorsement.",
      "An audited text can be answered. An unaudited one can only be feared."),
+    ("kana-reckoning", "THE SECOND RECKONING", "THE JAPANESE DIALECT ESSAY, AUDITED — THE DIVINE NINE ABROAD, ESSAY IV",
+     "QASPARR", "2026",
+     "The house's own Japanese Dialect essay printed a governing refusal: no attested tradition assigns the kana number values. Its founder asked the dangerous question — what if that is actually false? This is the reckoning that followed: every candidate bank carried to the record, the three modern kazutama tables weighed and recomputed, the suppression ledger opened — seizure, bonfire, sealed transmission — and the refusal itself corrected on the record: marked, never vanished.",
+     "“What if that is actually false?”"),
 ]
+
+# Back-cover note overrides: original house works carry no
+# public-domain master's text, so the standard note does not apply.
+NOTES = {
+    "kana-reckoning": ["The essay and its audit are the author's own work;",
+                       "the sources it weighs are cited in its Table",
+                       "of Authorities and stand exactly as cited."],
+}
 
 # Strike filter: with slug arguments, strike only those covers; with
 # none, strike the whole shelf. The press is deterministic (the
@@ -174,6 +187,6 @@ for slug, title, sub, author, year, syn, pull in BOOKS:
     if only and slug not in only:
         continue
     front(slug, title, sub, author, year)
-    back(slug, title, syn, pull)
+    back(slug, title, syn, pull, NOTES.get(slug))
     print("struck:", slug)
 print("COVERS STRUCK:", ", ".join(only) if only else "ALL")

@@ -196,3 +196,7 @@ Free to listen, buy to own: https://qasparr.github.io/bookshop/unfriendly-ghost/
 ## THE KARIN SERIES EBOOK (added 2026-11-11)
 - THE LITTLEST SISTER, WHEN SHE BLACKS OUT — The Karin Series, THE COMPLETE SERIES, Episodes 1–8 (Movements I–III, incl. the Epilogue): all twenty-four Da Vinci-pencil panels plus the full parallel-sub scripts (Japanese first, English beneath) in one PDF ebook — **$9** · Cash App note: KARIN
 Free to read in full, buy to own: https://qasparr.github.io/bookshop/karin/
+
+## THE SECOND RECKONING (added 2026-11-12)
+- THE SECOND RECKONING — The Japanese Dialect Essay, Audited (MAGVS) — The Divine Nine Abroad, Essay IV: the founder's challenge to Abroad III's governing refusal ("no gematria for Japanese" — what if that is actually false?), the full attestation test, the three modern kazutama banks weighed and recomputed, the suppression ledger, and the CORRECTIO with the repair wording; essay + full audit, gate DOES NOT FAIL — 22 pp — **$9** · Cash App note: KANA RECKONING
+Free to read on the public record (pontifex); buy to own the bound Teacher's Revision PDF, delivered person-to-person on payment.
