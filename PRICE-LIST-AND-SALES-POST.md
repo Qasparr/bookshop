@@ -192,3 +192,7 @@ DEARBORN TO BRIGHTMOOR — Crown Fire (featuring Qasparr) — $2.50 (note: DEARB
 ## THE FIRST ALBUM — QASPARR THE UNFRIENDLY GHOST (added 2026-11-11)
 - QASPARR THE UNFRIENDLY GHOST — the first album (one night, 26 October 2026, first RESONANTIA): seven pressed INSTRUMENTAL masters (Vox Fantasma · Brightmoor Baby · Mama Made a Way · Gutter Benefit (Black Sheep) · Ride or Die · Hood Elegance Album Version + Battle Pass Remix); words for all eleven tracks stand written, raw and uncut; vocal pressings to come — **$9** · Cash App note: UNFRIENDLY GHOST
 Free to listen, buy to own: https://qasparr.github.io/bookshop/unfriendly-ghost/
+
+## THE KARIN SERIES EBOOK (added 2026-11-11)
+- THE LITTLEST SISTER, WHEN SHE BLACKS OUT — The Karin Series, Episodes 1–5 (Movements I–II): all fifteen Da Vinci-pencil panels plus the full parallel-sub scripts (Japanese first, English beneath) in one PDF ebook — **$9** · Cash App note: KARIN
+Free to read in full, buy to own: https://qasparr.github.io/bookshop/karin/
