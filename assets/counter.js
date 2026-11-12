@@ -13,12 +13,20 @@
 
   MECHANISM: counters live at Abacus (abacus.jasoncameron.dev), a free
   no-account counting API: GET /hit/<namespace>/<key> adds one, GET
-  /get/<namespace>/<key> reads the number. Two event kinds:
+  /get/<namespace>/<key> reads the number. Three event kinds:
     view-<page>               — fired once when a store page loads.
+                                The shop's root shelf page counts as
+                                view-shelf.
     play-<page>-<track slug>  — fired on the FIRST 'play' event for that
                                 track within a single page load, so a
                                 pause-and-resume never double-counts, and
                                 each track the listener reaches counts once.
+    book-<slug>               — fired on the FIRST tap within a page load
+                                on a book card (any element carrying a
+                                data-count="<slug>" attribute). A book has
+                                no player to listen to; the tap on its card
+                                is the reader's knock, and it is counted
+                                the same weather-way as a play.
   The track slug is derived from the audio element's current file name,
   which covers both page shapes in this shop: pages with one player whose
   src is swapped per track (Royals, Unfriendly Ghost) and pages with one
@@ -48,11 +56,19 @@
   }
 
   // The page's own name is its folder: /bookshop/<page>/ -> <page>.
+  // The root of the shop (/bookshop/ or /bookshop/index.html) is the
+  // SHELF — the book page — and counts as 'shelf'. A subpage served by
+  // its file name (/bookshop/<page>/index.html) still names its folder.
   function pageName() {
     try {
       var parts = window.location.pathname.split('/').filter(Boolean);
       var last = parts.length ? parts[parts.length - 1] : '';
-      if (!last || last === 'bookshop' || /\.html?$/i.test(last)) { return null; }
+      if (!last || last === 'bookshop') { return 'shelf'; }
+      if (/\.html?$/i.test(last)) {
+        var prev = parts.length > 1 ? parts[parts.length - 2] : '';
+        if (!prev || prev === 'bookshop') { return 'shelf'; }
+        return prev.toLowerCase();
+      }
       return last.toLowerCase();
     } catch (e) { return null; }
   }
@@ -86,9 +102,24 @@
     });
   }
 
+  // (c) the book knock: first tap per card per page load.
+  var knocked = {};
+  function wireCard(el) {
+    el.addEventListener('click', function () {
+      var slug = el.getAttribute('data-count');
+      if (!slug) { return; }
+      var key = 'book-' + slug;
+      if (knocked[key]) { return; }
+      knocked[key] = true;
+      hit(key);
+    });
+  }
+
   function wire() {
     var players = document.querySelectorAll('audio');
     for (var i = 0; i < players.length; i++) { wirePlayer(players[i]); }
+    var cards = document.querySelectorAll('[data-count]');
+    for (var j = 0; j < cards.length; j++) { wireCard(cards[j]); }
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', wire);
