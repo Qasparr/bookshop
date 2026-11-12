@@ -194,5 +194,5 @@ DEARBORN TO BRIGHTMOOR — Crown Fire (featuring Qasparr) — $2.50 (note: DEARB
 Free to listen, buy to own: https://qasparr.github.io/bookshop/unfriendly-ghost/
 
 ## THE KARIN SERIES EBOOK (added 2026-11-11)
-- THE LITTLEST SISTER, WHEN SHE BLACKS OUT — The Karin Series, Episodes 1–5 (Movements I–II): all fifteen Da Vinci-pencil panels plus the full parallel-sub scripts (Japanese first, English beneath) in one PDF ebook — **$9** · Cash App note: KARIN
+- THE LITTLEST SISTER, WHEN SHE BLACKS OUT — The Karin Series, THE COMPLETE SERIES, Episodes 1–8 (Movements I–III, incl. the Epilogue): all twenty-four Da Vinci-pencil panels plus the full parallel-sub scripts (Japanese first, English beneath) in one PDF ebook — **$9** · Cash App note: KARIN
 Free to read in full, buy to own: https://qasparr.github.io/bookshop/karin/
