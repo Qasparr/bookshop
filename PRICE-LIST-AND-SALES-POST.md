@@ -196,6 +196,7 @@ Free to listen, buy to own: https://qasparr.github.io/bookshop/unfriendly-ghost/
 ## THE LITTLEST SISTER KEEPS THE COUNT — THE COMPLETE SERIES EBOOK (added 2026-11-11 as THE KARIN SERIES EBOOK; re-titled and re-noted 2026-11-15)
 - THE LITTLEST SISTER KEEPS THE COUNT — THE COMPLETE SERIES, Episodes 1–8 (Movements I–III, incl. the Epilogue), re-centered on Yuzu under the founder's ruling of 2026-11-12; Karin's arc within it keeps its name, THE LITTLEST SISTER, WHEN SHE BLACKS OUT: all twenty-four Da Vinci-pencil panels plus the full parallel-sub scripts (Japanese first, English beneath) in one PDF ebook — **$9** · Cash App note: YUZU
 - Former title and note, marked not vanished: THE KARIN SERIES EBOOK · Cash App note: KARIN (2026-11-11 → 2026-11-15). Re-titling ruled under the founder's delegation of 2026-11-15 — YUZU-RECENTERING-AMENDMENT §VI, Ruling 3.
+- Page count, updated 2026-11-15: the ebook now runs **64 pages** — the 61 as issued plus the three count-book frame plates (The Unopened Book · The Still Entry · The Blank Page) seated at the closes of Episodes 1, 3, and 5 under the founder's stamp of 11:22 EST, "Stamp it — draw the frame scenes as plates." The former count, 61 pages, stands marked, not vanished — YUZU-RECENTERING-AMENDMENT §VIII.
 Free to read in full, buy to own: https://qasparr.github.io/bookshop/karin/
 
 ## THE SECOND RECKONING (added 2026-11-12)
