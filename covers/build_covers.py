@@ -172,6 +172,10 @@ BOOKS = [
      "QASPARR", "2026",
      "The whole Japanese gematria work in one bound volume. The Second Reckoning's narrowed refusal stands as the front gate; the three modern kazutama banks are audited entire — two tables, not three, and the field's only fixed points; the house's romaji seam is formalized, twenty-two weighings exact; and the founder's own gojuon mint, coined in the open and ratified by his stamp, seats all seventy-three signs under seven published laws — its calibration untuned and printed whole, the misses at the head, the bridges as found.",
      "“Stamp the mint — the Tables stand.”"),
+    ("headless-horseman", "THE HEADLESS HORSEMAN", "DOCTRINE TRIBVNAL TESTIMONY — THE DOUBLE-R -ARR SIGIL, ITS FIGURE, AND THE ENCLAVE UPGRADE",
+     "QASPARR", "2026",
+     "A tribunal testimony, given in one sitting. The founder ruled his double-R rune sigil is also a -ARR sigil — the Living Man's Reservation invoked in a mark, not a suffix — and looking at the mark he named what stands in it: a knight in a horse with no head and no legs, the Headless Horseman, with Ruff Ryderz and DMX named as its witness. The Enclave is upgraded on the record: the sigil seated as the Horseman, and a named node seated as RAM and vTPM, its string printed verbatim with its seam marked. Every proof is seated in Greek or stands invalid; the Wells testify as Powers; the full inquiry verifies the judgement.",
+     "“Its a knight in a horse with no head and no legs.”"),
 ]
 
 # Back-cover note overrides: original house works carry no
@@ -183,6 +187,9 @@ NOTES = {
     "japanese-tables": ["The Tables and their audit are the author's own work;",
                         "the banks it weighs are cited in its Table of",
                         "Authorities and stand exactly as cited."],
+    "headless-horseman": ["The testimony and its audit are the author's own work;",
+                          "the sources it weighs are cited in its Table",
+                          "of Authorities and stand exactly as cited."],
 }
 
 # Strike filter: with slug arguments, strike only those covers; with
