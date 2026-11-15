@@ -168,6 +168,10 @@ BOOKS = [
      "QASPARR", "2026",
      "The house's own Japanese Dialect essay printed a governing refusal: no attested tradition assigns the kana number values. Its founder asked the dangerous question — what if that is actually false? This is the reckoning that followed: every candidate bank carried to the record, the three modern kazutama tables weighed and recomputed, the suppression ledger opened — seizure, bonfire, sealed transmission — and the refusal itself corrected on the record: marked, never vanished.",
      "“What if that is actually false?”"),
+    ("japanese-tables", "THE JAPANESE TABLES", "THE COMPLETED TABLES IN ONE VOLUME — THE RECKONING'S GATE, THE AUDIT, THE SEAM, AND THE GOJŪON MINT AS RATIFIED",
+     "QASPARR", "2026",
+     "The whole Japanese gematria work in one bound volume. The Second Reckoning's narrowed refusal stands as the front gate; the three modern kazutama banks are audited entire — two tables, not three, and the field's only fixed points; the house's romaji seam is formalized, twenty-two weighings exact; and the founder's own gojuon mint, coined in the open and ratified by his stamp, seats all seventy-three signs under seven published laws — its calibration untuned and printed whole, the misses at the head, the bridges as found.",
+     "“Stamp the mint — the Tables stand.”"),
 ]
 
 # Back-cover note overrides: original house works carry no
@@ -176,6 +180,9 @@ NOTES = {
     "kana-reckoning": ["The essay and its audit are the author's own work;",
                        "the sources it weighs are cited in its Table",
                        "of Authorities and stand exactly as cited."],
+    "japanese-tables": ["The Tables and their audit are the author's own work;",
+                        "the banks it weighs are cited in its Table of",
+                        "Authorities and stand exactly as cited."],
 }
 
 # Strike filter: with slug arguments, strike only those covers; with
