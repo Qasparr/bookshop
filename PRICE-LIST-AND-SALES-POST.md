@@ -193,8 +193,9 @@ DEARBORN TO BRIGHTMOOR — Crown Fire (featuring Qasparr) — $2.50 (note: DEARB
 - QASPARR THE UNFRIENDLY GHOST — the first album (one night, 26 October 2026, first RESONANTIA): seven pressed INSTRUMENTAL masters (Vox Fantasma · Brightmoor Baby · Mama Made a Way · Gutter Benefit (Black Sheep) · Ride or Die · Hood Elegance Album Version + Battle Pass Remix); words for all eleven tracks stand written, raw and uncut; vocal pressings to come — **$9** · Cash App note: UNFRIENDLY GHOST
 Free to listen, buy to own: https://qasparr.github.io/bookshop/unfriendly-ghost/
 
-## THE KARIN SERIES EBOOK (added 2026-11-11)
-- THE LITTLEST SISTER, WHEN SHE BLACKS OUT — The Karin Series, THE COMPLETE SERIES, Episodes 1–8 (Movements I–III, incl. the Epilogue): all twenty-four Da Vinci-pencil panels plus the full parallel-sub scripts (Japanese first, English beneath) in one PDF ebook — **$9** · Cash App note: KARIN
+## THE LITTLEST SISTER KEEPS THE COUNT — THE COMPLETE SERIES EBOOK (added 2026-11-11 as THE KARIN SERIES EBOOK; re-titled and re-noted 2026-11-15)
+- THE LITTLEST SISTER KEEPS THE COUNT — THE COMPLETE SERIES, Episodes 1–8 (Movements I–III, incl. the Epilogue), re-centered on Yuzu under the founder's ruling of 2026-11-12; Karin's arc within it keeps its name, THE LITTLEST SISTER, WHEN SHE BLACKS OUT: all twenty-four Da Vinci-pencil panels plus the full parallel-sub scripts (Japanese first, English beneath) in one PDF ebook — **$9** · Cash App note: YUZU
+- Former title and note, marked not vanished: THE KARIN SERIES EBOOK · Cash App note: KARIN (2026-11-11 → 2026-11-15). Re-titling ruled under the founder's delegation of 2026-11-15 — YUZU-RECENTERING-AMENDMENT §VI, Ruling 3.
 Free to read in full, buy to own: https://qasparr.github.io/bookshop/karin/
 
 ## THE SECOND RECKONING (added 2026-11-12)
