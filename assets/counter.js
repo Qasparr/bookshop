@@ -76,6 +76,25 @@
   No new event kinds are minted by this addendum: views, plays,
   listening blocks and knocks were already counted on every page
   that carries this script. The addendum only prints them.
+
+  ADDENDUM III (XVI day of November, 2026 e.v.): THE 64 LETTERS.
+  Printing the counts exposed a law of the counting house that
+  silent counting never had to face: Abacus refuses any key
+  longer than 64 characters, hit and read alike. A play key is
+  "play-" + page + "-" + track slug, and the long-named tracks —
+  all three First Renders, half the Unfriendly Ghost — ran past
+  the limit; their hits were turned away at the gate and counted
+  NOWHERE (the read-back's error is the witness: "length must be
+  between 3 and 64 characters"). Views and knocks, whose keys are
+  short, were never touched by this. The repair, in trackKey()
+  below: a key that fits keeps its exact old form — those
+  counters hold real counts and are not orphaned — and only an
+  over-long key is shortened, its slug cut to fit with a
+  six-letter hash of the whole slug seated at the tail, so two
+  long names sharing a head can never collide into one counter.
+  The over-long keys held nothing (every hit was refused), so
+  nothing is lost by their repair; their counts honestly begin
+  at zero from this day.
 */
 (function () {
   'use strict';
@@ -123,6 +142,23 @@
     } catch (e) { return null; }
   }
 
+  // THE 64 LETTERS (Addendum III): every play / listening key is
+  // built here and nowhere else, so the counted key and the
+  // printed key are one key by construction.
+  var KEY_MAX = 64;
+  function hash6(s) {
+    var h = 5381;
+    for (var i = 0; i < s.length; i++) { h = ((h * 33) ^ s.charCodeAt(i)) >>> 0; }
+    return ('00000' + h.toString(36)).slice(-6);
+  }
+  function trackKey(kind, slug) {
+    var head = kind + '-' + page + '-';
+    var key = head + slug;
+    if (key.length <= KEY_MAX) { return key; }
+    var room = KEY_MAX - head.length - 7; // '-' + the six-letter hash
+    return head + slug.slice(0, room) + '-' + hash6(slug);
+  }
+
   var page = pageName();
   if (!page) { return; }
 
@@ -135,7 +171,7 @@
     el.addEventListener('play', function () {
       var slug = trackSlug(el.currentSrc || el.getAttribute('src') || el.src);
       if (!slug) { return; }
-      var key = 'play-' + page + '-' + slug;
+      var key = trackKey('play', slug);
       if (counted[key]) { return; }
       counted[key] = true;
       hit(key);
@@ -169,7 +205,7 @@
           while (pending >= 10) {
             pending -= 10;
             var slug = trackSlug(el.currentSrc || el.getAttribute('src') || el.src);
-            if (slug) { hit('lt10-' + page + '-' + slug); }
+            if (slug) { hit(trackKey('lt10', slug)); }
           }
         }
       }
@@ -231,8 +267,8 @@
       if (audio) { slug = trackSlug(audio.currentSrc || audio.getAttribute('src') || audio.src); }
     }
     if (slug) {
-      readCount('play-' + page + '-' + slug, function (v) { set('m-plays', String(v)); });
-      readCount('lt10-' + page + '-' + slug, function (v) { set('m-listen', fmtListen(v)); });
+      readCount(trackKey('play', slug), function (v) { set('m-plays', String(v)); });
+      readCount(trackKey('lt10', slug), function (v) { set('m-listen', fmtListen(v)); });
     }
     // The books this box answers for: data-books names the cards
     // whose knocks the box sums and prints as one weather reading.
