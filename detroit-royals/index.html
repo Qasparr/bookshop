@@ -10,6 +10,14 @@
   record; no download is offered here. The download is the purchase,
   delivered person-to-person on payment with a numbered receipt —
   the same road the books travel.
+  THE TABVLA stands in the player since XVI day of November 2026
+  (the founder's order, completing the spread to every music page
+  in the shop): plays, listening time, visits — anonymous
+  aggregates only, the same weather-way as every counter in this
+  shop. One player serves the whole record, so the count follows
+  the track in the player. This page's keys always fit the
+  counting house's 64 letters, so its count runs unbroken from
+  the first day the counter shipped.
 -->
 <html lang="en">
 <head>
@@ -27,6 +35,11 @@
   .player { background: var(--purple2); border: 1px solid var(--gold); border-radius: 10px; padding: 16px; }
   .now { color: var(--gold); min-height: 1.4em; margin-bottom: 8px; font-size: 1.05rem; }
   audio { width: 100%; }
+  .tabvla { margin: 14px auto 2px; border-collapse: collapse; min-width: 260px; }
+  .tabvla caption { color: var(--green); letter-spacing: .18em; font-size: .8rem; padding-bottom: 6px; }
+  .tabvla th, .tabvla td { border: 1px solid var(--gold); padding: 5px 14px; font-size: .95rem; }
+  .tabvla th { color: var(--gold); letter-spacing: .08em; text-align: left; font-weight: normal; }
+  .tabvla td { text-align: right; }
   ol.tracks { list-style: none; margin: 18px 0 0; padding: 0; }
   ol.tracks li { border-top: 1px solid rgba(255,215,0,.25); }
   ol.tracks button { all: unset; display:flex; justify-content:space-between; width:100%; padding: 11px 6px; cursor:pointer; color: var(--ink); font-size: 1rem; }
@@ -53,6 +66,13 @@
     <ol class="tracks" id="list"></ol>
     <div class="bonus">BONUS — ALTERNATE TAKES</div>
     <ol class="tracks" id="bonus"></ol>
+    <table class="tabvla listen-metrics">
+      <caption>TABVLA — THE COUNT OF LISTENING</caption>
+      <tr><th>Plays</th><td class="m-plays">—</td></tr>
+      <tr><th>Listening time</th><td class="m-listen">—</td></tr>
+      <tr><th>Visits</th><td class="m-visits">—</td></tr>
+    </table>
+    <p class="fine" style="margin-top:8px;">Plays and listening time follow the track in the player.</p>
   </div>
 
   <div class="buy">
