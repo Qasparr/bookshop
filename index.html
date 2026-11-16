@@ -10,6 +10,9 @@
   own. Every card on this shelf carries the shop's anonymous counter —
   a tap on a book is counted the weather-way, the same as a listen.
   Aggregates only; no person is ever named or followed.
+  THE TABVLA stands on the Shelf since XVI day of November 2026
+  (the founder's order): visits to this page, and the books knocked
+  — every card tap on the shelf, summed in the open.
 -->
 <html lang="en">
 <head>
@@ -40,6 +43,11 @@
   ul.music .mp { color: var(--green); }
   .buy { margin-top: 28px; border:1px solid var(--green); border-radius:10px; padding:16px; text-align:center; }
   .buy a { color: var(--gold); font-size: 1.15rem; }
+  .tabvla { margin: 14px auto 2px; border-collapse: collapse; min-width: 260px; }
+  .tabvla caption { color: var(--green); letter-spacing: .18em; font-size: .8rem; padding-bottom: 6px; text-align: center; }
+  .tabvla th, .tabvla td { border: 1px solid var(--gold); padding: 5px 14px; font-size: .95rem; }
+  .tabvla th { color: var(--gold); letter-spacing: .08em; text-align: left; font-weight: normal; }
+  .tabvla td { text-align: right; }
   footer { margin-top: 36px; font-size:.8rem; text-align:center; opacity:.8; line-height:1.6; }
 </style>
 </head>
@@ -161,6 +169,12 @@
   </div>
   <p class="sumline">The essays stand free on GitHub — that's house law. What you buy here is the bound edition, and an author's keep.</p>
 
+  <table class="tabvla listen-metrics" data-books="douglass,huckfinn,sawyer,oz,leviathan,artofwar,meinkampf,leviathan-parallel,meinkampf-parallel,kana-reckoning,japanese-tables,headless-horseman,nine-vowels,render-cube,liber-sphingis,sphinx-cluster,littlest-sister">
+    <caption>TABVLA — THE COUNT OF THE SHELF</caption>
+    <tr><th>Books knocked</th><td class="m-knocks">—</td></tr>
+    <tr><th>Visits</th><td class="m-visits">—</td></tr>
+  </table>
+
   <h2>THE MUSIC</h2>
   <ul class="music">
     <li><a href="detroit-royals/">DETROIT ROYALS</a> — <span class="mp">$9</span></li>
@@ -168,7 +182,7 @@
     <li><a href="honey-and-hammer/">HONEY AND HAMMER</a> (single) — 2:40 — <span class="mp">$2.50</span></li>
     <li><a href="bonnet-and-crown/">BONNET AND CROWN</a> (single) — 3:02 — <span class="mp">$2.50</span></li>
     <li><a href="first-renders/">FIRST RENDERS</a> — three hits, <span class="mp">$2.50 each</span></li>
-    <li><a href="karin/">THE LITTLEST SISTER KEEPS THE COUNT</a> — the complete series, Episodes 1–8, re-centered on Yuzu (Karin's arc within it: “The Littlest Sister, When She Blacks Out”), free to read; the Complete Series ebook, 64 pp (61 as issued + the three count-book frame plates seated 2026-11-15; the former 61 pp marked, not vanished) — <span class="mp">$9</span>, Cash App note: YUZU</li>
+    <li><a href="karin/" data-count="littlest-sister">THE LITTLEST SISTER KEEPS THE COUNT</a> — the complete series, Episodes 1–8, re-centered on Yuzu (Karin's arc within it: “The Littlest Sister, When She Blacks Out”), free to read; the Complete Series ebook, 64 pp (61 as issued + the three count-book frame plates seated 2026-11-15; the former 61 pp marked, not vanished) — <span class="mp">$9</span>, Cash App note: YUZU</li>
   </ul>
 
   <div class="buy" id="buy">

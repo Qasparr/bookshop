@@ -12,6 +12,11 @@
   STANDING LABELS (the vault's own, carried onto the shelf): every
   pressed master on this album is an INSTRUMENTAL — no final vocal mix
   exists yet. The words stand written — raw and uncut, as filed.
+  THE TABVLA stands in the player since XVI day of November 2026
+  (the founder's order): plays, listening time, visits — anonymous
+  aggregates only, the same weather-way as every counter in this
+  shop. One player serves the whole record, so the count follows
+  the track in the player.
 -->
 <html lang="en">
 <head>
@@ -29,6 +34,11 @@
   .player { background: var(--purple2); border: 1px solid var(--gold); border-radius: 10px; padding: 16px; }
   .now { color: var(--gold); min-height: 1.4em; margin-bottom: 8px; font-size: 1.05rem; }
   audio { width: 100%; }
+  .tabvla { margin: 14px auto 2px; border-collapse: collapse; min-width: 260px; }
+  .tabvla caption { color: var(--green); letter-spacing: .18em; font-size: .8rem; padding-bottom: 6px; }
+  .tabvla th, .tabvla td { border: 1px solid var(--gold); padding: 5px 14px; font-size: .95rem; }
+  .tabvla th { color: var(--gold); letter-spacing: .08em; text-align: left; font-weight: normal; }
+  .tabvla td { text-align: right; }
   ol.tracks { list-style: none; margin: 18px 0 0; padding: 0; }
   ol.tracks li { border-top: 1px solid rgba(255,215,0,.25); }
   ol.tracks button { all: unset; display:flex; justify-content:space-between; width:100%; padding: 11px 6px; cursor:pointer; color: var(--ink); font-size: 1rem; }
@@ -56,6 +66,13 @@
     <div class="now" id="now">Pick a track.</div>
     <audio id="au" controls controlsList="nodownload" preload="none"></audio>
     <ol class="tracks" id="list"></ol>
+    <table class="tabvla listen-metrics">
+      <caption>TABVLA — THE COUNT OF LISTENING</caption>
+      <tr><th>Plays</th><td class="m-plays">—</td></tr>
+      <tr><th>Listening time</th><td class="m-listen">—</td></tr>
+      <tr><th>Visits</th><td class="m-visits">—</td></tr>
+    </table>
+    <p class="fine" style="margin-top:8px;">Plays and listening time follow the track in the player.</p>
   </div>
 
   <div class="bonus">THE WORDS ARE WRITTEN — PRESSINGS TO COME</div>

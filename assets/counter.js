@@ -52,6 +52,30 @@
   scripts blocked is not counted, and a part-block of listening
   (under ten seconds, still unflushed when the page closes) is not
   counted either. Aggregates only, as ever — the Line holds.
+
+  ADDENDUM II (XVI day of November, 2026 e.v.): THE TABVLA SPREADS.
+  At the founder's order the same table now stands on the shop's
+  other pages, and the read-back learns two new seats:
+    data-track="<file name>" — a page with several fixed players
+                     (the First Renders) gives each box the file it
+                     answers for; the box reads that track's plays
+                     and listening blocks, slugged by the same
+                     trackSlug() that counts them, so the printed
+                     key can never drift from the counted key. A box
+                     without data-track keeps the first law: it
+                     follows the page's player, and on a page whose
+                     one player swaps its file per track (the
+                     Unfriendly Ghost) the count follows the track
+                     in the player.
+    data-books="<slug,slug,...>" — a page with no player at all
+                     (the Shelf, the series page) still prints its
+                     Visits, and sums the book-<slug> knocks of the
+                     cards it names into a Books knocked row. A book
+                     is read, not heard; its table counts the
+                     reader's knock the same weather-way.
+  No new event kinds are minted by this addendum: views, plays,
+  listening blocks and knocks were already counted on every page
+  that carries this script. The addendum only prints them.
 */
 (function () {
   'use strict';
@@ -190,17 +214,39 @@
   }
 
   function renderTabvla(box) {
-    var audio = document.querySelector('audio');
-    if (!audio) { return; }
-    var slug = trackSlug(audio.currentSrc || audio.getAttribute('src') || audio.src);
     function set(cls, txt) {
       var n = box.querySelector('.' + cls);
       if (n) { n.textContent = txt; }
     }
+    // Visits print in every seat — a page with no player is still
+    // visited, and its table still stands.
     readCount('view-' + page, function (v) { set('m-visits', String(v)); });
+    // The track this box answers for: its own data-track naming
+    // wins; otherwise the page's player, as the first law had it.
+    var slug = null;
+    var named = box.getAttribute('data-track');
+    if (named) { slug = trackSlug(named); }
+    if (!slug) {
+      var audio = document.querySelector('audio');
+      if (audio) { slug = trackSlug(audio.currentSrc || audio.getAttribute('src') || audio.src); }
+    }
     if (slug) {
       readCount('play-' + page + '-' + slug, function (v) { set('m-plays', String(v)); });
       readCount('lt10-' + page + '-' + slug, function (v) { set('m-listen', fmtListen(v)); });
+    }
+    // The books this box answers for: data-books names the cards
+    // whose knocks the box sums and prints as one weather reading.
+    var books = box.getAttribute('data-books');
+    if (books) {
+      var slugs = books.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+      var total = 0, left = slugs.length;
+      if (!left) { set('m-knocks', '0'); }
+      slugs.forEach(function (bs) {
+        readCount('book-' + bs, function (v) {
+          total += v; left -= 1;
+          if (!left) { set('m-knocks', String(total)); }
+        });
+      });
     }
   }
 
@@ -210,9 +256,11 @@
       (function (box) {
         renderTabvla(box);
         setInterval(function () { renderTabvla(box); }, 30000);
-        var audio = document.querySelector('audio');
-        if (audio) {
-          audio.addEventListener('play', function () {
+        // Every player on the page may be the one just played —
+        // on a many-player page the refresh follows any of them.
+        var audios = document.querySelectorAll('audio');
+        for (var k = 0; k < audios.length; k++) {
+          audios[k].addEventListener('play', function () {
             setTimeout(function () { renderTabvla(box); }, 3000);
           });
         }
