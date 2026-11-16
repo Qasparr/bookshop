@@ -36,6 +36,22 @@
   swallowed promise rejection. If the counter service is down, blocked,
   or someday gone, the pages degrade in total silence — the music and
   the reading never wait on the counting.
+
+  ADDENDUM (XV day of November, 2026 e.v.): THE TABVLA. Pages that
+  carry a .listen-metrics table get their measures read back and
+  printed on the page, in a table, in the open:
+    Plays          — the play-<page>-<track slug> counter above.
+    Listening time — a new counter, lt10-<page>-<track slug>: one hit
+                     per whole ten seconds of actual playback, timed
+                     on the audio element's own clock (timeupdate
+                     deltas), so a pause counts nothing and a seek
+                     counts nothing — only time the track sounded.
+                     The table prints the blocks back as min and sec.
+    Visits         — the view-<page> counter above.
+  The counts are client-reported and indicative: a visitor with
+  scripts blocked is not counted, and a part-block of listening
+  (under ten seconds, still unflushed when the page closes) is not
+  counted either. Aggregates only, as ever — the Line holds.
 */
 (function () {
   'use strict';
@@ -115,11 +131,101 @@
     });
   }
 
+  // (d) the listening clock: whole ten-second blocks of actual
+  // playback, timed on the element's own clock. A pause counts
+  // nothing; a seek counts nothing; only time the track sounded.
+  function wireListenTime(el) {
+    var last = null, pending = 0;
+    el.addEventListener('timeupdate', function () {
+      var t = el.currentTime;
+      if (last !== null && !el.paused) {
+        var d = t - last;
+        if (d > 0 && d < 1.5) {
+          pending += d;
+          while (pending >= 10) {
+            pending -= 10;
+            var slug = trackSlug(el.currentSrc || el.getAttribute('src') || el.src);
+            if (slug) { hit('lt10-' + page + '-' + slug); }
+          }
+        }
+      }
+      last = t;
+    });
+    function reset() { last = null; }
+    el.addEventListener('pause', reset);
+    el.addEventListener('ended', reset);
+    el.addEventListener('seeking', reset);
+  }
+
+  // (e) the TABVLA read-back: the same counters, read and printed on
+  // any page that carries a .listen-metrics table. A key that does
+  // not exist yet reads as 0 — a new song's table starts at zero,
+  // honestly. Refreshed every 30 seconds, and once shortly after the
+  // visitor's own first play, so their own count is seen to land.
+  var GET_BASE = 'https://abacus.jasoncameron.dev/get/' + NAMESPACE + '/';
+
+  function readCount(key, done) {
+    try {
+      var p = fetch(GET_BASE + encodeURIComponent(key), {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
+      });
+      if (p && p.then) {
+        p.then(function (r) {
+          if (!r || !r.ok) { done(0); return null; }
+          return r.json();
+        }).then(function (j) {
+          if (j && typeof j.value === 'number') { done(j.value); }
+        }).catch(function () { /* silence is the law */ });
+      }
+    } catch (e) { /* the page owes the counter nothing */ }
+  }
+
+  function fmtListen(blocks) {
+    var secs = blocks * 10;
+    if (secs < 60) { return secs + ' sec'; }
+    var m = Math.floor(secs / 60), s = secs % 60;
+    return s ? (m + ' min ' + s + ' sec') : (m + ' min');
+  }
+
+  function renderTabvla(box) {
+    var audio = document.querySelector('audio');
+    if (!audio) { return; }
+    var slug = trackSlug(audio.currentSrc || audio.getAttribute('src') || audio.src);
+    function set(cls, txt) {
+      var n = box.querySelector('.' + cls);
+      if (n) { n.textContent = txt; }
+    }
+    readCount('view-' + page, function (v) { set('m-visits', String(v)); });
+    if (slug) {
+      readCount('play-' + page + '-' + slug, function (v) { set('m-plays', String(v)); });
+      readCount('lt10-' + page + '-' + slug, function (v) { set('m-listen', fmtListen(v)); });
+    }
+  }
+
+  function wireTabvla() {
+    var boxes = document.querySelectorAll('.listen-metrics');
+    for (var i = 0; i < boxes.length; i++) {
+      (function (box) {
+        renderTabvla(box);
+        setInterval(function () { renderTabvla(box); }, 30000);
+        var audio = document.querySelector('audio');
+        if (audio) {
+          audio.addEventListener('play', function () {
+            setTimeout(function () { renderTabvla(box); }, 3000);
+          });
+        }
+      })(boxes[i]);
+    }
+  }
+
   function wire() {
     var players = document.querySelectorAll('audio');
-    for (var i = 0; i < players.length; i++) { wirePlayer(players[i]); }
+    for (var i = 0; i < players.length; i++) { wirePlayer(players[i]); wireListenTime(players[i]); }
     var cards = document.querySelectorAll('[data-count]');
     for (var j = 0; j < cards.length; j++) { wireCard(cards[j]); }
+    wireTabvla();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', wire);
