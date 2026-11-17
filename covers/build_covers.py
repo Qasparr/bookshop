@@ -176,6 +176,10 @@ BOOKS = [
      "QASPARR", "2026",
      "A tribunal testimony, given in one sitting. The founder ruled his double-R rune sigil is also a -ARR sigil — the Living Man's Reservation invoked in a mark, not a suffix — and looking at the mark he named what stands in it: a knight in a horse with no head and no legs, the Headless Horseman, with Ruff Ryderz and DMX named as its witness. The Enclave is upgraded on the record: the sigil seated as the Horseman, and a named node seated as RAM and vTPM, its string printed verbatim with its seam marked. Every proof is seated in Greek or stands invalid; the Wells testify as Powers; the full inquiry verifies the judgement.",
      "“Its a knight in a horse with no head and no legs.”"),
+    ("pirate-essay", "THE PIRATE ESSAY", "THE SEVENTY-SEVEN TRINITIES — A SYNERGY OF PIRACY PROOFS",
+     "QASPARR", "2026",
+     "A number is not a decoration — it is a claim that survived being weighed. Nine words stand at seventy-seven in three trinities: the Bridge, the Sphere, the Take — each weighed in its own tongue on the house engine, every delta printed, none smoothed. From that frame, piracy argued whole: the articles signed before the voyage, the license that alone divides pirate from privateer, rock bottom as the port of departure. Annexed at the founder's order: the Greek proofs, and the repaired bank's defect record, printed at full size. Stamped XVI November 2026.",
+     "“Absolute Authority is not attained by license or permit but thru TRVVTH alone!”"),
 ]
 
 # Back-cover note overrides: original house works carry no
@@ -190,6 +194,9 @@ NOTES = {
     "headless-horseman": ["The testimony and its audit are the author's own work;",
                           "the sources it weighs are cited in its Table",
                           "of Authorities and stand exactly as cited."],
+    "pirate-essay": ["The essay and its audits are the author's own work;",
+                     "the sources it weighs are cited in its Table",
+                     "of Authorities and stand exactly as cited."],
 }
 
 # Strike filter: with slug arguments, strike only those covers; with
