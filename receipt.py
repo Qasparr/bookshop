@@ -58,6 +58,7 @@ import subprocess
 import sys
 import tempfile
 from datetime import datetime
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -115,6 +116,19 @@ PREFIX = {"sale": "BOOK", "contribution": "CONTRIB"}
 #              house takes the remainder, so the two shares always
 #              sum to the sale price to the cent. At the shelf price
 #              of $2.50: D-BLOK $1.88, the house $0.62.
+# THE ENVELOPE ON A SPLIT SALE (ruled XXII day of November, 2026
+#              e.v.: the founder asked how the professionals figure
+#              the tax set-aside on a split sale — on the whole or
+#              on the house's share — and ruled "Do it how they do
+#              it"): the professional method is that the artist's
+#              share is a pass-through — money the house holds for
+#              the artist and pays out, never the house's kept
+#              income — so the tax set-aside is figured on the
+#              HOUSE'S SHARE ONLY, never on the whole price. At the
+#              shelf price: 25% of the house's $0.62 is $0.155,
+#              rounded HALF-UP to the cent (see round_half_up_cents)
+#              — $0.16 in the jar. On a house sale the envelope
+#              rides on the whole receipt, as it always has.
 # ---------------------------------------------------------------------
 ARTIST_SPLITS = {
     "CONCRETE MAZE": {
@@ -273,6 +287,22 @@ def money(x: float) -> str:
     return f"${x:,.2f}"
 
 
+def round_half_up_cents(x) -> float:
+    """Round a dollar figure to the cent, halves rounding UP.
+
+    MECHANISM: Decimal arithmetic on the decimal strings of the
+    factors, so a true half-cent — the house's $0.62 × 25% =
+    $0.155 — rounds up to $0.16, the way a till is figured by
+    hand, where the binary float round() would banker's-round
+    the half down. Used for the tax set-aside on a split sale
+    (the ruling at the artist-split catalog); the standing
+    house-receipt set-aside keeps its standing round().
+    """
+    cents = Decimal(str(x)).quantize(Decimal("0.01"),
+                                      rounding=ROUND_HALF_UP)
+    return float(cents)
+
+
 def now_iso() -> str:
     """Current timestamp, ISO format, in the founder's timezone."""
     return datetime.now(DETROIT).isoformat(timespec="seconds")
@@ -329,10 +359,23 @@ def render_receipt(row: dict, cfg: dict) -> str:
     ]
     if row.get("note"):
         lines.append(f"Note:    {row['note']}")
+    lines.append("-" * 62)
+    # MECHANISM: on a split sale the set-aside was figured on the
+    # house's share only (the ruling at the artist-split catalog),
+    # and the line SAYS SO — its base is printed, so the paper
+    # never lets a reader take the jar for a whole-price sweep.
+    # On every other receipt the line stands exactly as it has
+    # always stood, word for word and cent for cent.
+    if row.get("artist_split"):
+        lines.append(
+            f"Tax set-aside (internal planning estimate, "
+            f"{cfg['tax_rate']:.0%} of the house share): "
+            f"{money(row['tax_set_aside'])}")
+    else:
+        lines.append(
+            f"Tax set-aside (internal planning estimate, "
+            f"{cfg['tax_rate']:.0%}): {money(row['tax_set_aside'])}")
     lines += [
-        "-" * 62,
-        f"Tax set-aside (internal planning estimate, "
-        f"{cfg['tax_rate']:.0%}): {money(row['tax_set_aside'])}",
         "  ^ The seller's own tax jar. This line is not a tax",
         "    document and gives the buyer no deduction.",
     ]
@@ -378,14 +421,47 @@ def record_payment(home: Path, kind: str, item: str, buyer: str,
                    amount: float, note: str = "") -> dict:
     """Book one payment: split it, number it, ledger it, print it.
 
-    MECHANISM: set_aside = round(amount × rate, 2); the net is the
-    remainder, so split + net always sums to the amount to the cent.
+    MECHANISM: on a house receipt, set_aside = round(amount ×
+    rate, 2); on a split receipt the envelope is figured on the
+    house's share only, rounded half-up to the cent (the ruling
+    at the artist-split catalog). The net is the remainder, so
+    set-aside + net always sums to the amount to the cent.
     DOCTRINE:  The split happens AT THE DOOR, on every receipt —
     the jar is filled before the money can be spent, not after.
     """
     cfg = ensure_home(home)
     receipt_no = next_number(home, kind)
-    set_aside = round(amount * cfg["tax_rate"], 2)
+    # MECHANISM: the artist-split catalog is consulted FIRST, at
+    # the door, because the tax jar's base depends on its answer.
+    # The artist's share is rounded to the cent first and the
+    # house takes the remainder (see ROUNDING at the catalog), so
+    # the two shares always sum to the amount. On a split sale
+    # the set-aside is then figured on the HOUSE'S SHARE ONLY —
+    # the artist's share is a pass-through, never the house's
+    # kept income (the founder's ruling of XXII Nov 2026: the
+    # professional method) — and rounded half-up to the cent.
+    # On a house sale the jar sweeps the whole receipt, as it
+    # always has.
+    # DOCTRINE:  the division is booked in the ledger row itself,
+    # so the book can always answer, for any split sale, exactly
+    # what the artist is owed — the memory is in the book, not
+    # in a head.
+    split = ARTIST_SPLITS.get(item.strip().upper())
+    artist_split = None
+    if split is not None:
+        artist_amount = round(amount * split["artist_share"], 2)
+        artist_split = {
+            "artist": split["artist"],
+            "artist_share": split["artist_share"],
+            "artist_amount": artist_amount,
+            "house_name": split["house_name"],
+            "house_amount": round(amount - artist_amount, 2),
+        }
+        set_aside = round_half_up_cents(
+            Decimal(str(artist_split["house_amount"]))
+            * Decimal(str(cfg["tax_rate"])))
+    else:
+        set_aside = round(amount * cfg["tax_rate"], 2)
     row = {
         "date": now_iso(),
         "kind": kind,
@@ -397,26 +473,12 @@ def record_payment(home: Path, kind: str, item: str, buyer: str,
         "net_spendable": round(amount - set_aside, 2),
         "note": note,
     }
-    # MECHANISM: an item standing in the artist-split catalog divides
-    # here, at the door, beside the tax split and independent of it:
-    # the artist's share is rounded to the cent first and the house
-    # takes the remainder (see ROUNDING at the catalog), so the two
-    # shares always sum to the amount. The tax jar above is the
-    # seller's own, swept on the whole receipt as on every receipt;
-    # the artist split divides the PRICE, and the receipt prints both.
-    # DOCTRINE:  the division is booked in the ledger row itself, so
-    # the book can always answer, for any split sale, exactly what
-    # the artist is owed — the memory is in the book, not in a head.
-    split = ARTIST_SPLITS.get(item.strip().upper())
-    if split is not None:
-        artist_amount = round(amount * split["artist_share"], 2)
-        row["artist_split"] = {
-            "artist": split["artist"],
-            "artist_share": split["artist_share"],
-            "artist_amount": artist_amount,
-            "house_name": split["house_name"],
-            "house_amount": round(amount - artist_amount, 2),
-        }
+    # The division computed above rides in the row, beside the
+    # jar's figures and independent of them: the artist split
+    # divides the PRICE, the jar sweeps its ruled base, and the
+    # receipt prints both.
+    if artist_split is not None:
+        row["artist_split"] = artist_split
     # DOCTRINE: a coupon rides only on a contribution, and only at or
     # above the threshold — generosity has a stated gate, kept alike
     # for every giver, so no giver is promised what another was not.
@@ -532,14 +594,26 @@ def selftest() -> int:
         check("split shares sum to the sale price",
               abs(spt.get("artist_amount", 0)
                   + spt.get("house_amount", 0) - sp["amount"]) < 0.005)
+        # The envelope on a split sale rides on the house's share
+        # only (the founder's ruling: the professional method) —
+        # 25% of $0.62 is $0.155, rounded half-up to $0.16, where
+        # a whole-price sweep would have taken $0.62.
+        check("split set-aside rides on the house share only ($0.16)",
+              sp["tax_set_aside"] == 0.16)
         check("house sale carries no artist split",
               "artist_split" not in s1)
         sp_text = render_receipt(sp, cfg)
         check("the division prints on the split receipt",
               "Artist split" in sp_text and "D-BLOK" in sp_text
               and "$1.88" in sp_text and "$0.62" in sp_text)
+        check("split set-aside line names its base and its amount",
+              "Tax set-aside (internal planning estimate, 25% of "
+              "the house share): $0.16" in sp_text)
         check("no split prints on a house receipt",
               "Artist split" not in render_receipt(s1, cfg))
+        check("house set-aside line unchanged in word and cent",
+              "Tax set-aside (internal planning estimate, 25%): "
+              "$2.25" in render_receipt(s1, cfg))
         # The sale notification proves its text and its gate in the
         # same temp house: the split figures ride the body, a house
         # sale's body carries none, and the gate — the real till's
