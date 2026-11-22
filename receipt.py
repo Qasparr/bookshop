@@ -54,6 +54,7 @@ import argparse
 import json
 import secrets
 import string
+import subprocess
 import sys
 import tempfile
 from datetime import datetime
@@ -122,6 +123,108 @@ ARTIST_SPLITS = {
         "house_name": "Johnathan",
     },
 }
+
+# ---------------------------------------------------------------------
+# THE SALE NOTIFICATION (added XXII day of November, 2026 e.v.,
+# at the founder's order of the same day)
+# MECHANISM: When a sale receipt is minted, the founder is told by
+#              email: the item, the receipt number, the amount —
+#              and, on a split SKU, the division's amounts. The send
+#              rides the Gmail connector CLI, the one send path on
+#              this box a script can invoke; it delivers when the
+#              founder's Gmail stands connected here. The gate is a
+#              config key — "sale_notifications" — that the default
+#              config NEVER seeds: it is set by hand in the real
+#              till's config.json alone, so the self-test's temp
+#              house and every scratch ledger stay silent by
+#              construction, and only a real mint in the real book
+#              can ever notify. Every gated mint appends its attempt
+#              to notifications.jsonl beside the ledger — SENT with
+#              the mail path's answer, or FAILED with its error —
+#              and reports the outcome on stderr; the receipt's own
+#              text and the mint itself never wait on the mail.
+# DOCTRINE:  The till tells its keeper. A sale the founder learns
+#              of late is a book half-kept; the notification is the
+#              doorbell on the same door the split happens at. And
+#              an undelivered notification is never a silent one:
+#              it stands in the outbox, marked FAILED, in the open.
+# PRIVACY:   The email carries the item, the number, and the money
+#              — never the buyer's name. Buyer names stay in the
+#              house's local records, as the shop's law has always
+#              held; the doorbell rings the sale, not the person.
+# ---------------------------------------------------------------------
+# The founder's own address, seated here at his order of
+# XXII day of November, 2026 e.v. — sale notifications go to him.
+NOTIFY_EMAIL = "sykosys93@gmail.com"
+NOTIFY_CLI = ["/opt/hatch/bin/hatch_gws_cli", "gmail", "+send"]
+
+
+def notification_text(row: dict):
+    """Compose the sale notification: subject and body for a row.
+
+    MECHANISM: Pure composition — no sending lives here, so the
+    self-test can prove the text (split amounts and all) without
+    the mail path ever being touched.
+    """
+    subject = (f"Bookshop sale — {row['item']} — "
+               f"Receipt {row['receipt_no']}")
+    lines = [
+        "A sale was receipted at the bookshop till.",
+        "",
+        f"Item:    {row['item']}",
+        f"Receipt: {row['receipt_no']}",
+        f"Amount:  {money(row['amount'])}",
+        f"Paid by: {PAYMENT_RAIL}",
+    ]
+    if row.get("artist_split"):
+        sp = row["artist_split"]
+        lines += [
+            "",
+            "Artist split:",
+            f"  {sp['artist']}: {sp['artist_share']:.0%} of the "
+            f"sale = {money(sp['artist_amount'])}",
+            f"  {sp['house_name']}: {1 - sp['artist_share']:.0%} of "
+            f"the sale = {money(sp['house_amount'])}",
+        ]
+    lines += ["", "93 — Live, Love, and let Love, Live."]
+    return subject, "\n".join(lines)
+
+
+def notify_sale(home: Path, cfg: dict, row: dict) -> bool:
+    """Email the founder a sale, if this house is the real till.
+
+    MECHANISM: The gate is double — the row must be a sale, and the
+    house config must carry "sale_notifications": true, a key the
+    default config never seeds (see the section head). Past the
+    gate, the Gmail CLI is invoked once; the attempt and its
+    outcome are appended to notifications.jsonl either way, and
+    the outcome prints on stderr. Returns True only on a send the
+    mail path accepted. A failed send never fails the mint.
+    """
+    if row["kind"] != "sale" or cfg.get("sale_notifications") is not True:
+        return False
+    subject, body = notification_text(row)
+    entry = {
+        "date": now_iso(),
+        "receipt_no": row["receipt_no"],
+        "to": NOTIFY_EMAIL,
+        "subject": subject,
+    }
+    try:
+        proc = subprocess.run(
+            NOTIFY_CLI + ["--to", NOTIFY_EMAIL, "--subject", subject,
+                          "--body", body],
+            capture_output=True, text=True, timeout=120)
+        entry["status"] = "SENT" if proc.returncode == 0 else "FAILED"
+        entry["detail"] = (proc.stdout or proc.stderr).strip()[:300]
+    except Exception as exc:  # the mail path is a courtesy, never a gate
+        entry["status"] = "FAILED"
+        entry["detail"] = f"{type(exc).__name__}: {exc}"[:300]
+    with (home / "notifications.jsonl").open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    print(f"[sale notification {entry['status']} -> {NOTIFY_EMAIL}]",
+          file=sys.stderr)
+    return entry["status"] == "SENT"
 
 
 # =====================================================================
@@ -325,6 +428,10 @@ def record_payment(home: Path, kind: str, item: str, buyer: str,
     (home / "receipts" / f"{receipt_no}.txt").write_text(text,
                                                          encoding="utf-8")
     print(text, end="")
+    # The doorbell rings only after the mint stands complete —
+    # ledger, receipt file, and print — and only in the real till:
+    # notify_sale's own gate keeps test and scratch houses silent.
+    notify_sale(home, cfg, row)
     return row
 
 
@@ -433,6 +540,24 @@ def selftest() -> int:
               and "$1.88" in sp_text and "$0.62" in sp_text)
         check("no split prints on a house receipt",
               "Artist split" not in render_receipt(s1, cfg))
+        # The sale notification proves its text and its gate in the
+        # same temp house: the split figures ride the body, a house
+        # sale's body carries none, and the gate — the real till's
+        # config key, never seeded here — stays shut, so no send is
+        # attempted and no outbox is written.
+        n_subject, n_body = notification_text(sp)
+        check("notification names item, receipt and amount",
+              "CONCRETE MAZE" in n_subject
+              and sp["receipt_no"] in n_subject and "$2.50" in n_body)
+        check("notification carries the split amounts",
+              "D-BLOK" in n_body and "$1.88" in n_body
+              and "$0.62" in n_body)
+        check("house notification carries no split",
+              "Artist split" not in notification_text(s1)[1]
+              and "$9.00" in notification_text(s1)[1])
+        check("notification gate stays shut in a test house",
+              notify_sale(home, cfg, sp) is False
+              and not (home / "notifications.jsonl").exists())
     print("-" * 62)
     print(f"SELFTEST: {'ALL PASS' if all(results) else 'FAILURES PRESENT'} "
           f"({sum(results)}/{len(results)})")
