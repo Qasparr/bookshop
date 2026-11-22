@@ -90,6 +90,39 @@ DEFAULT_CONFIG = {
 # different prefixes so a number alone tells the kind at a glance.
 PREFIX = {"sale": "BOOK", "contribution": "CONTRIB"}
 
+# ---------------------------------------------------------------------
+# THE ARTIST-SPLIT CATALOG (added XXII day of November, 2026 e.v.,
+# at the founder's order, the day D-BLOK's single took the shelf)
+# MECHANISM: A small table of items whose sale price divides at the
+#              door between the artist and the house. The key is the
+#              item name as it is receipted — the Cash App note word,
+#              matched stripped and uppercased, so the note the buyer
+#              was told to write is the key the book looks up. A sale
+#              whose item stands in this table carries an
+#              "artist_split" record in its ledger row and prints
+#              the division on its receipt; a sale whose item does
+#              NOT stand here is a house sale, whole and unsplit,
+#              and its receipt is unchanged in every line.
+# DOCTRINE:  The split is the artist's standing in the till, ruled
+#              by the founder: on a sale of the artist's own work
+#              through the house store, 75% of the price is the
+#              artist's and 25% is the house's. The division is
+#              printed on the receipt itself — the buyer sees whose
+#              work was bought and how the money divides — because
+#              the truth is printed or it is not printed.
+# ROUNDING:  The artist's share is rounded to the cent FIRST; the
+#              house takes the remainder, so the two shares always
+#              sum to the sale price to the cent. At the shelf price
+#              of $2.50: D-BLOK $1.88, the house $0.62.
+# ---------------------------------------------------------------------
+ARTIST_SPLITS = {
+    "CONCRETE MAZE": {
+        "artist": "D-BLOK",
+        "artist_share": 0.75,
+        "house_name": "Johnathan",
+    },
+}
+
 
 # =====================================================================
 # DIRECTORY AND FILE PLUMBING
@@ -200,6 +233,21 @@ def render_receipt(row: dict, cfg: dict) -> str:
         "  ^ The seller's own tax jar. This line is not a tax",
         "    document and gives the buyer no deduction.",
     ]
+    # MECHANISM: the division prints only on a split sale's receipt —
+    # the block exists in the row only when the catalog divided the
+    # price, so every other receipt keeps its exact standing shape.
+    # DOCTRINE:  the percentages AND the dollar amounts both print:
+    # a share stated without its amount is a promise, not a division.
+    if row.get("artist_split"):
+        sp = row["artist_split"]
+        lines += [
+            "-" * 62,
+            "Artist split — this sale divides at the door:",
+            f"  {sp['artist']}: {sp['artist_share']:.0%} of the sale "
+            f"= {money(sp['artist_amount'])}",
+            f"  {sp['house_name']}: {1 - sp['artist_share']:.0%} of "
+            f"the sale = {money(sp['house_amount'])}",
+        ]
     if row["kind"] == "contribution":
         lines += [
             "-" * 62,
@@ -246,6 +294,26 @@ def record_payment(home: Path, kind: str, item: str, buyer: str,
         "net_spendable": round(amount - set_aside, 2),
         "note": note,
     }
+    # MECHANISM: an item standing in the artist-split catalog divides
+    # here, at the door, beside the tax split and independent of it:
+    # the artist's share is rounded to the cent first and the house
+    # takes the remainder (see ROUNDING at the catalog), so the two
+    # shares always sum to the amount. The tax jar above is the
+    # seller's own, swept on the whole receipt as on every receipt;
+    # the artist split divides the PRICE, and the receipt prints both.
+    # DOCTRINE:  the division is booked in the ledger row itself, so
+    # the book can always answer, for any split sale, exactly what
+    # the artist is owed — the memory is in the book, not in a head.
+    split = ARTIST_SPLITS.get(item.strip().upper())
+    if split is not None:
+        artist_amount = round(amount * split["artist_share"], 2)
+        row["artist_split"] = {
+            "artist": split["artist"],
+            "artist_share": split["artist_share"],
+            "artist_amount": artist_amount,
+            "house_name": split["house_name"],
+            "house_amount": round(amount - artist_amount, 2),
+        }
     # DOCTRINE: a coupon rides only on a contribution, and only at or
     # above the threshold — generosity has a stated gate, kept alike
     # for every giver, so no giver is promised what another was not.
@@ -342,6 +410,29 @@ def selftest() -> int:
         net = sum(r["net_spendable"] for r in rows)
         check("balance reconciles (gross = envelope + spendable)",
               abs(gross - (env + net)) < 0.005 and len(rows) == 4)
+        # The artist split proves itself in the same temp house: a
+        # catalog sale divides 75/25 with shares summing to the
+        # price; a house sale carries no split and prints none.
+        cfg = ensure_home(home)
+        with contextlib.redirect_stdout(sink):
+            sp = record_payment(home, "sale", "CONCRETE MAZE", "Eve",
+                                2.50)
+        spt = sp.get("artist_split", {})
+        check("split SKU divides at the shelf price ($1.88 / $0.62)",
+              spt.get("artist") == "D-BLOK"
+              and spt.get("artist_amount") == 1.88
+              and spt.get("house_amount") == 0.62)
+        check("split shares sum to the sale price",
+              abs(spt.get("artist_amount", 0)
+                  + spt.get("house_amount", 0) - sp["amount"]) < 0.005)
+        check("house sale carries no artist split",
+              "artist_split" not in s1)
+        sp_text = render_receipt(sp, cfg)
+        check("the division prints on the split receipt",
+              "Artist split" in sp_text and "D-BLOK" in sp_text
+              and "$1.88" in sp_text and "$0.62" in sp_text)
+        check("no split prints on a house receipt",
+              "Artist split" not in render_receipt(s1, cfg))
     print("-" * 62)
     print(f"SELFTEST: {'ALL PASS' if all(results) else 'FAILURES PRESENT'} "
           f"({sum(results)}/{len(results)})")
